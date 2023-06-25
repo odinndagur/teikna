@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Header } from './Header'
 import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { searchBands, searchVideos } from '../db'
 import { Link, useNavigate, useSearch } from '@tanstack/react-location'
 import { YoutubePlayer } from './YoutubePlayer'
 import { VideoListItem } from './VideoListItem'

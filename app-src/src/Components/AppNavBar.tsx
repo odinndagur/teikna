@@ -60,9 +60,9 @@ export function AppNavBar({ type }: { type: 'footer' | 'header' }) {
             search: { id: 1 },
         },
         {
-            route: '/videos',
+            route: '/movies',
             icon: 'movie',
-            name: t('nav_videos'),
+            name: 'Myndir',
             type: type,
             search: { id: 1 },
         },
