@@ -333,11 +333,11 @@ async function run() {
 
     // db.create_function('to_ascii', (a: string) => toAscii(a))
 
-    const currentVersion = 4
+    const currentVersion = 5
     let initDB = false
     try {
         console.log('try')
-        db.exec('select * from band_member limit 5')
+        db.exec('select * from movie limit 5')
         const res = db.query('pragma user_version')
         const user_version = res[0].user_version
         console.log('pragma user version', user_version, currentVersion)
@@ -395,19 +395,13 @@ async function run() {
         // )
         // db.exec(`pragma user_version = ${currentVersion}`)
         let filepathPrefix = `${import.meta.env.BASE_URL}`
-        const filepaths = [`${filepathPrefix}assets/r6014.sqlite3.txt`]
+        const filepaths = [
+            `${filepathPrefix}assets/filmgrab-tables.txt`,
+            `${filepathPrefix}assets/filmgrab-sqlite.txt`,
+        ]
         for (let filepath of filepaths) {
             // if (filepath.includes('db_data')) {
-            for await (let line of makeTextFileLineIterator(filepath)) {
-                // console.log(line)
-                try {
-                    db.exec(line)
-                } catch (error) {
-                    console.error(error)
-                }
-            }
-            // } else {
-            // for await (let line of splitTextFileBySemicolon(filepath)) {
+            // for await (let line of makeTextFileLineIterator(filepath)) {
             //     // console.log(line)
             //     try {
             //         db.exec(line)
@@ -415,6 +409,15 @@ async function run() {
             //         console.error(error)
             //     }
             // }
+            // } else {
+            for await (let line of splitTextFileBySemicolon(filepath)) {
+                // console.log(line)
+                try {
+                    db.exec(line)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
             // }
         }
         // db.exec()

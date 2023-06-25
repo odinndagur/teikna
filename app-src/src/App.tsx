@@ -43,6 +43,7 @@ import { ShowPage } from './Components/ShowPage'
 import { BandPage } from './Components/BandPage'
 import { AlbumsListPage } from './Components/AlbumsListPage'
 import { Misc } from './Components/Misc'
+import { MoviesList } from './Components/MoviesList'
 
 const reactLocation = new ReactLocation()
 
@@ -71,7 +72,7 @@ function App() {
         const intervalID = setInterval(() => {
             console.log('callback yo')
             try {
-                query('select * from band_member limit 5').then((res: any) => {
+                query('select * from movie limit 5').then((res: any) => {
                     if (res[0]) {
                         clearInterval(intervalID)
                         setPromiseWorkerLoaded(true)
@@ -120,6 +121,10 @@ function App() {
                             {
                                 path: 'home',
                                 element: <HomePage />,
+                            },
+                            {
+                                path: 'movies',
+                                element: <MoviesList />,
                             },
                             {
                                 path: 'random',
