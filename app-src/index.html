@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- <link
+            href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+            rel="stylesheet"
+        /> -->
+
+        <!-- <link href="/dark.css" rel="alternate stylesheet" title="dark" />
+        <link href="/light.css" rel="alternate stylesheet" title="light" /> -->
+        <link
+            type="text/css"
+            rel="stylesheet"
+            property="stylesheet"
+            href="/dark.css"
+        />
+        <link
+            type="text/css"
+            rel="stylesheet"
+            property="stylesheet"
+            href="/light.css"
+        />
+        <script>
+            <!-- Switch to a named alternate stylesheet -->
+            function setActiveStyleSheet(title) {
+                /* Grab a list of all alternate style sheets */
+                let css = `link[rel="stylesheet"]`
+                let stylesheets = document.querySelectorAll(css)
+                /* Walk all alternate style sheets and disable them */
+                stylesheets.forEach((sheet) => {
+                    if (
+                        ['dark', 'light'].some(
+                            (sheetTitle) => sheet.href.indexOf(sheetTitle) > -1
+                        )
+                    ) {
+                        sheet.disabled = true
+                    }
+                })
+                stylesheets.forEach((sheet) => {
+                    if (sheet.href.indexOf(title) > -1) {
+                        sheet.disabled = false
+                    }
+                })
+                /* Select style sheet we want to "turn on" */
+                // let selector = `link[title="${title}"]`
+                // let stylesheet = document.querySelector(selector)
+                /* Enable the style sheet */
+                // stylesheet.disabled = false
+            }
+            window.setActiveStyleSheet = setActiveStyleSheet
+            function initDarkMode() {
+                let themeMode = window.localStorage.getItem('theme_mode')
+                console.log('themeMode: ', themeMode)
+                // if (themeMode === null) {}
+                if (!themeMode) {
+                    window.localStorage.setItem('theme_mode', 'light')
+                    themeMode = 'light'
+                }
+                if (themeMode === 'dark') {
+                    window.setActiveStyleSheet('dark')
+                } else {
+                    window.setActiveStyleSheet('light')
+                }
+            }
+            initDarkMode()
+        </script>
+        <!-- Start Single Page Apps for GitHub Pages -->
+        <script type="text/javascript">
+            // Single Page Apps for GitHub Pages
+            // MIT License
+            // https://github.com/rafgraph/spa-github-pages
+            // This script checks to see if a redirect is present in the query string,
+            // converts it back into the correct url and adds it to the
+            // browser's history using window.history.replaceState(...),
+            // which won't cause the browser to attempt to load the new url.
+            // When the single page app is loaded further down in this file,
+            // the correct url will be waiting in the browser's history for
+            // the single page app to route accordingly.
+            ;(function (l) {
+                console.log('redirect nett stuff')
+                if (l.search[1] === '/') {
+                    var decoded = l.search
+                        .slice(1)
+                        .split('&')
+                        .map(function (s) {
+                            return s.replace(/~and~/g, '&')
+                        })
+                        .join('?')
+                    window.history.replaceState(
+                        null,
+                        null,
+                        l.pathname.slice(0, -1) + decoded + l.hash
+                    )
+                }
+            })(window.location)
+        </script>
+
+        <!-- End Single Page Apps for GitHub Pages -->
+        <!-- <link rel="manifest" href="/assets/manifest.webmanifest" /> -->
+        <link rel="dns-prefetch" href="//youtube.com" />
+        <!-- <link rel="dns-prefetch" href="//youtube-nocookie.com" /> -->
+        <link rel="preconnect" href="https://youtube.com" />
+        <!-- <link rel="preconnect" href="https://youtube-nocookie.com" /> -->
+
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+        />
+        <meta name="description" content="R6013 á netinu" />
+        <link
+            rel="shortcut icon"
+            href="splash_screens/icon.png"
+            type="image/x-icon"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+            href="splash_screens/iPhone_14_Pro_Max_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+            href="splash_screens/iPhone_14_Pro_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+            href="splash_screens/iPhone_14_Plus__iPhone_13_Pro_Max__iPhone_12_Pro_Max_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+            href="splash_screens/iPhone_14__iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+            href="splash_screens/iPhone_13_mini__iPhone_12_mini__iPhone_11_Pro__iPhone_XS__iPhone_X_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+            href="splash_screens/iPhone_11_Pro_Max__iPhone_XS_Max_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+            href="splash_screens/iPhone_11__iPhone_XR_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: landscape)"
+            href="splash_screens/iPhone_8_Plus__iPhone_7_Plus__iPhone_6s_Plus__iPhone_6_Plus_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+            href="splash_screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+            href="splash_screens/4__iPhone_SE__iPod_touch_5th_generation_and_later_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+            href="splash_screens/12.9__iPad_Pro_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+            href="splash_screens/11__iPad_Pro__10.5__iPad_Pro_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+            href="splash_screens/10.9__iPad_Air_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+            href="splash_screens/10.5__iPad_Air_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+            href="splash_screens/10.2__iPad_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+            href="splash_screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: landscape)"
+            href="splash_screens/8.3__iPad_Mini_landscape.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+            href="splash_screens/iPhone_14_Pro_Max_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+            href="splash_screens/iPhone_14_Pro_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+            href="splash_screens/iPhone_14_Plus__iPhone_13_Pro_Max__iPhone_12_Pro_Max_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+            href="splash_screens/iPhone_14__iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+            href="splash_screens/iPhone_13_mini__iPhone_12_mini__iPhone_11_Pro__iPhone_XS__iPhone_X_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+            href="splash_screens/iPhone_11_Pro_Max__iPhone_XS_Max_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+            href="splash_screens/iPhone_11__iPhone_XR_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)"
+            href="splash_screens/iPhone_8_Plus__iPhone_7_Plus__iPhone_6s_Plus__iPhone_6_Plus_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+            href="splash_screens/iPhone_8__iPhone_7__iPhone_6s__iPhone_6__4.7__iPhone_SE_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+            href="splash_screens/4__iPhone_SE__iPod_touch_5th_generation_and_later_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+            href="splash_screens/12.9__iPad_Pro_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+            href="splash_screens/11__iPad_Pro__10.5__iPad_Pro_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+            href="splash_screens/10.9__iPad_Air_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 834px) and (device-height: 1112px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+            href="splash_screens/10.5__iPad_Air_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 810px) and (device-height: 1080px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+            href="splash_screens/10.2__iPad_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+            href="splash_screens/9.7__iPad_Pro__7.9__iPad_mini__9.7__iPad_Air__9.7__iPad_portrait.png"
+        />
+        <link
+            rel="apple-touch-startup-image"
+            media="screen and (device-width: 744px) and (device-height: 1133px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)"
+            href="splash_screens/8.3__iPad_Mini_portrait.png"
+        />
+
+        <meta name="theme-color" content="white" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
+        />
+        <meta name="apple-mobile-web-app-title" content="ÍTM" />
+
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+        <link
+            rel="preconnect"
+            crossorigin="anonymous"
+            href="https://fonts.googleapis.com"
+        />
+        <link
+            rel="preconnect"
+            crossorigin="anonymous"
+            href="https://fonts.gstatic.com"
+        />
+        <link
+            href="https://fonts.googleapis.com/css?family=Faustina"
+            rel="stylesheet"
+        />
+        <link
+            crossorigin="anonymous"
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap"
+        />
+        <link
+            crossorigin="anonymous"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@200&display=swap"
+            rel="stylesheet"
+        />
+        <!-- <link
+            rel="preload"
+            href="https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNZ.ttf"
+            as="font"
+            type="font/ttf"
+            crossorigin="anonymous"
+        /> -->
+
+        <!-- <style>
+            @font-face {
+                font-family: 'Material Icons';
+                src: url('https://fonts.gstatic.com/s/materialicons/v41/flUhRq6tzZclQEJ-Vdg-IuiaDsNZ.ttf');
+                font-style: normal;
+                font-weight: 200;
+            }
+            .material-icons {
+                font-family: 'Material Icons';
+                font-weight: normal;
+                font-style: normal;
+                font-size: 24px;
+                line-height: 1;
+                letter-spacing: normal;
+                text-transform: none;
+                display: inline-block;
+                white-space: nowrap;
+                word-wrap: normal;
+                direction: ltr;
+            }
+        </style> -->
+        <title>%VITE_APP_NAME%</title>
+        <link rel="canonical" href="https://odinndagur.github.io%BASE_URL%" />
+    </head>
+    <body>
+        <!-- <script>
+            console.log('fyrir sw')
+            // register ServiceWorker, remember to use absolute path!
+            if (navigator.serviceWorker) {
+                console.log('fyrir register sw')
+                navigator.serviceWorker.register('/sw.js', {
+                    scope: '/',
+                })
+            }
+        </script> -->
+
+        <div id="root"></div>
+
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
+</html>

@@ -1,0 +1,22 @@
+{
+    "lol": "islenska",
+    "days_until_show": "Eftir {{count}} daga",
+    "days_since_show": "Fyrir {{count}} dögum",
+    "upcoming_shows": "Tónleikar á næstunni",
+    "recent_shows": "Síðustu tónleikar",
+    "recent_videos": "Nýleg myndbönd",
+    "nav_videos": "Myndbönd",
+    "nav_shows": "Tónleikar",
+    "search_for_a_show": "Leita að tónleikum",
+    "nav_random_video": "Myndband af handahófi",
+    "search_for_a_video": "Leita að myndbandi",
+    "save_app": "Vista app",
+    "band_members": "Meðlimir",
+    "more_sets_from_show": "Fleiri sett frá {{show}}",
+    "more_sets_from_band": "Fleiri sett frá {{band}}",
+    "directions_save_app_heading": "Vista app á síma",
+    "directions_save_app_intro": "Ef þú vilt vista síðuna sem app á símanum þínum geturðu gert eftirfarandi:",
+    "directions_save_app_iphone": "Valið „share“ takkann og ýtt á Add to home screen.",
+    "directions_save_app_android": "Sumir símar birta skilaboð sem bjóða þér að „installa“ appinu. Á öðrum þarftu að velja share takkann og annað hvort „Install app“ eða „Add to home screen“.",
+    "nav_menu_go": "Fara"
+}

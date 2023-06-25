@@ -1,0 +1,22 @@
+{
+    "lol": "enska",
+    "days_until_show": "In {{count}} days",
+    "days_since_show": "{{count}} days ago",
+    "upcoming_shows": "Upcoming shows",
+    "recent_shows": "Recent shows",
+    "recent_videos": "Recent videos",
+    "nav_videos": "Videos",
+    "nav_shows": "Shows",
+    "search_for_a_show": "Search for a show",
+    "nav_random_video": "Random video",
+    "search_for_a_video": "Search for a video",
+    "save_app": "Install app",
+    "band_members": "Members",
+    "more_sets_from_show": "More sets from {{show}}",
+    "more_sets_from_band": "More sets from {{band}}",
+    "directions_save_app_heading": "Install app",
+    "directions_save_app_intro": "How to save this page as an app on your phone:",
+    "directions_save_app_iphone": "Go to the \"Share\" menu and choose \"Add to home screen\".",
+    "directions_save_app_android": "Some phones show a popup asking if you want to install the app. On others you have to press the three dots menu and select \"Install\" or \"Add to home screen\" or something similar.",
+    "nav_menu_go": "Go"
+}
