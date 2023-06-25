@@ -1,0 +1,6 @@
+CREATE TABLE movie(id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT,year INTEGER,director_id INTEGER,dop_id INTEGER,production_designer_id INTEGER,costume_designer_id INTEGER,filmgrab_url TEXT);
+CREATE TABLE director(id INTEGER PRIMARY KEY AUTOINCREMENT,name);
+CREATE TABLE director_of_photography(id INTEGER PRIMARY KEY AUTOINCREMENT,name);
+CREATE TABLE production_designer(id INTEGER PRIMARY KEY AUTOINCREMENT,name);
+CREATE TABLE costume_designer(id INTEGER PRIMARY KEY AUTOINCREMENT,name);
+CREATE TABLE movie_image(movie_id,image_url);

@@ -18,8 +18,8 @@ export default defineConfig({
                 enabled: true,
             },
             manifest: {
-                name: 'R6013',
-                short_name: 'R6013',
+                name: 'Teikna',
+                short_name: 'Teikna',
                 start_url: '/',
                 display: 'standalone',
                 theme_color: '#FFFFFF',

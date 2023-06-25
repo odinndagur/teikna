@@ -296,7 +296,7 @@ async function run() {
 
     SQL.FS.mkdir('/sql')
     SQL.FS.mount(sqlFS, {}, '/sql')
-    const path = '/sql/r6013.sqlite'
+    const path = '/sql/Teikna.sqlite'
     if (typeof SharedArrayBuffer === 'undefined') {
         let stream = SQL.FS.open(path, 'a+')
         await stream.node.contents.readIfFallback()

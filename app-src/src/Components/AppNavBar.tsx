@@ -55,7 +55,7 @@ export function AppNavBar({ type }: { type: 'footer' | 'header' }) {
         {
             route: '/',
             icon: 'home',
-            name: 'R6013',
+            name: 'Teikna',
             type: type,
             search: { id: 1 },
         },

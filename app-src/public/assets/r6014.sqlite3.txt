@@ -832,8 +832,8 @@ INSERT INTO band VALUES(331,'Bucking Fastards','unknown','2000-01-01 00:00:00','
 INSERT INTO band VALUES(332,'bjarni og þóra úr supersport!','unknown','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO band VALUES(333,'Handspritt','unknown','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO band VALUES(334,'Kisimjá','unknown','2000-01-01 00:00:00','2000-01-01 00:00:00');
-INSERT INTO band VALUES(335,'789 - 20. febrúar í R6013','unknown','2000-01-01 00:00:00','2000-01-01 00:00:00');
-INSERT INTO band VALUES(336,'1012 - 10. sept í R6013','unknown','2000-01-01 00:00:00','2000-01-01 00:00:00');
+INSERT INTO band VALUES(335,'789 - 20. febrúar í Teikna','unknown','2000-01-01 00:00:00','2000-01-01 00:00:00');
+INSERT INTO band VALUES(336,'1012 - 10. sept í Teikna','unknown','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO band VALUES(337,'Gavin Portland','Hardcore',NULL,NULL);
 CREATE TABLE IF NOT EXISTS "festival_show" ("festival_id" INTEGER NULL  ,"show_id" INTEGER NULL,FOREIGN KEY("festival_id") REFERENCES "festivals" ("id") ON UPDATE NO ACTION ON DELETE NO ACTION,FOREIGN KEY("show_id") REFERENCES "shows" ("id") ON UPDATE NO ACTION ON DELETE NO ACTION);
 CREATE TABLE IF NOT EXISTS "festival" (	"id" INTEGER NOT NULL  ,	"festival_name" VARCHAR(255) NOT NULL  ,	"date_started" DATETIME NULL  ,	"date_ended" DATETIME NULL  ,	PRIMARY KEY ("id"));
@@ -1295,7 +1295,7 @@ CREATE TABLE IF NOT EXISTS "venue" (	"id" INTEGER NOT NULL  ,	"venue_name" VARCH
 INSERT INTO venue VALUES(1,'Port','','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO venue VALUES(2,'Norðanpaunk','','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO venue VALUES(3,'Akranesviti','','2000-01-01 00:00:00','2000-01-01 00:00:00');
-INSERT INTO venue VALUES(4,'R6013','','2000-01-01 00:00:00','2000-01-01 00:00:00');
+INSERT INTO venue VALUES(4,'Teikna','','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO venue VALUES(5,'Faktorý','','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO venue VALUES(6,'Eistnaflug','','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO venue VALUES(7,'Mengi','','2000-01-01 00:00:00','2000-01-01 00:00:00');
@@ -1305,7 +1305,7 @@ INSERT INTO venue VALUES(10,'MINØR Coworking','','2000-01-01 00:00:00','2000-01
 INSERT INTO venue VALUES(11,'Lucky Records','','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO venue VALUES(12,'Pizza Fjörður @ Eistnaflug','','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO venue VALUES(13,'Gamli Gaukurinn','','2000-01-01 00:00:00','2000-01-01 00:00:00');
-INSERT INTO venue VALUES(14,'R6013 á Menningarnótt','','2000-01-01 00:00:00','2000-01-01 00:00:00');
+INSERT INTO venue VALUES(14,'Teikna á Menningarnótt','','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO venue VALUES(15,'Húrra','','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO venue VALUES(16,'Bar 11','','2000-01-01 00:00:00','2000-01-01 00:00:00');
 INSERT INTO venue VALUES(17,'Gaukurinn','','2000-01-01 00:00:00','2000-01-01 00:00:00');

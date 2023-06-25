@@ -1,5 +1,5 @@
 {
-    "name": "r6013",
+    "name": "Teikna",
     "private": true,
     "version": "0.0.0",
     "type": "module",
@@ -8,7 +8,7 @@
         "build": "vite build",
         "preview": "vite preview",
         "deploy": "./deploy.sh",
-	"i": "npm i && cp public/assets/*sql* node_modules/@jlongster/sql.js/dist/"
+        "i": "npm i && cp public/assets/*sql* node_modules/@jlongster/sql.js/dist/"
     },
     "dependencies": {
         "@emotion/react": "^11.10.6",
