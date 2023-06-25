@@ -2,7 +2,12 @@ import { useState, useEffect, Suspense } from 'react'
 import { ThemeContext } from './Components/ThemeContext'
 import HomePage from './Components/Home'
 import { VideoListPage } from './Components/VideoListPage'
-import { query, getRandomVideo, getShowsDataFromSheets } from './db'
+import {
+    query,
+    getRandomVideo,
+    getShowsDataFromSheets,
+    getMovieById,
+} from './db'
 import {
     ReactLocation,
     Router,
@@ -21,11 +26,11 @@ import { RawSql } from './Components/RawSql'
 import { Footer } from './Components/Footer'
 import { Header } from './Components/Header'
 import { VideoPage } from './Components/VideoPage'
-import { NotionTest } from './Components/NotionTest'
 import { useTranslation } from 'react-i18next'
 import { Test } from './Components/Test'
 import { Misc } from './Components/Misc'
 import { MoviesList } from './Components/MoviesList'
+import { MoviePage } from './Components/MoviePage'
 
 const reactLocation = new ReactLocation()
 
@@ -94,7 +99,21 @@ function App() {
                             },
                             {
                                 path: 'movies',
-                                element: <MoviesList />,
+                                children: [
+                                    {
+                                        path: '/',
+                                        element: <MoviesList />,
+                                    },
+                                    {
+                                        path: ':id',
+                                        element: <MoviePage />,
+                                        loader: async ({ params }) => ({
+                                            movie: await getMovieById(
+                                                params.id
+                                            ),
+                                        }),
+                                    },
+                                ],
                             },
                             {
                                 path: 'random',
@@ -300,10 +319,6 @@ function App() {
                             {
                                 path: 'misc',
                                 element: <Misc />,
-                            },
-                            {
-                                path: 'notiontest',
-                                element: <NotionTest />,
                             },
                             {
                                 // Passing no route is equivalent to passing `path: '*'`

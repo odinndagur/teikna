@@ -333,7 +333,7 @@ async function run() {
 
     // db.create_function('to_ascii', (a: string) => toAscii(a))
 
-    const currentVersion = 5
+    const currentVersion = 4
     let initDB = false
     try {
         console.log('try')
@@ -397,7 +397,8 @@ async function run() {
         let filepathPrefix = `${import.meta.env.BASE_URL}`
         const filepaths = [
             `${filepathPrefix}assets/filmgrab-tables.txt`,
-            `${filepathPrefix}assets/filmgrab-sqlite.txt`,
+            // `${filepathPrefix}assets/filmgrab-sqlite.txt`,
+            `${filepathPrefix}assets/film-grab-db0.sqlite3.txt`,
         ]
         for (let filepath of filepaths) {
             // if (filepath.includes('db_data')) {

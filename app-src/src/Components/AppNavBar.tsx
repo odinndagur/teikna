@@ -52,13 +52,13 @@ export function AppNavBar({ type }: { type: 'footer' | 'header' }) {
 
     const navItems = [
         // { route: '/home', icon: 'home', name: 'Heim', type: type },
-        {
-            route: '/',
-            icon: 'home',
-            name: 'Teikna',
-            type: type,
-            search: { id: 1 },
-        },
+        // {
+        //     route: '/',
+        //     icon: 'home',
+        //     name: 'Teikna',
+        //     type: type,
+        //     search: { id: 1 },
+        // },
         {
             route: '/movies',
             icon: 'movie',
@@ -66,17 +66,17 @@ export function AppNavBar({ type }: { type: 'footer' | 'header' }) {
             type: type,
             search: { id: 1 },
         },
-        {
-            route: '/shows',
-            icon: 'list',
-            name: t('nav_shows'),
-            type: type,
-            search: { id: 1 },
-        },
+        // {
+        //     route: '/shows',
+        //     icon: 'list',
+        //     name: t('nav_shows'),
+        //     type: type,
+        //     search: { id: 1 },
+        // },
         {
             route: '/misc',
             icon: 'support_agent',
-            name: 'misc',
+            name: 'Misc',
             type: type,
         },
         //        {
