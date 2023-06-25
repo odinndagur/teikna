@@ -4,7 +4,7 @@ import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    base: '/',
+    base: '/teikna',
     define: {
         'process.env': {},
     },
@@ -20,7 +20,7 @@ export default defineConfig({
             manifest: {
                 name: 'Teikna',
                 short_name: 'Teikna',
-                start_url: '/',
+                start_url: '/teikna',
                 display: 'standalone',
                 theme_color: '#FFFFFF',
                 background_color: '#FFFFFF',

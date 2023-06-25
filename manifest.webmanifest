@@ -1,1 +1,1 @@
-{"name":"Teikna","short_name":"Teikna","start_url":"/","display":"standalone","background_color":"#FFFFFF","lang":"en","scope":"/","theme_color":"#FFFFFF","icons":[{"src":"splash_screens/icon.png","sizes":"512x512","type":"image/png","purpose":"any"}]}
+{"name":"Teikna","short_name":"Teikna","start_url":"/teikna","display":"standalone","background_color":"#FFFFFF","lang":"en","scope":"/teikna/","theme_color":"#FFFFFF","icons":[{"src":"splash_screens/icon.png","sizes":"512x512","type":"image/png","purpose":"any"}]}
