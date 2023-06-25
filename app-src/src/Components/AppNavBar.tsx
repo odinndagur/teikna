@@ -118,7 +118,7 @@ export function AppNavBar({ type }: { type: 'footer' | 'header' }) {
     }
     return (
         <div className="nav-container">
-            {type == 'header' && (
+            {/* {type == 'header' && (
                 <Menu
                     as={'div'}
                     style={{}}
@@ -181,7 +181,7 @@ export function AppNavBar({ type }: { type: 'footer' | 'header' }) {
                         })}
                     </Menu.Items>
                 </Menu>
-            )}
+            )} */}
             <nav
                 className={type === 'footer' ? 'app-navbar' : 'desktop-navbar'}
             >

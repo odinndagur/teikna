@@ -73,6 +73,31 @@ export const getSomeMovies = async () => {
     return movies
 }
 
+export const searchMovies = async (searchValue: string) => {
+    const res = await query(`
+        select movie.*,
+        dop.name as dop,
+        production_designer.name as production_designer,
+        costume_designer.name as costume_designer,
+        json_group_array(movie_image.image_url) as images
+        from movie 
+        join movie_image on movie.id = movie_image.movie_id
+        join director_of_photography as dop on dop.id = movie.dop_id
+        join production_designer on production_designer.id = movie.production_designer_id
+        join costume_designer on costume_designer.id = movie.costume_designer_id
+        join movie_fts on movie_fts.id = movie.id
+        ${searchValue ? 'where movie_fts match "' + searchValue + '*"' : ''}
+        group by movie.id
+        limit 100
+    `)
+    const movies = res.map((movie) => ({
+        ...movie,
+        images: JSON.parse(movie.images),
+    }))
+    DB_CONSOLE_LOGS && console.log(movies)
+    return movies
+}
+
 export const getRandomVideo = async () => {
     // const res = await query('select count(*) as sign_count from sign')
     // // DB_CONSOLE_LOGS && console.log(res)

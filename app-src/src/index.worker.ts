@@ -394,11 +394,13 @@ async function run() {
         //     'INSERT INTO collection(id,user_id,name) VALUES(3,3,"Mín tákn");'
         // )
         // db.exec(`pragma user_version = ${currentVersion}`)
-        let filepathPrefix = `${import.meta.env.BASE_URL}`
+        let filepathPrefix = `${import.meta.env.BASE_URL}assets/`
         const filepaths = [
-            `${filepathPrefix}assets/filmgrab-tables.txt`,
+            // `${filepathPrefix}filmgrab-tables.txt`,
             // `${filepathPrefix}assets/filmgrab-sqlite.txt`,
-            `${filepathPrefix}assets/film-grab-db0.sqlite3.txt`,
+            // `${filepathPrefix}film-grab-db0.sqlite3.txt`,
+            // `${filepathPrefix}filmgrab-fts.txt`,
+            `${filepathPrefix}filmgrab-tables-ready.txt`,
         ]
         for (let filepath of filepaths) {
             // if (filepath.includes('db_data')) {
@@ -411,11 +413,13 @@ async function run() {
             //     }
             // }
             // } else {
-            for await (let line of splitTextFileBySemicolon(filepath)) {
+            for await (let line of makeTextFileLineIterator(filepath)) {
+                // for await (let line of splitTextFileBySemicolon(filepath)) {
                 // console.log(line)
                 try {
                     db.exec(line)
                 } catch (error) {
+                    console.log(`ERROR hja linu: ${line}`)
                     console.error(error)
                 }
             }

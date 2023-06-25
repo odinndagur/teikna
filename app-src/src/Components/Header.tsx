@@ -23,7 +23,7 @@ export function Header({ children }: { children?: any }) {
             }}
         >
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <div
+                {/* <div
                     className="dark-mode-switch-container"
                     style={{
                         position: 'static',
@@ -47,7 +47,7 @@ export function Header({ children }: { children?: any }) {
                 >
                     <span className="material-icons">install_mobile</span>
                     <span>{t('save_app')}</span>
-                </div>
+                </div> */}
 
                 <div
                     className="dark-mode-switch-container"

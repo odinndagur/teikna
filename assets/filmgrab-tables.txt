@@ -1,3 +1,44 @@
+-- CREATE TABLE IF NOT EXISTS "movie" (
+--     "id" INTEGER AUTOINCREMENT,
+--     "title" TEXT,
+--     "year" INTEGER,
+--     "director_id" INTEGER,
+--     "dop_id" INTEGER,
+--     "production_designer_id" INTEGER,
+--     "costume_designer_id" INTEGER,
+--     "filmgrab_url" TEXT,
+--     PRIMARY KEY("id"),
+--     FOREIGN KEY("dop_id") REFERENCES "director_of_photography"("id"),
+--     FOREIGN KEY("director_id") REFERENCES "director"("id"),
+--     FOREIGN KEY("production_designer_id") REFERENCES "production_designer_id"("id"),
+--     FOREIGN KEY("costume_designer_id") REFERENCES "costume_designer_id"("id")
+-- );
+-- CREATE TABLE IF NOT EXISTS "director" (
+--     "id" INTEGER AUTOINCREMENT,
+--     "name" TEXT,
+--     PRIMARY KEY("id")
+-- );
+-- CREATE TABLE IF NOT EXISTS "director_of_photography" (
+--     "id" INTEGER AUTOINCREMENT,
+--     name TEXT,
+--     PRIMARY KEY("id")
+-- );
+-- CREATE TABLE IF NOT EXISTS "production_designer" (
+--     "id" INTEGER AUTOINCREMENT,
+--     name TEXT,
+--     PRIMARY KEY("id")
+-- );
+-- CREATE TABLE IF NOT EXISTS "costume_designer" (
+--     "id" INTEGER AUTOINCREMENT,
+--     name TEXT,
+--     PRIMARY KEY("id")
+-- );
+-- CREATE TABLE IF NOT EXISTS "movie_image" (
+--     "movie_id" INTEGER AUTOINCREMENT,
+--     "image_url" TEXT,
+--     FOREIGN KEY("movie_id") REFERENCES "movie"("id"),
+-- );
+
 CREATE TABLE movie(id INTEGER PRIMARY KEY AUTOINCREMENT,title TEXT,year INTEGER,director_id INTEGER,dop_id INTEGER,production_designer_id INTEGER,costume_designer_id INTEGER,filmgrab_url TEXT);
 CREATE TABLE director(id INTEGER PRIMARY KEY AUTOINCREMENT,name);
 CREATE TABLE director_of_photography(id INTEGER PRIMARY KEY AUTOINCREMENT,name);

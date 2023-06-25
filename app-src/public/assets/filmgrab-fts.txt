@@ -1,0 +1,7 @@
+INSERT INTO movie_fts (id,title,year,director,production_designer,costume_designer,director_of_photography)
+SELECT movie.id, movie.title, movie.year, director.name, production_designer.name, costume_designer.name, director_of_photography.name
+FROM movie JOIN director ON movie.director_id = director.id
+JOIN production_designer ON movie.production_designer_id = production_designer.id
+JOIN costume_designer ON movie.costume_designer_id = costume_designer.id
+JOIN director_of_photography ON movie.dop_id = director_of_photography.id
+GROUP BY movie.id;

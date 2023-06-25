@@ -75,12 +75,12 @@ html {
         padding-bottom: var(--navbar-padding-bottom);
     }
 }
-@media screen and (display-mode: standalone) {
-    #root {
-        --navbar-padding-bottom: 4rem;
-        padding-bottom: var(--navbar-padding-bottom);
-    }
+/* @media screen and (display-mode: standalone) { */
+#root {
+    --navbar-padding-bottom: 4rem;
+    padding-bottom: var(--navbar-padding-bottom);
 }
+/* } */
 
 html,
 body {
@@ -607,7 +607,7 @@ input {
 .grid {
     display: grid;
     /* grid-template-columns: 1fr 1fr 1fr; */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
     justify-items: center;
     align-items: center;
     /* background-color: red; */
@@ -618,7 +618,7 @@ input {
 }
 
 .grid img {
-    max-width: 400px;
+    max-width: 100%;
     /* filter: blur(2px); */
 }
 
