@@ -79,7 +79,7 @@ function App() {
                 >
                     <Router
                         location={reactLocation}
-                        basepath="/teikna"
+                        basepath="/teikna/"
                         // defaultLinkPreloadMaxAge={Infinity}
                         // defaultPendingElement={<PlaceholderScreen />}
                         // defaultLoaderMaxAge={Infinity}
