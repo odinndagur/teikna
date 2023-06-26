@@ -53,9 +53,14 @@ export function MoviePage() {
                                 style={{
                                     border: 'none',
                                     minWidth: '80%',
-                                    height: '',
+                                    // maxWidth: '100%',
+                                    // maxHeight: '100%',
+                                    maxWidth: '100%',
+                                    maxHeight: '100%',
+                                    // minHeight: '80%',
                                     // boxSizing: 'border-box',
                                     backdropFilter: 'blur(10px)',
+                                    WebkitBackdropFilter: 'blur(10px)',
                                     // backgroundImage: `url(${movie.images[9]})`,
                                 }}
                                 onClick={(ev) => {
@@ -67,72 +72,120 @@ export function MoviePage() {
                                     }
                                 }}
                             >
-                                <div
-                                    style={{
-                                        display: 'grid',
-                                        // justifyContent: 'center',
-                                        // alignItems: 'center',
-                                    }}
-                                >
-                                    <img
-                                        src={img}
-                                        alt=""
-                                        width={'100%'}
-                                        // height={'100%'}
+                                <form method="dialog">
+                                    <button
                                         style={{
-                                            placeSelf: 'center',
+                                            position: 'absolute',
+                                            top: '1rem',
+                                            left: '1rem',
                                         }}
-                                    />
-                                </div>
-                                <div
+                                        className="material-icons"
+                                    >
+                                        arrow_back
+                                    </button>
+                                </form>
+                                <img
+                                    src={img}
+                                    alt=""
                                     style={{
-                                        display: 'flex',
-                                        justifyContent: 'space-evenly',
-                                        alignItems: 'center',
-                                        padding: '0.5rem 0',
+                                        objectFit: 'cover',
+                                        //     transform: 'rotate(90deg)',
+                                        width: '100%',
+                                        height: '100%',
+
+                                        //     aspectRatio: 'auto',
+                                    }}
+                                />
+                            </dialog>
+                            {/* {false && (
+                                <dialog
+                                    className="dialog-screenshot"
+                                    id={img}
+                                    style={{
+                                        border: 'none',
+                                        minWidth: '80%',
+                                        height: '',
+                                        // boxSizing: 'border-box',
+                                        backdropFilter: 'blur(10px)',
+                                        WebkitBackdropFilter: 'blur(10px)',
+                                        // backgroundImage: `url(${movie.images[9]})`,
+                                    }}
+                                    onClick={(ev) => {
+                                        const dialog = document.getElementById(
+                                            img
+                                        ) as HTMLDialogElement
+                                        if (ev.target == dialog) {
+                                            dialog.close()
+                                        }
                                     }}
                                 >
-                                    {movie.title}
-                                </div>
-                                <div
-                                // style={{ backgroundColor: 'green' }}
-                                >
-                                    <Carousel>
-                                        {movie?.images?.map((image) => {
-                                            return (
-                                                <button
-                                                    onClick={() => {
-                                                        const currentDialog =
-                                                            document.getElementById(
-                                                                img
-                                                            ) as HTMLDialogElement
-                                                        currentDialog.close()
-                                                        const newDialog =
-                                                            document.getElementById(
-                                                                image
-                                                            ) as HTMLDialogElement
-                                                        newDialog.showModal()
-                                                    }}
-                                                    style={{
-                                                        minWidth: '300px',
-                                                        // padding: 0,
-                                                    }}
-                                                >
-                                                    <img
-                                                        style={{
-                                                            // backgroundColor: 'red',
-                                                            outline:
-                                                                '1px solid black',
+                                    <div
+                                        style={{
+                                            display: 'grid',
+                                            // justifyContent: 'center',
+                                            // alignItems: 'center',
+                                        }}
+                                    >
+                                        <img
+                                            src={img}
+                                            alt=""
+                                            width={'100%'}
+                                            // height={'100%'}
+                                            style={{
+                                                placeSelf: 'center',
+                                            }}
+                                        />
+                                    </div>
+                                    <div
+                                        style={{
+                                            display: 'flex',
+                                            justifyContent: 'space-evenly',
+                                            alignItems: 'center',
+                                            padding: '0.5rem 0',
+                                        }}
+                                    >
+                                        {movie.title}
+                                    </div>
+                                    <div
+                                    // style={{ backgroundColor: 'green' }}
+                                    >
+                                        <Carousel>
+                                            {movie?.images?.map((image) => {
+                                                return (
+                                                    <button
+                                                        onClick={() => {
+                                                            const currentDialog =
+                                                                document.getElementById(
+                                                                    img
+                                                                ) as HTMLDialogElement
+                                                            currentDialog.close()
+                                                            const newDialog =
+                                                                document.getElementById(
+                                                                    image
+                                                                ) as HTMLDialogElement
+                                                            newDialog.showModal()
                                                         }}
-                                                        key={image}
-                                                        src={image}
-                                                    />
-                                                </button>
-                                            )
-                                        })}
-                                    </Carousel>
-                                </div>
-                            </dialog>
+                                                        style={{
+                                                            minWidth: '300px',
+                                                            // padding: 0,
+                                                        }}
+                                                    >
+                                                        <img
+                                                            style={{
+                                                                // backgroundColor: 'red',
+                                                                outline:
+                                                                    '1px solid black',
+                                                            }}
+                                                            key={image}
+                                                            src={image}
+                                                        />
+                                                    </button>
+                                                )
+                                            })}
+                                        </Carousel>
+                                    </div>
+                                </dialog>
+                            )} */}
                         </div>
                     )
                 })}
