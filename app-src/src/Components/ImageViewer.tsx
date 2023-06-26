@@ -1,4 +1,5 @@
 import { Grid } from './Grid'
+import './MoviePage.css'
 
 export function ImageViewer({ images }: { images: string[] }) {
     return (
@@ -26,8 +27,13 @@ export function ImageViewer({ images }: { images: string[] }) {
                                 minWidth: '80%',
                                 // maxWidth: '100%',
                                 // maxHeight: '100%',
-                                maxWidth: '100%',
-                                maxHeight: '100%',
+                                // maxWidth: '100%',
+                                // maxHeight: '100%',
+                                width: '100vw',
+                                height: '100vh',
+                                boxSizing: 'border-box',
+                                padding:
+                                    'env(safe-area-border-top),env(safe-area-border-right),env(safe-area-border-bottom),env(safe-area-border-left)',
                                 // minHeight: '80%',
                                 // boxSizing: 'border-box',
                                 backdropFilter: 'blur(10px)',
@@ -47,7 +53,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                 <form method="dialog" className="no-scrollbar">
                                     <button
                                         style={{
-                                            // position: 'absolute',
+                                            position: 'absolute',
                                             top: '1rem',
                                             left: '1rem',
                                         }}

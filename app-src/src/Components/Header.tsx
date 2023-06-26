@@ -47,44 +47,34 @@ export function Header({ children }: { children?: any }) {
                     <span className="material-icons">install_mobile</span>
                     <span>{t('save_app')}</span>
                 </div> */}
-
-                <div
-                    className="dark-mode-switch-container"
-                    style={{
-                        position: 'static',
-                        top: 'env(safe-area-inset-top)',
-                        right: '0',
-                        padding: 0,
-                        zIndex: 9999,
-                        display: 'flex',
-                        alignItems: 'center',
-                    }}
-                >
-                    <DarkModeSwitch />
-                    <button
-                        onClick={() => {
-                            const currentLanguage = i18n.language
-                            if (currentLanguage.includes('en')) {
-                                i18n.changeLanguage('is')
-                            } else {
-                                i18n.changeLanguage('en')
-                            }
-                        }}
-                    >
-                        {i18n.language.split('-')[0]}
-                    </button>
-                </div>
             </div>
             <div
                 style={{
                     display: 'flex',
                     flexBasis: '100%',
-                    justifyContent: 'space-evenly',
+                    justifyContent: 'center',
                     alignItems: 'center',
                     maxHeight: '2rem',
                     padding: standalone ? '2rem' : undefined,
                 }}
             >
+                <div
+                    className="dark-mode-switch-container"
+                    style={{
+                        // position: 'static',
+                        // top: 'env(safe-area-inset-top)',
+                        // right: '0',
+                        // padding: 0,
+                        // zIndex: 9999,
+                        // display: 'flex',
+                        // alignItems: 'center',
+                        position: 'absolute',
+                        left: '1rem',
+                    }}
+                >
+                    <DarkModeSwitch />
+                </div>
+
                 <Link
                     style={{
                         paddingBottom: standalone ? undefined : '3rem',

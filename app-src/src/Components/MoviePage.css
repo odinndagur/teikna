@@ -1,10 +1,11 @@
 .dialog-screenshot {
     /* background: red; */
+    /* display: none; */
 }
 .dialog-screenshot::backdrop {
     backdrop-filter: blur(20px) grayscale();
     -webkit-backdrop-filter: blur(20px) grayscale();
-    background-color: red;
-    display: none;
+    /* background-color: red; */
+    /* display: none; */
     /* background-color: red; */
 }
