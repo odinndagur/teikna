@@ -20,6 +20,7 @@ export type movieGenerics = MakeGenerics<{
             costume_designer: string
             year: number
             images: string[]
+            filmgrab_url: string
         }
     }
 }>
@@ -34,6 +35,10 @@ export function MoviePage() {
             {/* {JSON.stringify(movie)} */}
             <div key={movie?.id}>
                 <h1>{movie?.title}</h1>
+                <i>
+                    All images from{' '}
+                    <a href={movie?.filmgrab_url}>filmgrab.com</a>
+                </i>
                 <ImageViewer images={movie?.images!} />
             </div>
             <Footer></Footer>

@@ -59,7 +59,7 @@ export function Header({ children }: { children?: any }) {
                 }}
             >
                 <div
-                    className="dark-mode-switch-container"
+                    // className="dark-mode-switch-container"
                     style={{
                         // position: 'static',
                         // top: 'env(safe-area-inset-top)',
