@@ -41,7 +41,7 @@
         /* bottom: 0; */
     }
     #root {
-        margin-top: var(--navbar-padding-bottom);
+        margin-top: calc(var(--navbar-padding-bottom) + 2rem);
     }
 }
 
