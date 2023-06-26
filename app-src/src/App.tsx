@@ -4,11 +4,11 @@ import HomePage from './Components/Home'
 import { VideoListPage } from './Components/VideoListPage'
 import {
     query,
-    getRandomVideo,
     getShowsDataFromSheets,
     getMovieById,
     searchMovies,
     fetchImagesFromSub,
+    getRandomMovie,
 } from './db'
 import {
     ReactLocation,
@@ -34,6 +34,7 @@ import { Misc } from './Components/Misc'
 import { MoviesList } from './Components/MoviesList'
 import { MoviePage } from './Components/MoviePage'
 import { SubredditPage } from './Components/SubredditPage'
+import { RandomMovie } from './Components/RandomMovie'
 
 const reactLocation = new ReactLocation()
 
@@ -148,11 +149,10 @@ function App() {
                             },
                             {
                                 path: 'random',
-                                element: <div>lol</div>,
-
-                                // loader: async () => ({
-                                //     videoId: await getRandomVideo(),
-                                // }),
+                                element: <RandomMovie />,
+                                loader: async () => ({
+                                    movie: await getRandomMovie(),
+                                }),
                             },
                             {
                                 path: 'videos',

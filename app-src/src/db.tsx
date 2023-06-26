@@ -132,7 +132,7 @@ export const searchMovies = async (searchValue?: string) => {
     return movies
 }
 
-export const getRandomVideo = async () => {
+export const getRandomMovie = async () => {
     // const res = await query('select count(*) as sign_count from sign')
     // // DB_CONSOLE_LOGS && console.log(res)
     // const count = parseInt(res[0].sign_count)
@@ -140,9 +140,9 @@ export const getRandomVideo = async () => {
     // const index = Math.floor(Math.random() * count)
     // // DB_CONSOLE_LOGS && console.log(index)
     // const signs = await query(`select * from sign limit 1 offset ${index}`)
-    const videos = await query(`select * from video order by random() limit 1`)
-    DB_CONSOLE_LOGS && console.log(videos[0])
-    return videos[0].id
+    const movies = await query(`select * from movie order by random() limit 1`)
+    DB_CONSOLE_LOGS && console.log(movies[0])
+    return movies[0]
 }
 
 export const getDataFromSheets = async ({

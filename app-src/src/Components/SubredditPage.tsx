@@ -11,10 +11,10 @@ import { ImageViewer } from './ImageViewer'
 import { useState } from 'react'
 
 export function SubredditPage() {
-    const { data } = useQuery({
-        queryFn: () => fetchImagesFromSub('gonewild'),
-        queryKey: ['sub', 'gonewild'],
-    })
+    // const { data } = useQuery({
+    //     queryFn: () => fetchImagesFromSub('gonewild'),
+    //     queryKey: ['sub', 'gonewild'],
+    // })
 
     const navigate = useNavigate()
 
