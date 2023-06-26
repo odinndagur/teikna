@@ -226,17 +226,19 @@ const isImgUrl = (url: string) => {
     return /\.(jpe?g|png|webp|avif|gif)$/.test(url)
 }
 
-export const fetchImagesFromSub = async (sub: string) => {
+export const fetchImagesFromSub = async (sub: string, after?: string) => {
     const baseUrl = 'https://api.reddit.com/r/'
     const urlSuffix = '.json'
 
-    const fullUrl = baseUrl + sub + urlSuffix
+    const fullUrl = baseUrl + sub + urlSuffix + (after ? '?after=' + after : '')
+    DB_CONSOLE_LOGS && console.log({ fullUrl })
     return await fetch(fullUrl)
         .then((res) => res.json())
         .then((d) => {
             if (!d.data) {
-                return
+                return { after: '', images: [] }
             }
+            const after = d.data.after
             const images = d.data.children
                 .map((child: any) => {
                     let imgUrl = child.data.url
@@ -246,6 +248,6 @@ export const fetchImagesFromSub = async (sub: string) => {
                     }
                 })
                 .filter(Boolean)
-            return images
+            return { images, after }
         })
 }

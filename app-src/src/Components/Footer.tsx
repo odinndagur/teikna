@@ -15,7 +15,7 @@ export function Footer({ children }: { children?: any }) {
             style={{
                 paddingBottom: standalone
                     ? 'calc(var(--navbar-padding-bottom))'
-                    : undefined,
+                    : '2rem',
             }}
         >
             {/* <footer

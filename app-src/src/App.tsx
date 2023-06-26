@@ -152,22 +152,31 @@ function App() {
                                     {
                                         path: '/',
                                         element: <SubredditPage />,
-                                        loader: async () => ({
-                                            images: await fetchImagesFromSub(
-                                                'cute'
-                                            ),
-                                        }),
+                                        loader: async () => {
+                                            const { images, after } =
+                                                await fetchImagesFromSub('cute')
+                                            return {
+                                                images,
+                                                after,
+                                            }
+                                        },
                                     },
                                     {
                                         path: ':subreddit',
                                         element: <SubredditPage />,
                                         loader: async ({
                                             params: { subreddit },
-                                        }) => ({
-                                            images: await fetchImagesFromSub(
-                                                subreddit
-                                            ),
-                                        }),
+                                        }) => {
+                                            const { images, after } =
+                                                await fetchImagesFromSub(
+                                                    subreddit
+                                                )
+                                            return {
+                                                images,
+                                                after,
+                                                subreddit,
+                                            }
+                                        },
                                     },
                                 ],
                             },

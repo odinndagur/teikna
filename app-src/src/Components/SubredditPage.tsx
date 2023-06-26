@@ -8,7 +8,7 @@ import { Grid } from './Grid'
 import './MoviePage.css'
 import { Carousel } from './Carousel'
 import { ImageViewer } from './ImageViewer'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export function SubredditPage() {
     // const { data } = useQuery({
@@ -22,11 +22,26 @@ export function SubredditPage() {
     type imageGenerics = MakeGenerics<{
         LoaderData: {
             images: string[]
+            after: string
+            subreddit: string
         }
     }>
     const {
-        data: { images },
+        data: { images, after: original_after, subreddit },
     } = useMatch<imageGenerics>()
+
+    useEffect(() => {
+        setAfter(original_after)
+    }, [])
+
+    const [moreImages, setMoreImages] = useState([])
+    const [after, setAfter] = useState('')
+
+    // const { data } = useQuery({
+    //     queryFn: () => fetchImagesFromSub(subreddit ?? 'cute', after),
+    //     queryKey: [subreddit, after],
+    // })
+
     return (
         <>
             <Header>
@@ -49,7 +64,20 @@ export function SubredditPage() {
                 </form>
             </Header>
             {/* {JSON.stringify(movie)} */}
-            <ImageViewer images={images!} />
+            <ImageViewer images={[...images!, ...moreImages]} />
+            <button
+                style={{ maxWidth: '8rem', margin: 'auto' }}
+                onClick={() => {
+                    fetchImagesFromSub(subreddit ?? 'cute', after).then(
+                        (res) => {
+                            setMoreImages(res.images)
+                            setAfter(res.after)
+                        }
+                    )
+                }}
+            >
+                Load more
+            </button>
             <Footer></Footer>
         </>
     )

@@ -78,7 +78,7 @@ html {
 /* @media screen and (display-mode: standalone) { */
 #root {
     --navbar-padding-bottom: 4rem;
-    /* padding-bottom: var(--navbar-padding-bottom); */
+    padding-bottom: var(--navbar-padding-bottom);
 }
 /* } */
 
