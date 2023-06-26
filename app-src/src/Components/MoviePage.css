@@ -1,0 +1,7 @@
+.dialog-screenshot {
+}
+.dialog-screenshot::backdrop {
+    backdrop-filter: blur(20px) grayscale();
+    background-color: rgba(var(--background-color), 0.1);
+    /* background-color: red; */
+}

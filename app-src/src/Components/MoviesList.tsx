@@ -34,16 +34,27 @@ export function MoviesList() {
                         className=""
                         style={{
                             boxShadow: 'var(--card-box-shadow)',
+                            borderBottom: '1px solid var(--main-text-color)',
                             padding: '1rem',
                             // width: '100%',
                             // boxSizing: 'border-box',
                         }}
                     >
-                        <div>
-                            <b>{movie.title}</b>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <b>{movie.title}</b> <i>{movie.year}</i>
                         </div>
-                        <div>
-                            <i>{movie.year}</i>
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                            }}
+                        >
+                            <p>{movie.director}</p>
                         </div>
                         {/* <img src={movie.images[0]}></img> */}
                     </Link>

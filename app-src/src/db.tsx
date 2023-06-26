@@ -1,4 +1,27 @@
 const DB_CONSOLE_LOGS = true
+
+type movieJson = {
+    id: number
+    title: string
+    director: string
+    director_of_photography: string
+    production_designer: string
+    costume_designer: string
+    year: number
+    images: string
+}
+
+type movie = {
+    id: number
+    title: string
+    director: string
+    director_of_photography: string
+    production_designer: string
+    costume_designer: string
+    year: number
+    images: string[]
+}
+
 export const query = async (query: string) => {
     DB_CONSOLE_LOGS && console.log(query)
     const result = await window.promiseWorker.postMessage({
@@ -42,7 +65,7 @@ join costume_designer on costume_designer.id = movie.costume_designer_id
 where movie.id = ${id}
 group by movie.id
 `)
-    const currentMovie = res.map((movie) => ({
+    const currentMovie: movie[] = res.map((movie: movieJson) => ({
         ...movie,
         images: JSON.parse(movie.images),
     }))
@@ -65,7 +88,15 @@ export const getSomeMovies = async () => {
         group by movie.id
         limit 10
     `)
-    const movies = res.map((movie) => ({
+    const movies: {
+        title: string
+        director: string
+        director_of_photography: string
+        production_designer: string
+        costume_designer: string
+        year: number
+        images: string[]
+    }[] = res.map((movie: movieJson) => ({
         ...movie,
         images: JSON.parse(movie.images),
     }))
@@ -73,25 +104,28 @@ export const getSomeMovies = async () => {
     return movies
 }
 
-export const searchMovies = async (searchValue: string) => {
+export const searchMovies = async (searchValue?: string) => {
     const res = await query(`
-        select movie.*,
-        dop.name as dop,
-        production_designer.name as production_designer,
-        costume_designer.name as costume_designer,
+        select movie.id, movie.title, movie.year,
+        director,
+        director_of_photography,
+        production_designer,
+        costume_designer,
         json_group_array(movie_image.image_url) as images
         from movie 
         join movie_image on movie.id = movie_image.movie_id
-        join director_of_photography as dop on dop.id = movie.dop_id
-        join production_designer on production_designer.id = movie.production_designer_id
-        join costume_designer on costume_designer.id = movie.costume_designer_id
+        --join director_of_photography as dop on dop.id = movie.dop_id
+        --join production_designer on production_designer.id = movie.production_designer_id
+        --join costume_designer on costume_designer.id = movie.costume_designer_id
         join movie_fts on movie_fts.id = movie.id
         ${searchValue ? 'where movie_fts match "' + searchValue + '*"' : ''}
         group by movie.id
+        order by levenshtein(movie.title,"${searchValue}")
         limit 100
     `)
-    const movies = res.map((movie) => ({
+    const movies: movie[] = res.map((movie: movieJson) => ({
         ...movie,
+        year: Number(movie.year),
         images: JSON.parse(movie.images),
     }))
     DB_CONSOLE_LOGS && console.log(movies)
@@ -184,5 +218,6 @@ export const getShowsDataFromSheets = async () => {
                 ])
             })
         })
+    //@ts-ignore
     return shows.sort((a, b) => a.date - b.date)
 }

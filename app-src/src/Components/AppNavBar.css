@@ -34,63 +34,14 @@
     /* margin-bottom: 2rem; */
 }
 
-.small-menu {
-    position: relative;
-    /* display: inline-block; */
-    background-color: var(--accent-color);
-    /* width: max-content; */
-    width: 100%;
-    display: none;
-    justify-content: center;
-    z-index: 1000;
-}
-/* @media screen and ((display-mode: browser) and (min-width:501px)) {
+@media (orientation: landscape) {
     .app-navbar {
-        display: none;
-    }
-    .desktop-navbar {
-        display: flex;
-    }
-    .small-menu {
-        display: none;
-    }
-} */
-
-/* @media screen and ((display-mode: browser) and (max-width: 500px)) {
-    .app-navbar {
-        display: none;
-    }
-    .desktop-navbar {
-        display: none;
-    }
-    .small-menu {
-        display: inline-block;
-    }
-}
-@media screen and (min-device-width: 200px) {
-    .app-navbar {
-        display: none;
-    }
-    .desktop-navbar {
-        display: none;
-    }
-    .small-menu {
-        display: inline-block;
+        position: static;
+        padding-bottom: 0;
+        /* bottom: 0; */
     }
 }
 
-@media screen and (min-width: 501px) {
-    .app-navbar {
-        display: none;
-    }
-    .desktop-navbar {
-        display: flex;
-    }
-    .small-menu {
-        display: none;
-    }
-}
-@media screen and (display-mode: standalone) { */
 .app-navbar {
     display: flex;
 }

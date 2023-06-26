@@ -7,6 +7,7 @@ import {
     getRandomVideo,
     getShowsDataFromSheets,
     getMovieById,
+    searchMovies,
 } from './db'
 import {
     ReactLocation,
@@ -91,7 +92,7 @@ function App() {
                         routes={[
                             {
                                 path: '/',
-                                element: <HomePage />,
+                                element: <Navigate to={'/movies'} />,
                             },
                             {
                                 path: 'home',
@@ -103,6 +104,9 @@ function App() {
                                     {
                                         path: '/',
                                         element: <MoviesList />,
+                                        loader: async () => ({
+                                            movies: await searchMovies(),
+                                        }),
                                     },
                                     {
                                         path: ':id',

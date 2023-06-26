@@ -15,12 +15,11 @@ export function Header({ children }: { children?: any }) {
 
     return (
         <header
-            style={{
-                backgroundColor: 'var(--background-color)',
-                position: standalone ? 'sticky' : undefined,
-                top: 0,
-                //padding: '2rem 1rem',
-            }}
+            style={
+                {
+                    //padding: '2rem 1rem',
+                }
+            }
         >
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {/* <div
@@ -101,7 +100,7 @@ export function Header({ children }: { children?: any }) {
                         alt=""
                         width={'100%'}
                     />
-                    {/* Teikna */}
+                    Teikna
                 </Link>
             </div>
             <AppNavBar type="header" />

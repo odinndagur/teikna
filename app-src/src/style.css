@@ -128,7 +128,7 @@ ul li {
 }
 
 header {
-    /* position: auto; */
+    position: relative;
     text-align: center;
     /* padding-top: calc(env(safe-area-inset-top, 3rem) + 1em); */
     padding-bottom: 0.5rem;
@@ -141,7 +141,17 @@ header {
     background-color: var(--background-color);
     z-index: 1000;
     /* border-bottom: 1px solid var(--main-text-color); */
+    background-color: var(--background-color);
 }
+@media (display-mode: standalone) or (orientation: landscape) {
+    header {
+        /* position: sticky;
+        top: 0; */
+    }
+}
+/* backgroundColor: 'var(--background-color)',
+position: standalone ? 'sticky' : undefined,
+top: 0, */
 /* @media screen and ((min-height: 400px)) {
     header {
         position: sticky;
@@ -638,4 +648,24 @@ input {
     /* border-radius: 10px;
     backdrop-filter: blur(5px); */
     /* object-fit: contain; */
+}
+/* The overlay effect - lays on top of the container and over the image */
+.overlay {
+    position: absolute;
+    bottom: 0;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5); /* Black see-through */
+    color: #f1f1f1;
+    width: 100%;
+    transition: 0.5s ease;
+    opacity: 0;
+    color: white;
+    font-size: 20px;
+    padding: 20px;
+    text-align: center;
+}
+
+/* When you mouse over the container, fade in the overlay title */
+.container:hover .overlay {
+    opacity: 1;
 }
