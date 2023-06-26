@@ -19,13 +19,18 @@ export function SubredditPage() {
     const navigate = useNavigate()
 
     const [inputState, setInputState] = useState('')
-
+    type imageGenerics = MakeGenerics<{
+        LoaderData: {
+            images: string[]
+        }
+    }>
     const {
         data: { images },
-    } = useMatch()
+    } = useMatch<imageGenerics>()
     return (
         <>
             <Header>
+                <datalist id="subreddits"></datalist>
                 <form
                     onSubmit={(ev) => {
                         ev.preventDefault()
@@ -38,12 +43,13 @@ export function SubredditPage() {
                         name=""
                         id=""
                         placeholder="Go to subreddit..."
+                        list="subreddits"
                     />{' '}
                     <button type="submit">Go</button>
                 </form>
             </Header>
             {/* {JSON.stringify(movie)} */}
-            <ImageViewer images={images} />
+            <ImageViewer images={images!} />
             <Footer></Footer>
         </>
     )

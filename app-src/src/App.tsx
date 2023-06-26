@@ -15,6 +15,7 @@ import {
     Router,
     Outlet,
     Navigate,
+    MakeGenerics,
 } from '@tanstack/react-location'
 
 import PlaceholderScreen from './Components/PlaceholderScreen'
@@ -46,6 +47,12 @@ const queryClient = new QueryClient({
         },
     },
 })
+
+type searchGenerics = MakeGenerics<{
+    Search: {
+        query?: string
+    }
+}>
 
 function App() {
     const { t, i18n, ready } = useTranslation()
@@ -107,9 +114,26 @@ function App() {
                                     {
                                         path: '/',
                                         element: <MoviesList />,
-                                        loader: async () => ({
-                                            movies: await searchMovies(),
+                                        loader: async ({ search }) => ({
+                                            movies: await queryClient.fetchQuery(
+                                                {
+                                                    queryFn: () =>
+                                                        searchMovies(
+                                                            String(
+                                                                search.query ??
+                                                                    ''
+                                                            )
+                                                        ),
+                                                    queryKey: [
+                                                        'search',
+                                                        search,
+                                                    ],
+                                                    staleTime: 0,
+                                                    cacheTime: 0,
+                                                }
+                                            ),
                                         }),
+                                        loaderMaxAge: 0,
                                     },
                                     {
                                         path: ':id',

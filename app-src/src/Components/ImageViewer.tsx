@@ -49,7 +49,15 @@ export function ImageViewer({ images }: { images: string[] }) {
                                 }
                             }}
                         >
-                            <div>
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: '100%',
+                                    width: '100%',
+                                }}
+                            >
                                 <form method="dialog" className="no-scrollbar">
                                     <button
                                         style={{
@@ -62,26 +70,20 @@ export function ImageViewer({ images }: { images: string[] }) {
                                         arrow_back
                                     </button>
                                 </form>
-                                <div
+                                {/* <div> */}
+                                <img
+                                    src={img}
+                                    alt=""
                                     style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        maxHeight: '100%',
-                                        maxWidth: '100%',
+                                        placeSelf: 'center',
+                                        objectFit: 'contain',
+                                        width: '100%',
+                                        height: '100%',
+                                        maxHeight: '100vh',
+                                        maxWidth: '100vw',
                                     }}
-                                >
-                                    <img
-                                        src={img}
-                                        alt=""
-                                        style={{
-                                            objectFit: 'contain',
-                                            width: '100%',
-                                            height: '100%',
-                                            maxHeight: '100vh',
-                                            maxWidth: '100vw',
-                                        }}
-                                    />
-                                </div>
+                                />
+                                {/* </div> */}
                             </div>
                         </dialog>
                         {/* {false && (

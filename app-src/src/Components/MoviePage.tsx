@@ -22,6 +22,17 @@ export type movieGenerics = MakeGenerics<{
             images: string[]
             filmgrab_url: string
         }
+        movies?: {
+            id: string | number
+            title: string
+            director: string
+            director_of_photography: string
+            production_designer: string
+            costume_designer: string
+            year: number
+            images: string[]
+            filmgrab_url: string
+        }[]
     }
 }>
 export function MoviePage() {
