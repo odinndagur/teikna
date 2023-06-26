@@ -1,9 +1,4 @@
-import {
-    Link,
-    MakeGenerics,
-    useMatch,
-    useNavigate,
-} from '@tanstack/react-location'
+import { MakeGenerics, useMatch, useNavigate } from '@tanstack/react-location'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { useQuery } from '@tanstack/react-query'
@@ -31,21 +26,21 @@ export function SubredditPage() {
     return (
         <>
             <Header>
-                {/* <form
+                <form
                     onSubmit={(ev) => {
                         ev.preventDefault()
                         navigate({ to: `/subreddit/${inputState}` })
                     }}
-                > */}
-                <input
-                    onChange={(ev) => setInputState(ev.currentTarget.value)}
-                    type="text"
-                    name=""
-                    id=""
-                    placeholder="Go to subreddit..."
-                />{' '}
-                <Link to={`/subreddit/${inputState}`}>Go</Link>
-                {/* </form> */}
+                >
+                    <input
+                        onChange={(ev) => setInputState(ev.currentTarget.value)}
+                        type="text"
+                        name=""
+                        id=""
+                        placeholder="Go to subreddit..."
+                    />{' '}
+                    <button type="submit">Go</button>
+                </form>
             </Header>
             {/* {JSON.stringify(movie)} */}
             <ImageViewer images={images} />
