@@ -100,7 +100,7 @@ export function AppNavBar({ type }: { type: 'footer' | 'header' }) {
         {
             route: '/random',
             icon: 'shuffle',
-            name: t('nav_random_video'),
+            name: 'Random',
             type: type,
         },
     ]
