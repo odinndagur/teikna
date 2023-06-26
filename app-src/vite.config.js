@@ -92,6 +92,19 @@ export default defineConfig({
                         },
                     },
                     {
+                        urlPattern: /^https:\/\/film-grab\.com\/.*/i,
+                        handler: 'CacheFirst',
+                        options: {
+                            cacheName: 'filmgrab-images-cache',
+                            expiration: {
+                                maxAgeSeconds: 60 * 60 * 24 * 7, // 7 dagar
+                            },
+                            cacheableResponse: {
+                                statuses: [0, 200],
+                            },
+                        },
+                    },
+                    {
                         // https://i.ytimg.com/vi/${props.videoId}/maxresdefault.jpg
                         urlPattern: /^https:\/\/i\.ytimg\.com\/.*/i,
                         handler: 'CacheFirst',

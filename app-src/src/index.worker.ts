@@ -333,7 +333,7 @@ async function run() {
 
     // db.create_function('to_ascii', (a: string) => toAscii(a))
 
-    const currentVersion = 4
+    const currentVersion = 5
     let initDB = false
     try {
         console.log('try')

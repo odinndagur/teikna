@@ -106,6 +106,14 @@ define(['./workbox-865c825e'], (function (workbox) { 'use strict';
       statuses: [0, 200]
     })]
   }), 'GET');
+  workbox.registerRoute(/^https:\/\/film-grab\.com\/.*/i, new workbox.CacheFirst({
+    "cacheName": "filmgrab-images-cache",
+    plugins: [new workbox.ExpirationPlugin({
+      maxAgeSeconds: 604800
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [0, 200]
+    })]
+  }), 'GET');
   workbox.registerRoute(/^https:\/\/i\.ytimg\.com\/.*/i, new workbox.CacheFirst({
     "cacheName": "video-thumbnails-cache",
     plugins: [new workbox.ExpirationPlugin({

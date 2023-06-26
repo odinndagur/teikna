@@ -36,9 +36,12 @@
 
 @media (orientation: landscape) {
     .app-navbar {
-        position: static;
-        padding-bottom: 0;
+        position: absolute;
+        top: 0;
         /* bottom: 0; */
+    }
+    #root {
+        margin-top: var(--navbar-padding-bottom);
     }
 }
 
