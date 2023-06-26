@@ -1,4 +1,9 @@
-import { MakeGenerics, useMatch } from '@tanstack/react-location'
+import {
+    Link,
+    MakeGenerics,
+    useMatch,
+    useNavigate,
+} from '@tanstack/react-location'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { useQuery } from '@tanstack/react-query'
@@ -8,17 +13,42 @@ import { Grid } from './Grid'
 import './MoviePage.css'
 import { Carousel } from './Carousel'
 import { ImageViewer } from './ImageViewer'
+import { useState } from 'react'
 
 export function SubredditPage() {
     const { data } = useQuery({
         queryFn: () => fetchImagesFromSub('gonewild'),
         queryKey: ['sub', 'gonewild'],
     })
+
+    const navigate = useNavigate()
+
+    const [inputState, setInputState] = useState('')
+
+    const {
+        data: { images },
+    } = useMatch()
     return (
         <>
-            <Header></Header>
+            <Header>
+                {/* <form
+                    onSubmit={(ev) => {
+                        ev.preventDefault()
+                        navigate({ to: `/subreddit/${inputState}` })
+                    }}
+                > */}
+                <input
+                    onChange={(ev) => setInputState(ev.currentTarget.value)}
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder="Go to subreddit..."
+                />{' '}
+                <Link to={`/subreddit/${inputState}`}>Go</Link>
+                {/* </form> */}
+            </Header>
             {/* {JSON.stringify(movie)} */}
-            <ImageViewer images={data} />
+            <ImageViewer images={images} />
             <Footer></Footer>
         </>
     )

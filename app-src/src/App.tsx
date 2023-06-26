@@ -8,6 +8,7 @@ import {
     getShowsDataFromSheets,
     getMovieById,
     searchMovies,
+    fetchImagesFromSub,
 } from './db'
 import {
     ReactLocation,
@@ -122,7 +123,28 @@ function App() {
                             },
                             {
                                 path: 'subreddit',
-                                element: <SubredditPage />,
+                                children: [
+                                    {
+                                        path: '/',
+                                        element: <SubredditPage />,
+                                        loader: async () => ({
+                                            images: await fetchImagesFromSub(
+                                                'cute'
+                                            ),
+                                        }),
+                                    },
+                                    {
+                                        path: ':subreddit',
+                                        element: <SubredditPage />,
+                                        loader: async ({
+                                            params: { subreddit },
+                                        }) => ({
+                                            images: await fetchImagesFromSub(
+                                                subreddit
+                                            ),
+                                        }),
+                                    },
+                                ],
                             },
                             {
                                 path: 'random',

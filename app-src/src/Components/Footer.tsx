@@ -11,7 +11,20 @@ export function Footer({ children }: { children?: any }) {
     })
 
     return (
-        <footer style={{ paddingBottom: 'calc(var(--navbar-padding-bottom))' }}>
+        <footer
+            style={{
+                paddingBottom: standalone
+                    ? 'calc(var(--navbar-padding-bottom))'
+                    : undefined,
+            }}
+        >
+            {/* <footer
+            style={
+                {
+                    // outline: '1px solid black',
+                }
+            }
+        > */}
             {children}
             <AppNavBar type="footer" />
         </footer>

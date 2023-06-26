@@ -79,6 +79,12 @@ export function AppNavBar({ type }: { type: 'footer' | 'header' }) {
             name: 'Misc',
             type: type,
         },
+        {
+            route: '/subreddit',
+            icon: 'imagesmode',
+            name: 'Subreddits',
+            type: type,
+        },
         //        {
         //            route: '/leit',
         //            icon: 'search',
