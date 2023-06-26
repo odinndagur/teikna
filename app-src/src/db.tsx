@@ -221,3 +221,31 @@ export const getShowsDataFromSheets = async () => {
     //@ts-ignore
     return shows.sort((a, b) => a.date - b.date)
 }
+
+const isImgUrl = (url: string) => {
+    return /\.(jpe?g|png|webp|avif|gif)$/.test(url)
+}
+
+export const fetchImagesFromSub = async (sub: string) => {
+    const baseUrl = 'https://api.reddit.com/r/'
+    const urlSuffix = '.json'
+
+    const fullUrl = baseUrl + sub + urlSuffix
+    return await fetch(fullUrl)
+        .then((res) => res.json())
+        .then((d) => {
+            if (!d.data) {
+                return
+            }
+            const images = d.data.children
+                .map((child: any) => {
+                    let imgUrl = child.data.url
+                    if (isImgUrl(imgUrl)) {
+                        console.log(imgUrl)
+                        return imgUrl
+                    }
+                })
+                .filter(Boolean)
+            return images
+        })
+}

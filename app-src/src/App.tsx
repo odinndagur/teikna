@@ -32,6 +32,7 @@ import { Test } from './Components/Test'
 import { Misc } from './Components/Misc'
 import { MoviesList } from './Components/MoviesList'
 import { MoviePage } from './Components/MoviePage'
+import { SubredditPage } from './Components/SubredditPage'
 
 const reactLocation = new ReactLocation()
 
@@ -118,6 +119,10 @@ function App() {
                                         }),
                                     },
                                 ],
+                            },
+                            {
+                                path: 'subreddit',
+                                element: <SubredditPage />,
                             },
                             {
                                 path: 'random',
