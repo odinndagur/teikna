@@ -3,7 +3,8 @@
     --background-color-alpha: var(--background-color-light-alpha);
     --main-text-color: var(--main-text-color-light);
     --secondary-color: rgb(240, 240, 240);
-    --accent-color: rgb(255, 132, 0);
+    /* --accent-color: rgb(255, 132, 0); */
+    --accent-color: rgb(76, 115, 177);
     --card-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     --card-hover-box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
