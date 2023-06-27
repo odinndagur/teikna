@@ -333,7 +333,7 @@ async function run() {
 
     // db.create_function('to_ascii', (a: string) => toAscii(a))
 
-    const currentVersion = 5
+    const currentVersion = 0
     let initDB = false
     try {
         console.log('try')
@@ -354,6 +354,7 @@ async function run() {
         initDB = true
     }
     if (initDB) {
+        console.log('INIT FKN DB')
         // let filepathPrefix = `${import.meta.env.BASE_URL}`
         // const filepaths = [
         //     `${filepathPrefix}assets/sign_tables.txt`,
