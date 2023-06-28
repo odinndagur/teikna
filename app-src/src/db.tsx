@@ -251,6 +251,7 @@ export const fetchImagesFromSub = async (
             if (!d.data) {
                 return { after: '', images: [] }
             }
+            console.log({ 'd.data': d.data })
             const after = d.data.after
             const images = d.data.children
                 .map((child: any) => {
