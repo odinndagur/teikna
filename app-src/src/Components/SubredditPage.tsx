@@ -1,4 +1,9 @@
-import { MakeGenerics, useMatch, useNavigate } from '@tanstack/react-location'
+import {
+    MakeGenerics,
+    useMatch,
+    useNavigate,
+    useSearch,
+} from '@tanstack/react-location'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { useQuery } from '@tanstack/react-query'
@@ -13,21 +18,25 @@ import { useLocalStorage } from 'usehooks-ts'
 
 export function SubredditPage() {
     const [myStorage, setMyStorage] = useLocalStorage('subreddits', [])
-    const original_after = ''
-    const {
-        data: {
-            // images, after: original_after,
-            subreddit,
-        },
-    } = useMatch<imageGenerics>()
+    const [currentSubreddit, setCurrentSubreddit] = useLocalStorage(
+        'current-subreddit',
+        'cute'
+    )
+    const [shouldGetMoreImages, setShouldGetMoreImages] = useState(0)
     const { data } = useQuery({
-        queryFn: () =>
-            fetchImagesFromSub(
-                // myStorage.join('+') ?? 'gonewild',
-                subreddit ?? 'cute',
-                undefined
-            ),
-        queryKey: [subreddit],
+        queryFn: async () => {
+            const data = await fetchImagesFromSub({
+                sub: currentSubreddit ?? 'cute',
+                after: after,
+                express: import.meta.env.MODE == 'development',
+            })
+
+            console.log({ data }, 'DATA INNI I USE QUERY')
+            setAfter(data.after)
+            return data
+        },
+        keepPreviousData: true,
+        queryKey: [currentSubreddit, shouldGetMoreImages],
     })
 
     const navigate = useNavigate()
@@ -41,9 +50,9 @@ export function SubredditPage() {
         }
     }>
 
-    useEffect(() => {
-        setAfter(original_after)
-    }, [])
+    // useEffect(() => {
+    //     setAfter(original_after)
+    // }, [])
 
     const [moreImages, setMoreImages] = useState([])
     const [after, setAfter] = useState('')
@@ -55,7 +64,7 @@ export function SubredditPage() {
 
     return (
         <>
-            {subreddit}
+            {currentSubreddit}
             <Header>
                 <datalist id="subreddits" key={myStorage.join(',')}>
                     {myStorage.map((val, idx) => (
@@ -88,6 +97,7 @@ export function SubredditPage() {
                 <form
                     onSubmit={(ev) => {
                         ev.preventDefault()
+                        setCurrentSubreddit(inputState)
                         navigate({ to: `/subreddit/${inputState}` })
                     }}
                 >
@@ -105,19 +115,14 @@ export function SubredditPage() {
             {/* {JSON.stringify(movie)} */}
             {data?.images && (
                 <ImageViewer
-                    key={subreddit}
+                    key={currentSubreddit}
                     images={[...data?.images, ...moreImages]}
                 />
             )}
             <button
                 style={{ maxWidth: '8rem', margin: 'auto' }}
                 onClick={() => {
-                    fetchImagesFromSub(subreddit ?? 'cute', after).then(
-                        (res) => {
-                            setMoreImages(res.images)
-                            setAfter(data?.after)
-                        }
-                    )
+                    setShouldGetMoreImages((old) => old + 1)
                 }}
             >
                 Load more

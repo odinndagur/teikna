@@ -226,23 +226,25 @@ const isImgUrl = (url: string) => {
     return /\.(jpe?g|png|webp|avif|gif)$/.test(url)
 }
 
-export const fetchImagesFromSub = async (
-    sub: string,
-    after?: string,
-    express: boolean = false
-) => {
+export const fetchImagesFromSub = async ({
+    sub,
+    after,
+    express = false,
+}: {
+    sub: string
+    after?: string
+    express: boolean
+}) => {
+    console.log({ after }, 'AFTER')
     const baseUrl = 'https://api.reddit.com/r/'
     const urlSuffix = '.json'
 
     const fullUrl = baseUrl + sub + urlSuffix + (after ? '?after=' + after : '')
     if (express) {
         console.log('EXPRESS')
-        const { images, newAfter } = await fetchImagesFromSubExpress(
-            sub,
-            after ?? ''
-        )
+        const res = await fetchImagesFromSubExpress(sub, after ?? '')
 
-        return { images: images ?? [], after: newAfter ?? '' }
+        return { images: res.images ?? [], after: res.after }
     }
     DB_CONSOLE_LOGS && console.log({ fullUrl })
     return await fetch(fullUrl, { mode: 'no-cors' })
@@ -276,11 +278,9 @@ export const fetchImagesFromSubExpress = async (
         }`,
         {}
     )
-    console.log({ res })
-    const { images, newAfter }: { images: string[]; newAfter?: string } =
-        await res.json()
-    console.log(images)
-    return { images, newAfter }
+    const data = await res.json()
+    console.log({ data })
+    return { images: data.images, after: data.after }
 }
 
 export const getCollections = async () => {

@@ -168,19 +168,6 @@ function App() {
                                     {
                                         path: ':subreddit',
                                         element: <SubredditPage />,
-                                        loader: async ({
-                                            params: { subreddit },
-                                        }) => {
-                                            const { images, after } =
-                                                await fetchImagesFromSub(
-                                                    subreddit
-                                                )
-                                            return {
-                                                images,
-                                                after,
-                                                subreddit,
-                                            }
-                                        },
                                     },
                                 ],
                             },
