@@ -80,6 +80,12 @@ export function AppNavBar({ type }: { type: 'footer' | 'header' }) {
             type: type,
         },
         {
+            route: '/collections/1',
+            icon: 'list',
+            name: 'Collection',
+            type: type,
+        },
+        {
             route: '/subreddit',
             icon: 'imagesmode',
             name: 'Subreddits',

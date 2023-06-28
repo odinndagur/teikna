@@ -229,13 +229,14 @@ const isImgUrl = (url: string) => {
 export const fetchImagesFromSub = async (
     sub: string,
     after?: string,
-    express: boolean = true
+    express: boolean = false
 ) => {
     const baseUrl = 'https://api.reddit.com/r/'
     const urlSuffix = '.json'
 
     const fullUrl = baseUrl + sub + urlSuffix + (after ? '?after=' + after : '')
     if (express) {
+        console.log('EXPRESS')
         const { images, newAfter } = await fetchImagesFromSubExpress(
             sub,
             after ?? ''

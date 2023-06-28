@@ -25,10 +25,9 @@ export function SubredditPage() {
             fetchImagesFromSub(
                 // myStorage.join('+') ?? 'gonewild',
                 subreddit ?? 'cute',
-                undefined,
-                true
+                undefined
             ),
-        queryKey: ['sub', subreddit, myStorage.join('+') ?? 'gonewild'],
+        queryKey: [subreddit],
     })
 
     const navigate = useNavigate()
@@ -56,6 +55,7 @@ export function SubredditPage() {
 
     return (
         <>
+            {subreddit}
             <Header>
                 <datalist id="subreddits" key={myStorage.join(',')}>
                     {myStorage.map((val, idx) => (

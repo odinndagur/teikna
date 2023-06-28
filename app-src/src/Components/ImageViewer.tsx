@@ -4,167 +4,167 @@ import './MoviePage.css'
 import { useLocalStorage } from 'usehooks-ts'
 
 export function ImageViewer({ images }: { images: string[] }) {
-  const [mirrored, setMirrored] = useState(false)
-  const [currentImageSize, setCurrentImageSize] = useState()
-  const [userCollections, setUserCollections] = useLocalStorage<
-    { name: string; id: string | number; images: string[] }[]
-  >('user-collections', [])
-  return (
-    <Grid>
-      {images?.map((img, idx) => {
-        return (
-          <div key={img}>
-            {/* <button> */}
-            <img
-              className="button"
-              src={img}
-              key={img}
-              onClick={() => {
-                setMirrored(false)
-                const el = document.getElementById(
-                  img
-                ) as HTMLDialogElement
-                el.showModal()
-              }}
-              style={{
-                cursor: 'pointer',
-                maxWidth: '100%',
-                maxHeight: '100%',
-              }}
-            />
-            {/* </button> */}
-            <dialog
-              className="dialog-screenshot"
-              id={img}
-              style={{
-                border: 'none',
-                minWidth: '80%',
-                // maxWidth: '100%',
-                // maxHeight: '100%',
-                // maxWidth: '100%',
-                // maxHeight: '100%',
-                width: '100vw',
-                height: '100vh',
-                boxSizing: 'border-box',
-                padding:
-                  'env(safe-area-border-top),env(safe-area-border-right),env(safe-area-border-bottom),env(safe-area-border-left)',
-                // minHeight: '80%',
-                // boxSizing: 'border-box',
-                backdropFilter: 'blur(10px)',
-                WebkitBackdropFilter: 'blur(10px)',
-                // backgroundImage: `url(${movie.images[9]})`,
-              }}
-              onClick={(ev) => {
-                const dialog = document.getElementById(
-                  img
-                ) as HTMLDialogElement
-                if (ev.target == dialog) {
-                  dialog.close()
-                }
-              }}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  maxHeight: '100%',
-                  width: '100%',
-                }}
-                key={String(mirrored)}
-              >
-                <form method="dialog" className="no-scrollbar">
-                  <button
-                    style={{
-                      position: 'absolute',
-                      transform: 'translate(-000%,00%)',
-                      top: '1rem',
-                      left: '1rem',
-                      zIndex: 5,
-                    }}
-                    className="material-icons"
-                  >
-                    arrow_back
-                  </button>
-                  <button
-                    style={{
-                      position: 'absolute',
-                      top: '1rem',
-                      right: '1rem',
-                      zIndex: 5,
-                      transform: mirrored
-                        ? 'scaleX(-1)'
-                        : undefined,
-                    }}
-                    className="material-icons"
-                    onClick={(ev) => {
-                      ev.preventDefault()
-                      setMirrored((old) => !old)
-                    }}
-                  >
-                    flip
-                  </button>
-                  <button
-                    style={{
-                      position: 'absolute',
-                      top: '1rem',
-                      right: '1rem',
-                      zIndex: 5,
-                      translate: '0 150%',
-                      transform: mirrored
-                        ? 'scaleX(-1)'
-                        : undefined,
-                    }}
-                    className="material-icons"
-                    onClick={(ev) => {
-                      ev.preventDefault()
-                      setUserCollections((old: any) => {
-                        const currentCollection =
-                          old.find(
-                            (c: any) => c.id == 1
-                          )
-                        return [
-                          ...old.filter(
-                            (c: any) => c.id != 1
-                          ),
-                          {
-                            ...currentCollection,
-                            images: [
-                              ...currentCollection.images,
-                              img,
-                            ],
-                          },
-                        ]
-                      })
-                      // setMirrored((old) => !old)
-                    }}
-                  >
-                    add
-                  </button>
-                </form>
-                {/* <div> */}
-                <img
-                  src={img}
-                  alt=""
-                  style={{
-                    placeSelf: 'center',
-                    objectFit: 'contain',
-                    // width: '100%',
-                    // height: '100%',
-                    // outline: '5px solid green',
-                    maxHeight: '100vh',
-                    maxWidth: '100vw',
-                    transform: mirrored
-                      ? 'scaleX(-1)'
-                      : undefined,
-                    // backgroundColor: 'red',
-                  }}
-                // ref={currentImageRef}
-                />
-                {/* </div> */}
-              </div>
-            </dialog>
-            {/* {false && (
+    const [mirrored, setMirrored] = useState(false)
+    const [currentImageSize, setCurrentImageSize] = useState()
+    const [userCollections, setUserCollections] = useLocalStorage<
+        { id: number | string; name: string; images: string[] }[]
+    >('user-collections', [{ name: 'Base', id: 1, images: [] }])
+    return (
+        <Grid>
+            {images?.map((img, idx) => {
+                return (
+                    <div key={img}>
+                        {/* <button> */}
+                        <img
+                            className="button"
+                            src={img}
+                            key={img}
+                            onClick={() => {
+                                setMirrored(false)
+                                const el = document.getElementById(
+                                    img
+                                ) as HTMLDialogElement
+                                el.showModal()
+                            }}
+                            style={{
+                                cursor: 'pointer',
+                                maxWidth: '100%',
+                                maxHeight: '100%',
+                            }}
+                        />
+                        {/* </button> */}
+                        <dialog
+                            className="dialog-screenshot"
+                            id={img}
+                            style={{
+                                border: 'none',
+                                minWidth: '80%',
+                                // maxWidth: '100%',
+                                // maxHeight: '100%',
+                                // maxWidth: '100%',
+                                // maxHeight: '100%',
+                                width: '100vw',
+                                height: '100vh',
+                                boxSizing: 'border-box',
+                                padding:
+                                    'env(safe-area-border-top),env(safe-area-border-right),env(safe-area-border-bottom),env(safe-area-border-left)',
+                                // minHeight: '80%',
+                                // boxSizing: 'border-box',
+                                backdropFilter: 'blur(10px)',
+                                WebkitBackdropFilter: 'blur(10px)',
+                                // backgroundImage: `url(${movie.images[9]})`,
+                            }}
+                            onClick={(ev) => {
+                                const dialog = document.getElementById(
+                                    img
+                                ) as HTMLDialogElement
+                                if (ev.target == dialog) {
+                                    dialog.close()
+                                }
+                            }}
+                        >
+                            <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    maxHeight: '100%',
+                                    width: '100%',
+                                }}
+                                key={String(mirrored)}
+                            >
+                                <form method="dialog" className="no-scrollbar">
+                                    <button
+                                        style={{
+                                            position: 'absolute',
+                                            transform: 'translate(-000%,00%)',
+                                            top: '1rem',
+                                            left: '1rem',
+                                            zIndex: 5,
+                                        }}
+                                        className="material-icons"
+                                    >
+                                        arrow_back
+                                    </button>
+                                    <button
+                                        style={{
+                                            position: 'absolute',
+                                            top: '1rem',
+                                            right: '1rem',
+                                            zIndex: 5,
+                                            transform: mirrored
+                                                ? 'scaleX(-1)'
+                                                : undefined,
+                                        }}
+                                        className="material-icons"
+                                        onClick={(ev) => {
+                                            ev.preventDefault()
+                                            setMirrored((old) => !old)
+                                        }}
+                                    >
+                                        flip
+                                    </button>
+                                    <button
+                                        style={{
+                                            position: 'absolute',
+                                            top: '1rem',
+                                            right: '1rem',
+                                            zIndex: 5,
+                                            translate: '0 150%',
+                                            transform: mirrored
+                                                ? 'scaleX(-1)'
+                                                : undefined,
+                                        }}
+                                        className="material-icons"
+                                        onClick={(ev) => {
+                                            ev.preventDefault()
+                                            setUserCollections((old: any) => {
+                                                const currentCollection =
+                                                    old.find(
+                                                        (c: any) => c.id == 1
+                                                    )
+                                                return [
+                                                    ...old.filter(
+                                                        (c: any) => c.id != 1
+                                                    ),
+                                                    {
+                                                        ...currentCollection,
+                                                        images: [
+                                                            ...currentCollection.images,
+                                                            img,
+                                                        ],
+                                                    },
+                                                ]
+                                            })
+                                            // setMirrored((old) => !old)
+                                        }}
+                                    >
+                                        add
+                                    </button>
+                                </form>
+                                {/* <div> */}
+                                <img
+                                    src={img}
+                                    alt=""
+                                    style={{
+                                        placeSelf: 'center',
+                                        objectFit: 'contain',
+                                        // width: '100%',
+                                        // height: '100%',
+                                        // outline: '5px solid green',
+                                        maxHeight: '100vh',
+                                        maxWidth: '100vw',
+                                        transform: mirrored
+                                            ? 'scaleX(-1)'
+                                            : undefined,
+                                        // backgroundColor: 'red',
+                                    }}
+                                    // ref={currentImageRef}
+                                />
+                                {/* </div> */}
+                            </div>
+                        </dialog>
+                        {/* {false && (
                 <dialog
                     className="dialog-screenshot"
                     id={img}
@@ -253,9 +253,9 @@ export function ImageViewer({ images }: { images: string[] }) {
                     </div>
                 </dialog>
             )} */}
-          </div>
-        )
-      })}
-    </Grid>
-  )
+                    </div>
+                )
+            })}
+        </Grid>
+    )
 }
