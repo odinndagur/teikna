@@ -22,7 +22,11 @@ export function ImageViewer({ images }: { images: string[] }) {
                                 ) as HTMLDialogElement
                                 el.showModal()
                             }}
-                            style={{ cursor: 'pointer' }}
+                            style={{
+                                cursor: 'pointer',
+                                maxWidth: '100vw',
+                                maxHeight: '100vh',
+                            }}
                         />
                         {/* </button> */}
                         <dialog
@@ -60,7 +64,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    height: '100%',
+                                    maxHeight: '100%',
                                     width: '100%',
                                 }}
                                 key={String(mirrored)}

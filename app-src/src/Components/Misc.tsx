@@ -6,7 +6,7 @@ import { Footer } from './Footer'
 import { useLocalStorage } from 'usehooks-ts'
 import { SubredditPage } from './SubredditPage'
 import { ImageViewer } from './ImageViewer'
-import { fetchImagesFromSub } from '../db'
+import { fetchImagesFromSub, fetchImagesFromSubExpress } from '../db'
 
 export function Misc() {
     const [searchValue, setSearchValue] = useState('')
@@ -18,16 +18,15 @@ export function Misc() {
     const [moreImages, setMoreImages] = useState([])
     const [after, setAfter] = useState('')
 
-    const [images, setImages] = useState([])
+    const [images, setImages] = useState([''])
     const [subreddits, setSubreddits] = useState('')
     useEffect(() => {
         setSubreddits(myStorage.join('+'))
     }, [myStorage])
     useEffect(() => {
-        fetchImagesFromSub(subreddits ?? 'cute', after).then((res) => {
-            setMoreImages((old) => [...old, ...res.images])
-            setAfter(res.after)
-        })
+        fetchImagesFromSubExpress(subreddits).then((images) =>
+            setImages((old) => [...old, ...images])
+        )
     }, [subreddits])
 
     return (
@@ -63,7 +62,7 @@ export function Misc() {
             <button
                 style={{ maxWidth: '8rem', margin: 'auto' }}
                 onClick={() => {
-                    fetchImagesFromSub(subreddits ?? 'cute', after).then(
+                    fetchImagesFromSubExpress(subreddits ?? 'cute').then(
                         (res) => {
                             setMoreImages(res.images)
                             setAfter(res.after)

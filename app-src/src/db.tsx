@@ -251,3 +251,11 @@ export const fetchImagesFromSub = async (sub: string, after?: string) => {
             return { images, after }
         })
 }
+
+export const fetchImagesFromSubExpress = async (subs: string) => {
+    const res = await fetch(`http://46.22.111.71/?subreddits=${subs}`, {})
+    console.log({ res })
+    const images: string[] = await res.json()
+    console.log(images)
+    return images
+}
