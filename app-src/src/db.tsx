@@ -229,12 +229,12 @@ const isImgUrl = (url: string) => {
 export const fetchImagesFromSub = async ({
     sub,
     after,
-    express = false,
 }: {
     sub: string
     after?: string
-    express: boolean
 }) => {
+    const express =
+        import.meta.env.MODE == 'development' || 'localhost' in window.location
     console.log({ after }, 'AFTER')
     const baseUrl = 'https://api.reddit.com/r/'
     const urlSuffix = '.json'

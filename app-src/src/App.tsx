@@ -156,14 +156,14 @@ function App() {
                                     {
                                         path: '/',
                                         element: <SubredditPage />,
-                                        loader: async () => {
-                                            const { images, after } =
-                                                await fetchImagesFromSub('cute')
-                                            return {
-                                                images,
-                                                after,
-                                            }
-                                        },
+                                        // loader: async () => {
+                                        //     const { images, after } =
+                                        //         await fetchImagesFromSub('cute')
+                                        //     return {
+                                        //         images,
+                                        //         after,
+                                        //     }
+                                        // },
                                     },
                                     {
                                         path: ':subreddit',

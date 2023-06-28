@@ -29,7 +29,6 @@ export function SubredditPage() {
             const data = await fetchImagesFromSub({
                 sub: currentSubreddit ?? 'cute',
                 after: after,
-                express: import.meta.env.MODE == 'development',
             })
 
             console.log({ data }, 'DATA INNI I USE QUERY')
@@ -41,6 +40,7 @@ export function SubredditPage() {
         },
         keepPreviousData: true,
         refetchOnMount: false,
+        enabled: false,
         queryKey: [currentSubreddit],
     })
 
@@ -68,7 +68,7 @@ export function SubredditPage() {
 
     return (
         <div>
-            {currentSubreddit}
+            {/* {currentSubreddit} */}
             <Header>
                 <datalist id="subreddits" key={myStorage.join(',')}>
                     {myStorage.map((val, idx) => (
