@@ -165,8 +165,8 @@ export function SubredditPage() {
                     console.log(ev)
                     ev.preventDefault()
                     ev.stopPropagation()
-                    // setShouldGetMoreImages((old) => old + 1)
-                    refetch()
+                    setShouldGetMoreImages((old) => old + 1)
+                    // refetch()
                 }}
             >
                 Load more

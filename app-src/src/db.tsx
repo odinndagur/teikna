@@ -248,9 +248,10 @@ export const fetchImagesFromSub = async ({
         return { images: res.images ?? [], after: res.after }
     }
     DB_CONSOLE_LOGS && console.log({ fullUrl })
-    return await fetch(fullUrl, { mode: 'no-cors' })
+    return await fetch(fullUrl)
         .then((res) => res.json())
         .then((d) => {
+            console.log({ d })
             if (!d.data) {
                 return { after: '', images: [] }
             }
