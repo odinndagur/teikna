@@ -79,7 +79,7 @@ export function SubredditPage() {
     return (
         <div>
             {/* {currentSubreddit} */}
-            {/* <Header>
+            <Header>
                 <datalist id="subreddits" key={myStorage.join(',')}>
                     {myStorage.map((val, idx) => (
                         <option value={val} key={idx}>
@@ -125,7 +125,7 @@ export function SubredditPage() {
                     />{' '}
                     <button type="submit">Go</button>
                 </form>
-            </Header> */}
+            </Header>
             {/* {JSON.stringify(movie)} */}
             <ImageViewer
                 // key={currentSubreddit}
@@ -143,7 +143,7 @@ export function SubredditPage() {
             >
                 Load more
             </button>
-            {/* <Footer></Footer> */}
+            <Footer></Footer>
         </div>
     )
 }
