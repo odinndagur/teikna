@@ -14,9 +14,9 @@ export default defineConfig({
         }),
         VitePWA({
             registerType: 'autoUpdate',
-            devOptions: {
-                enabled: true,
-            },
+            // devOptions: {
+            //     enabled: true,
+            // },
             manifest: {
                 name: 'Teikna',
                 short_name: 'Teikna',

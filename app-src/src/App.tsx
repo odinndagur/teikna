@@ -165,10 +165,10 @@ function App() {
                                         //     }
                                         // },
                                     },
-                                    {
-                                        path: ':subreddit',
-                                        element: <SubredditPage />,
-                                    },
+                                    // {
+                                    //     path: ':subreddit',
+                                    //     element: <SubredditPage />,
+                                    // },
                                 ],
                             },
                             {
@@ -405,6 +405,7 @@ function App() {
                     >
                         {!promiseWorkerLoaded && <Header></Header>}
                         <Outlet />
+
                         {!promiseWorkerLoaded && <Footer></Footer>}
                         {/* <AppNavBar type="footer" /> */}
                         {/* <div
@@ -419,7 +420,6 @@ function App() {
                         >
                             <DarkModeSwitch setCurrentTheme={setCurrentTheme} />
                         </div> */}
-
                         <dialog
                             id="app-save-modal"
                             onClick={(ev) => {

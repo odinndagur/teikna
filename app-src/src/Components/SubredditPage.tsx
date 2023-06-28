@@ -25,24 +25,36 @@ export function SubredditPage() {
     )
     const [shouldGetMoreImages, setShouldGetMoreImages] = useState(0)
     const { data, refetch } = useQuery({
-        queryFn: async () => {
-            const data = await fetchImagesFromSub({
+        queryFn: () =>
+            fetchImagesFromSub({
                 sub: currentSubreddit ?? 'cute',
                 after: after,
-            })
+            }),
+        // {
+        //     const data = await fetchImagesFromSub({
+        //         sub: currentSubreddit ?? 'cute',
+        //         after: after,
+        //     })
 
-            console.log({ data }, 'DATA INNI I USE QUERY')
-            setAfter(data.after)
-            if (!data) {
-                return { images: [], after: '' }
-            }
-            return data
-        },
+        //     console.log({ data }, 'DATA INNI I USE QUERY')
+        //     setAfter(data.after)
+        //     if (!data) {
+        //         return { images: [], after: '' }
+        //     }
+        //     return data
+        // },
         keepPreviousData: true,
         refetchOnMount: false,
-        enabled: false,
-        queryKey: [currentSubreddit],
+        enabled: true,
+        queryKey: [currentSubreddit, shouldGetMoreImages],
+        staleTime: Infinity,
+        refetchOnWindowFocus: false,
+        refetchOnReconnect: false,
     })
+
+    useEffect(() => {
+        setAfter(data?.after ?? '')
+    }, [data?.images])
 
     const navigate = useNavigate()
 
@@ -59,8 +71,6 @@ export function SubredditPage() {
     //     setAfter(original_after)
     // }, [])
 
-    const [moreImages, setMoreImages] = useState([])
-
     // const { data } = useQuery({
     //     queryFn: () => fetchImagesFromSub(subreddit ?? 'cute', after),
     //     queryKey: [subreddit, after],
@@ -69,7 +79,7 @@ export function SubredditPage() {
     return (
         <div>
             {/* {currentSubreddit} */}
-            <Header>
+            {/* <Header>
                 <datalist id="subreddits" key={myStorage.join(',')}>
                     {myStorage.map((val, idx) => (
                         <option value={val} key={idx}>
@@ -115,25 +125,25 @@ export function SubredditPage() {
                     />{' '}
                     <button type="submit">Go</button>
                 </form>
-            </Header>
+            </Header> */}
             {/* {JSON.stringify(movie)} */}
-            {data?.images && (
-                <ImageViewer
-                    // key={currentSubreddit}
-                    images={[...data?.images, ...moreImages]}
-                />
-            )}
+            <ImageViewer
+                // key={currentSubreddit}
+                images={data?.images}
+            />
             <button
                 style={{ maxWidth: '8rem', margin: 'auto' }}
                 onClick={(ev) => {
+                    console.log(ev)
                     ev.preventDefault()
+                    ev.stopPropagation()
                     // setShouldGetMoreImages((old) => old + 1)
                     refetch()
                 }}
             >
                 Load more
             </button>
-            <Footer></Footer>
+            {/* <Footer></Footer> */}
         </div>
     )
 }

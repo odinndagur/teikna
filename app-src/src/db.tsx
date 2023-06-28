@@ -234,7 +234,8 @@ export const fetchImagesFromSub = async ({
     after?: string
 }) => {
     const express =
-        import.meta.env.MODE == 'development' || 'localhost' in window.location
+        import.meta.env.MODE == 'development' ||
+        window.location.href.includes('localhost')
     console.log({ after }, 'AFTER')
     const baseUrl = 'https://api.reddit.com/r/'
     const urlSuffix = '.json'
