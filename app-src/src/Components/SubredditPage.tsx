@@ -22,7 +22,7 @@ export function SubredditPage() {
     const {
         data: { subreddit },
     } = useMatch()
-    const [after, setAfter] = useState('')
+    const [after, setAfter] = useState(undefined)
     const [myStorage, setMyStorage] = useLocalStorage('subreddits', [])
     // const [currentSubreddit, setCurrentSubreddit] = useLocalStorage(
     //     'current-subreddit',
