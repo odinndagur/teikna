@@ -17,13 +17,14 @@ import { useEffect, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 
 export function SubredditPage() {
+    const [after, setAfter] = useState('')
     const [myStorage, setMyStorage] = useLocalStorage('subreddits', [])
     const [currentSubreddit, setCurrentSubreddit] = useLocalStorage(
         'current-subreddit',
         'cute'
     )
     const [shouldGetMoreImages, setShouldGetMoreImages] = useState(0)
-    const { data } = useQuery({
+    const { data, refetch } = useQuery({
         queryFn: async () => {
             const data = await fetchImagesFromSub({
                 sub: currentSubreddit ?? 'cute',
@@ -33,10 +34,14 @@ export function SubredditPage() {
 
             console.log({ data }, 'DATA INNI I USE QUERY')
             setAfter(data.after)
+            if (!data) {
+                return { images: [], after: '' }
+            }
             return data
         },
         keepPreviousData: true,
-        queryKey: [currentSubreddit, shouldGetMoreImages],
+        refetchOnMount: false,
+        queryKey: [currentSubreddit],
     })
 
     const navigate = useNavigate()
@@ -55,7 +60,6 @@ export function SubredditPage() {
     // }, [])
 
     const [moreImages, setMoreImages] = useState([])
-    const [after, setAfter] = useState('')
 
     // const { data } = useQuery({
     //     queryFn: () => fetchImagesFromSub(subreddit ?? 'cute', after),
@@ -63,7 +67,7 @@ export function SubredditPage() {
     // })
 
     return (
-        <>
+        <div>
             {currentSubreddit}
             <Header>
                 <datalist id="subreddits" key={myStorage.join(',')}>
@@ -115,19 +119,21 @@ export function SubredditPage() {
             {/* {JSON.stringify(movie)} */}
             {data?.images && (
                 <ImageViewer
-                    key={currentSubreddit}
+                    // key={currentSubreddit}
                     images={[...data?.images, ...moreImages]}
                 />
             )}
             <button
                 style={{ maxWidth: '8rem', margin: 'auto' }}
-                onClick={() => {
-                    setShouldGetMoreImages((old) => old + 1)
+                onClick={(ev) => {
+                    ev.preventDefault()
+                    // setShouldGetMoreImages((old) => old + 1)
+                    refetch()
                 }}
             >
                 Load more
             </button>
             <Footer></Footer>
-        </>
+        </div>
     )
 }
