@@ -9,6 +9,8 @@ import {
     searchMovies,
     fetchImagesFromSub,
     getRandomMovie,
+    getCollectionById,
+    getCollections,
 } from './db'
 import {
     ReactLocation,
@@ -36,6 +38,8 @@ import { MoviesList } from './Components/MoviesList'
 import { MoviePage } from './Components/MoviePage'
 import { SubredditPage } from './Components/SubredditPage'
 import { RandomMovie } from './Components/RandomMovie'
+import { CollectionsPage } from './Components/CollectionsPage'
+import { CollectionPage } from './Components/CollectionPage'
 
 const reactLocation = new ReactLocation()
 
@@ -84,7 +88,7 @@ function App() {
     }, [])
 
     if (!promiseWorkerLoaded) {
-        return
+        return <></>
         return <PlaceholderScreen />
     }
     return (
@@ -177,6 +181,28 @@ function App() {
                                                 subreddit,
                                             }
                                         },
+                                    },
+                                ],
+                            },
+                            {
+                                path: 'collections',
+                                children: [
+                                    {
+                                        path: '/',
+                                        element: <CollectionsPage />,
+                                        loader: async () => ({
+                                            collections: await getCollections(),
+                                        }),
+                                    },
+                                    {
+                                        path: ':collectionId',
+                                        element: <CollectionPage />,
+                                        loader: async ({ params }) => ({
+                                            // images: await getCollectionById(
+                                            //     params.id
+                                            // ),
+                                            collectionId: params.collectionId,
+                                        }),
                                     },
                                 ],
                             },
@@ -390,7 +416,9 @@ function App() {
                             },
                         ]}
                     >
+                        {!promiseWorkerLoaded && <Header></Header>}
                         <Outlet />
+                        {!promiseWorkerLoaded && <Footer></Footer>}
                         {/* <AppNavBar type="footer" /> */}
                         {/* <div
                             className="dark-mode-switch-container"

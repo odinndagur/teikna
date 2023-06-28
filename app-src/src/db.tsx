@@ -226,11 +226,23 @@ const isImgUrl = (url: string) => {
     return /\.(jpe?g|png|webp|avif|gif)$/.test(url)
 }
 
-export const fetchImagesFromSub = async (sub: string, after?: string) => {
+export const fetchImagesFromSub = async (
+    sub: string,
+    after?: string,
+    express: boolean = true
+) => {
     const baseUrl = 'https://api.reddit.com/r/'
     const urlSuffix = '.json'
 
     const fullUrl = baseUrl + sub + urlSuffix + (after ? '?after=' + after : '')
+    if (express) {
+        const { images, newAfter } = await fetchImagesFromSubExpress(
+            sub,
+            after ?? ''
+        )
+
+        return { images: images ?? [], after: newAfter ?? '' }
+    }
     DB_CONSOLE_LOGS && console.log({ fullUrl })
     return await fetch(fullUrl, { mode: 'no-cors' })
         .then((res) => res.json())
@@ -252,13 +264,28 @@ export const fetchImagesFromSub = async (sub: string, after?: string) => {
         })
 }
 
-export const fetchImagesFromSubExpress = async (subs: string) => {
+export const fetchImagesFromSubExpress = async (
+    subs: string,
+    after: string
+) => {
     const res = await fetch(
-        `http://46.22.111.71/?subreddits=${encodeURIComponent(subs)}&reset`,
+        `http://46.22.111.71/?subreddits=${encodeURIComponent(subs)}${
+            after ? '&after=' + encodeURIComponent(after) : ''
+        }`,
         {}
     )
     console.log({ res })
-    const images: string[] = await res.json()
+    const { images, newAfter }: { images: string[]; newAfter?: string } =
+        await res.json()
     console.log(images)
-    return images
+    return { images, newAfter }
+}
+
+export const getCollections = async () => {
+    console.log('getCollections')
+    return ['lol']
+}
+export const getCollectionById = async (id) => {
+    console.log('getCollection')
+    return ['lol']
 }

@@ -9,12 +9,27 @@ import './MoviePage.css'
 import { Carousel } from './Carousel'
 import { ImageViewer } from './ImageViewer'
 import { useEffect, useState } from 'react'
+import { useLocalStorage } from 'usehooks-ts'
 
 export function SubredditPage() {
-    // const { data } = useQuery({
-    //     queryFn: () => fetchImagesFromSub('gonewild'),
-    //     queryKey: ['sub', 'gonewild'],
-    // })
+    const [myStorage, setMyStorage] = useLocalStorage('subreddits', [])
+    const original_after = ''
+    const {
+        data: {
+            // images, after: original_after,
+            subreddit,
+        },
+    } = useMatch<imageGenerics>()
+    const { data } = useQuery({
+        queryFn: () =>
+            fetchImagesFromSub(
+                // myStorage.join('+') ?? 'gonewild',
+                subreddit ?? 'cute',
+                undefined,
+                true
+            ),
+        queryKey: ['sub', subreddit, myStorage.join('+') ?? 'gonewild'],
+    })
 
     const navigate = useNavigate()
 
@@ -26,9 +41,6 @@ export function SubredditPage() {
             subreddit: string
         }
     }>
-    const {
-        data: { images, after: original_after, subreddit },
-    } = useMatch<imageGenerics>()
 
     useEffect(() => {
         setAfter(original_after)
@@ -45,7 +57,34 @@ export function SubredditPage() {
     return (
         <>
             <Header>
-                <datalist id="subreddits"></datalist>
+                <datalist id="subreddits" key={myStorage.join(',')}>
+                    {myStorage.map((val, idx) => (
+                        <option value={val} key={idx}>
+                            {val}
+                        </option>
+                    ))}
+                </datalist>
+                <form
+                    onSubmit={(ev) => {
+                        ev.preventDefault()
+                        setMyStorage((old) => [
+                            ...old,
+                            ev.currentTarget[0].value,
+                        ])
+                    }}
+                >
+                    <input type="text" name="" id="lol" />
+                    <button type="submit">testa add 2 local storage</button>
+                    <button
+                        onClick={(ev) => {
+                            ev.preventDefault()
+                            setMyStorage([])
+                        }}
+                    >
+                        delete
+                    </button>
+                </form>
+
                 <form
                     onSubmit={(ev) => {
                         ev.preventDefault()
@@ -64,14 +103,19 @@ export function SubredditPage() {
                 </form>
             </Header>
             {/* {JSON.stringify(movie)} */}
-            <ImageViewer images={[...images!, ...moreImages]} />
+            {data?.images && (
+                <ImageViewer
+                    key={subreddit}
+                    images={[...data?.images, ...moreImages]}
+                />
+            )}
             <button
                 style={{ maxWidth: '8rem', margin: 'auto' }}
                 onClick={() => {
                     fetchImagesFromSub(subreddit ?? 'cute', after).then(
                         (res) => {
                             setMoreImages(res.images)
-                            setAfter(res.after)
+                            setAfter(data?.after)
                         }
                     )
                 }}

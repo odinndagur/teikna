@@ -23,15 +23,16 @@ export function Misc() {
     useEffect(() => {
         setSubreddits(myStorage.join('+'))
     }, [myStorage])
-    useEffect(() => {
-        console.log(subreddits)
-        fetchImagesFromSubExpress(subreddits).then((images) =>
-            setImages((old) => [
-                ...old,
-                ...images.sort(() => 0.5 - Math.random()),
-            ])
-        )
-    }, [subreddits])
+    // useEffect(() => {
+    //     console.log(subreddits)
+    //     fetchImagesFromSubExpress(subreddits,'').then((images) =>
+    //         setImages((old) =>
+    //             Array.from(new Set([...old, ...images])).sort(
+    //                 () => 0.5 - Math.random()
+    //             )
+    //         )
+    //     )
+    // }, [subreddits])
 
     return (
         <div>
@@ -57,25 +58,20 @@ export function Misc() {
             >
                 <input type="text" name="" id="lol" />
                 <button type="submit">testa add 2 local storage</button>
+                <button
+                    onClick={(ev) => {
+                        ev.preventDefault()
+                        setMyStorage([])
+                    }}
+                >
+                    delete
+                </button>
                 {myStorage.map((val, idx) => (
                     <div key={idx}>{val}</div>
                 ))}
             </form>
 
             <ImageViewer images={[...images!, ...moreImages]} />
-            <button
-                style={{ maxWidth: '8rem', margin: 'auto' }}
-                onClick={() => {
-                    fetchImagesFromSubExpress(subreddits ?? 'cute').then(
-                        (res) => {
-                            setMoreImages(res.images)
-                            setAfter(res.after)
-                        }
-                    )
-                }}
-            >
-                Load more
-            </button>
 
             <Footer></Footer>
         </div>
