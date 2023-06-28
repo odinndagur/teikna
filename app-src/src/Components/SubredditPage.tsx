@@ -1,12 +1,13 @@
 import {
     MakeGenerics,
+    useLocation,
     useMatch,
     useNavigate,
     useSearch,
 } from '@tanstack/react-location'
 import { Header } from './Header'
 import { Footer } from './Footer'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { fetchImagesFromSub, getMovieById } from '../db'
 import { Grid } from './Grid'
 
@@ -17,17 +18,21 @@ import { useEffect, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 
 export function SubredditPage() {
+    const queryClient = useQueryClient()
+    const {
+        data: { subreddit },
+    } = useMatch()
     const [after, setAfter] = useState('')
     const [myStorage, setMyStorage] = useLocalStorage('subreddits', [])
-    const [currentSubreddit, setCurrentSubreddit] = useLocalStorage(
-        'current-subreddit',
-        'cute'
-    )
+    // const [currentSubreddit, setCurrentSubreddit] = useLocalStorage(
+    //     'current-subreddit',
+    //     'cute'
+    // )
     const [shouldGetMoreImages, setShouldGetMoreImages] = useState(0)
     const { data, refetch } = useQuery({
         queryFn: () =>
             fetchImagesFromSub({
-                sub: currentSubreddit ?? 'cute',
+                sub: subreddit ?? 'cute',
                 after: after,
             }),
         // {
@@ -46,8 +51,8 @@ export function SubredditPage() {
         keepPreviousData: true,
         refetchOnMount: false,
         enabled: true,
-        queryKey: [currentSubreddit, shouldGetMoreImages],
-        staleTime: Infinity,
+        queryKey: [subreddit, shouldGetMoreImages],
+        // staleTime: Infinity,
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
     })
@@ -87,7 +92,7 @@ export function SubredditPage() {
                         </option>
                     ))}
                 </datalist>
-                <form
+                {/*<form
                     onSubmit={(ev) => {
                         ev.preventDefault()
                         setMyStorage((old) => [
@@ -96,7 +101,7 @@ export function SubredditPage() {
                         ])
                     }}
                 >
-                    <input type="text" name="" id="lol" />
+                     <input type="text" name="" id="lol" />
                     <button type="submit">testa add 2 local storage</button>
                     <button
                         onClick={(ev) => {
@@ -106,13 +111,19 @@ export function SubredditPage() {
                     >
                         delete
                     </button>
-                </form>
+                </form> */}
 
                 <form
                     onSubmit={(ev) => {
                         ev.preventDefault()
-                        setCurrentSubreddit(inputState)
-                        navigate({ to: `/subreddit/${inputState}` })
+                        // setCurrentSubreddit(inputState)
+                        queryClient.invalidateQueries({
+                            queryKey: [subreddit, shouldGetMoreImages],
+                        })
+                        setAfter('')
+                        navigate({
+                            to: `/subreddit/${inputState}`,
+                        })
                     }}
                 >
                     <input
@@ -124,6 +135,23 @@ export function SubredditPage() {
                         list="subreddits"
                     />{' '}
                     <button type="submit">Go</button>
+                    <button
+                        onClick={(ev) => {
+                            ev.preventDefault()
+                            setMyStorage((old) => [...old, inputState])
+                        }}
+                    >
+                        Add to list
+                    </button>
+                    <button
+                        type="submit"
+                        onClick={(ev) => {
+                            ev.preventDefault()
+                            setMyStorage([])
+                        }}
+                    >
+                        Clear list
+                    </button>
                 </form>
             </Header>
             {/* {JSON.stringify(movie)} */}

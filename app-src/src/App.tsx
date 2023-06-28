@@ -165,10 +165,13 @@ function App() {
                                         //     }
                                         // },
                                     },
-                                    // {
-                                    //     path: ':subreddit',
-                                    //     element: <SubredditPage />,
-                                    // },
+                                    {
+                                        path: ':subreddit',
+                                        element: <SubredditPage />,
+                                        loader: ({ params }) => ({
+                                            subreddit: params.subreddit,
+                                        }),
+                                    },
                                 ],
                             },
                             {
