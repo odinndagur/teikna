@@ -232,7 +232,7 @@ export const fetchImagesFromSub = async (sub: string, after?: string) => {
 
     const fullUrl = baseUrl + sub + urlSuffix + (after ? '?after=' + after : '')
     DB_CONSOLE_LOGS && console.log({ fullUrl })
-    return await fetch(fullUrl)
+    return await fetch(fullUrl, { mode: 'no-cors' })
         .then((res) => res.json())
         .then((d) => {
             if (!d.data) {
