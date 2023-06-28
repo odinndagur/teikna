@@ -24,8 +24,8 @@ export function ImageViewer({ images }: { images: string[] }) {
                             }}
                             style={{
                                 cursor: 'pointer',
-                                maxWidth: '100vw',
-                                maxHeight: '100vh',
+                                maxWidth: '100%',
+                                maxHeight: '100%',
                             }}
                         />
                         {/* </button> */}

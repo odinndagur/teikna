@@ -24,8 +24,12 @@ export function Misc() {
         setSubreddits(myStorage.join('+'))
     }, [myStorage])
     useEffect(() => {
+        console.log(subreddits)
         fetchImagesFromSubExpress(subreddits).then((images) =>
-            setImages((old) => [...old, ...images])
+            setImages((old) => [
+                ...old,
+                ...images.sort(() => 0.5 - Math.random()),
+            ])
         )
     }, [subreddits])
 

@@ -253,7 +253,10 @@ export const fetchImagesFromSub = async (sub: string, after?: string) => {
 }
 
 export const fetchImagesFromSubExpress = async (subs: string) => {
-    const res = await fetch(`http://46.22.111.71/?subreddits=${subs}`, {})
+    const res = await fetch(
+        `http://46.22.111.71/?subreddits=${encodeURIComponent(subs)}&reset`,
+        {}
+    )
     console.log({ res })
     const images: string[] = await res.json()
     console.log(images)
