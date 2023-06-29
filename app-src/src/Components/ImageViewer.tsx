@@ -203,8 +203,8 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             // width: '100%',
                                             // height: '100%',
                                             // outline: '5px solid green',
-                                            maxHeight: '95vmin',
-                                            maxWidth: '95vmin',
+                                            maxHeight: '95%',
+                                            maxWidth: '95%',
 
                                             // maxHeight: 'min(100vh,100%)',
                                             // maxWidth: 'min(100vw,100%)',
