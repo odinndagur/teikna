@@ -5,6 +5,7 @@ import { useLocalStorage } from 'usehooks-ts'
 
 export function ImageViewer({ images }: { images: string[] }) {
     const [mirrored, setMirrored] = useState(false)
+    const [showGrid, setShowGrid] = useState(false)
     const [currentImageSize, setCurrentImageSize] = useState()
     const [userCollections, setUserCollections] = useLocalStorage<
         { id: number | string; name: string; images: string[] }[]
@@ -118,6 +119,25 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             right: '1rem',
                                             zIndex: 5,
                                             translate: '0 150%',
+                                            // transform: mirrored
+                                            //     ? 'scaleX(-1)'
+                                            //     : undefined,
+                                        }}
+                                        className="material-icons"
+                                        onClick={(ev) => {
+                                            ev.preventDefault()
+                                            setShowGrid((old) => !old)
+                                        }}
+                                    >
+                                        grid_3x3
+                                    </button>
+                                    <button
+                                        style={{
+                                            position: 'absolute',
+                                            top: '1rem',
+                                            left: '1rem',
+                                            zIndex: 5,
+                                            translate: '0 150%',
                                             transform: mirrored
                                                 ? 'scaleX(-1)'
                                                 : undefined,
@@ -150,24 +170,125 @@ export function ImageViewer({ images }: { images: string[] }) {
                                     </button>
                                 </form>
                                 {/* <div> */}
-                                <img
-                                    src={img}
-                                    alt=""
+                                <div
                                     style={{
+                                        position: 'relative',
                                         placeSelf: 'center',
-                                        objectFit: 'contain',
-                                        // width: '100%',
-                                        // height: '100%',
-                                        // outline: '5px solid green',
-                                        maxHeight: '100%',
-                                        maxWidth: '100%',
-                                        transform: mirrored
-                                            ? 'scaleX(-1)'
-                                            : undefined,
-                                        // backgroundColor: 'red',
                                     }}
-                                    // ref={currentImageRef}
-                                />
+                                >
+                                    <img
+                                        src={img}
+                                        alt=""
+                                        style={{
+                                            // placeSelf: 'center',
+                                            objectFit: 'contain',
+                                            // width: '100%',
+                                            // height: '100%',
+                                            // outline: '5px solid green',
+                                            maxHeight: '95vmin',
+                                            maxWidth: '95vmin',
+
+                                            // maxHeight: 'min(100vh,100%)',
+                                            // maxWidth: 'min(100vw,100%)',
+                                            transform: mirrored
+                                                ? 'scaleX(-1)'
+                                                : undefined,
+                                            // backgroundColor: 'red',
+                                        }}
+                                        // ref={currentImageRef}
+                                    />
+                                    <div
+                                        style={{
+                                            boxSizing: 'border-box',
+                                            // outline: '1px solid pink',
+                                            position: 'absolute',
+                                            inset: 0,
+                                            bottom: '4px',
+                                            maxHeight: '100%',
+                                            // backgroundColor:
+                                            //     'rgba(255,255,0,0.3)',
+
+                                            display: 'grid',
+                                            visibility: showGrid
+                                                ? 'visible'
+                                                : 'hidden',
+                                            gridTemplateColumns: '1fr 1fr 1fr',
+                                        }}
+                                    >
+                                        <div
+                                            style={{
+                                                height: '100%',
+                                                width: '100%',
+                                                border: '1px solid red',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        ></div>
+                                        <div
+                                            style={{
+                                                height: '100%',
+                                                width: '100%',
+                                                border: '1px solid red',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        ></div>
+                                        <div
+                                            style={{
+                                                height: '100%',
+                                                width: '100%',
+                                                border: '1px solid red',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        ></div>
+                                        <div
+                                            style={{
+                                                height: '100%',
+                                                width: '100%',
+                                                border: '1px solid red',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        ></div>
+                                        <div
+                                            style={{
+                                                height: '100%',
+                                                width: '100%',
+                                                border: '1px solid red',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        ></div>
+                                        <div
+                                            style={{
+                                                height: '100%',
+                                                width: '100%',
+                                                border: '1px solid red',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        ></div>
+                                        <div
+                                            style={{
+                                                height: '100%',
+                                                width: '100%',
+                                                border: '1px solid red',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        ></div>
+                                        <div
+                                            style={{
+                                                height: '100%',
+                                                width: '100%',
+                                                border: '1px solid red',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        ></div>
+                                        <div
+                                            style={{
+                                                height: '100%',
+                                                width: '100%',
+                                                border: '1px solid red',
+                                                boxSizing: 'border-box',
+                                            }}
+                                        ></div>
+                                    </div>
+                                </div>
                                 {/* </div> */}
                             </div>
                         </dialog>
