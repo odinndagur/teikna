@@ -6,6 +6,7 @@ import { useLocalStorage } from 'usehooks-ts'
 export function ImageViewer({ images }: { images: string[] }) {
     const [mirrored, setMirrored] = useState(false)
     const [showGrid, setShowGrid] = useState(false)
+    const [showControls, setShowControls] = useState(true)
     const [currentImageSize, setCurrentImageSize] = useState()
     const [userCollections, setUserCollections] = useLocalStorage<
         { id: number | string; name: string; images: string[] }[]
@@ -81,7 +82,15 @@ export function ImageViewer({ images }: { images: string[] }) {
                                 }}
                                 key={String(mirrored)}
                             >
-                                <form method="dialog" className="no-scrollbar">
+                                <form
+                                    method="dialog"
+                                    className="no-scrollbar"
+                                    style={{
+                                        visibility: showControls
+                                            ? 'visible'
+                                            : 'hidden',
+                                    }}
+                                >
                                     <button
                                         style={{
                                             position: 'absolute',
@@ -119,6 +128,9 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             right: '1rem',
                                             zIndex: 5,
                                             translate: '0 150%',
+                                            color: showGrid
+                                                ? 'var(--main-text-color)'
+                                                : 'gray',
                                             // transform: mirrored
                                             //     ? 'scaleX(-1)'
                                             //     : undefined,
@@ -174,14 +186,20 @@ export function ImageViewer({ images }: { images: string[] }) {
                                     style={{
                                         position: 'relative',
                                         placeSelf: 'center',
+                                        // backgroundColor: 'red',
+                                        // maxHeight: '95vmin',
+                                        // maxWidth: '95vmin',
                                     }}
                                 >
                                     <img
                                         src={img}
+                                        onClick={() =>
+                                            setShowControls((old) => !old)
+                                        }
                                         alt=""
                                         style={{
                                             // placeSelf: 'center',
-                                            objectFit: 'contain',
+                                            objectFit: 'fill',
                                             // width: '100%',
                                             // height: '100%',
                                             // outline: '5px solid green',
@@ -199,6 +217,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                     />
                                     <div
                                         style={{
+                                            pointerEvents: 'none',
                                             boxSizing: 'border-box',
                                             // outline: '1px solid pink',
                                             position: 'absolute',
@@ -219,7 +238,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             style={{
                                                 height: '100%',
                                                 width: '100%',
-                                                border: '1px solid red',
+                                                border: '1px solid var(--grid-color)',
                                                 boxSizing: 'border-box',
                                             }}
                                         ></div>
@@ -227,7 +246,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             style={{
                                                 height: '100%',
                                                 width: '100%',
-                                                border: '1px solid red',
+                                                border: '1px solid var(--grid-color)',
                                                 boxSizing: 'border-box',
                                             }}
                                         ></div>
@@ -235,7 +254,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             style={{
                                                 height: '100%',
                                                 width: '100%',
-                                                border: '1px solid red',
+                                                border: '1px solid var(--grid-color)',
                                                 boxSizing: 'border-box',
                                             }}
                                         ></div>
@@ -243,7 +262,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             style={{
                                                 height: '100%',
                                                 width: '100%',
-                                                border: '1px solid red',
+                                                border: '1px solid var(--grid-color)',
                                                 boxSizing: 'border-box',
                                             }}
                                         ></div>
@@ -251,7 +270,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             style={{
                                                 height: '100%',
                                                 width: '100%',
-                                                border: '1px solid red',
+                                                border: '1px solid var(--grid-color)',
                                                 boxSizing: 'border-box',
                                             }}
                                         ></div>
@@ -259,7 +278,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             style={{
                                                 height: '100%',
                                                 width: '100%',
-                                                border: '1px solid red',
+                                                border: '1px solid var(--grid-color)',
                                                 boxSizing: 'border-box',
                                             }}
                                         ></div>
@@ -267,7 +286,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             style={{
                                                 height: '100%',
                                                 width: '100%',
-                                                border: '1px solid red',
+                                                border: '1px solid var(--grid-color)',
                                                 boxSizing: 'border-box',
                                             }}
                                         ></div>
@@ -275,7 +294,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             style={{
                                                 height: '100%',
                                                 width: '100%',
-                                                border: '1px solid red',
+                                                border: '1px solid var(--grid-color)',
                                                 boxSizing: 'border-box',
                                             }}
                                         ></div>
@@ -283,7 +302,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             style={{
                                                 height: '100%',
                                                 width: '100%',
-                                                border: '1px solid red',
+                                                border: '1px solid var(--grid-color)',
                                                 boxSizing: 'border-box',
                                             }}
                                         ></div>
