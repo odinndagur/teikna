@@ -64,11 +64,18 @@ export function ImageViewer({ images }: { images: string[] }) {
                             }}
                         >
                             <div
+                                // style={{
+                                //     display: 'flex',
+                                //     justifyContent: 'center',
+                                //     alignContent: 'center',
+                                //     maxHeight: '100%',
+                                //     width: '100%',
+                                // }}
                                 style={{
                                     display: 'flex',
                                     justifyContent: 'center',
-                                    alignItems: 'center',
-                                    maxHeight: '100%',
+                                    alignContent: 'center',
+                                    height: '100%',
                                     width: '100%',
                                 }}
                                 key={String(mirrored)}
@@ -152,8 +159,8 @@ export function ImageViewer({ images }: { images: string[] }) {
                                         // width: '100%',
                                         // height: '100%',
                                         // outline: '5px solid green',
-                                        maxHeight: '100vh',
-                                        maxWidth: '100vw',
+                                        maxHeight: '100%',
+                                        maxWidth: '100%',
                                         transform: mirrored
                                             ? 'scaleX(-1)'
                                             : undefined,

@@ -275,10 +275,10 @@ export const fetchImagesFromSubExpress = async (
     after: string
 ) => {
     const res = await fetch(
-        `http://46.22.111.71/?subreddits=${encodeURIComponent(subs)}${
+        `http://localhost:3000/?subreddits=${encodeURIComponent(subs)}${
             after ? '&after=' + encodeURIComponent(after) : ''
         }`,
-        {}
+        { mode: 'cors' }
     )
     const data = await res.json()
     console.log({ data })
