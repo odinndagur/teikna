@@ -60,24 +60,24 @@ export function ImageWithModal({ img }: { img: string }) {
                     // minWidth: '80%',
                     // maxWidth: '100%',
                     // maxHeight: '100%',
-                    // maxWidth: rotation % 2 == 0 ? '100vw' : 'auto',
-                    // maxHeight: rotation % 2 != 0 ? 'auto' : '100vw',
-                    maxHeight:
-                        orientation == 'portrait'
-                            ? rotation % 2 == 0
-                                ? '100vh'
-                                : '100vw'
-                            : rotation % 2 == 0
-                            ? '100vh'
-                            : '100vw',
-                    maxWidth:
-                        orientation == 'portrait'
-                            ? rotation % 2 == 0
-                                ? '100vw'
-                                : '100vh'
-                            : rotation % 2 == 0
-                            ? '100vw'
-                            : '100vh',
+                    maxWidth: rotation % 2 == 0 ? '100vw' : '100vh',
+                    maxHeight: rotation % 2 != 0 ? '100vh' : '100vw',
+                    // maxHeight:
+                    //     orientation == 'portrait'
+                    //         ? rotation % 2 == 0
+                    //             ? '100vh'
+                    //             : '100vw'
+                    //         : rotation % 2 == 0
+                    //         ? '100vh'
+                    //         : '100vw',
+                    // maxWidth:
+                    //     orientation == 'portrait'
+                    //         ? rotation % 2 == 0
+                    //             ? '100vw'
+                    //             : '100vh'
+                    //         : rotation % 2 == 0
+                    //         ? '100vw'
+                    //         : '100vh',
 
                     // orientation == 'landscape'
                     //     ? rotation % 2 != 0
@@ -95,6 +95,9 @@ export function ImageWithModal({ img }: { img: string }) {
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
                     rotate: `${rotation * 90}deg`,
+                    transform: `translate(0,${
+                        ['0', '25%', '0', '-25px'][rotation]
+                    })`,
 
                     // backgroundImage: `url(${movie.images[9]})`,
                 }}
