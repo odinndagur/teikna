@@ -168,6 +168,24 @@ export default defineConfig({
                             },
                         },
                     },
+                    {
+                        // https://i.ytimg.com/vi/${props.videoId}/maxresdefault.jpg
+                        // https://i.redd.it/lsxdgvnp6n8b1.gif
+                        //  'https://i.redd.it/tphszp0jh09b1.jpg'
+                        // urlPattern: /^https:\/\/i\.ytimg\.com\/.*/i,
+                        urlPattern: /^https:\/\/i\.redd\.it\/.*/i,
+                        handler: 'CacheFirst',
+                        options: {
+                            cacheName: 'reddit-images-cache',
+                            expiration: {
+                                maxEntries: 10,
+                                maxAgeSeconds: 60 * 60 * 24 * 7, // <== 7 days
+                            },
+                            cacheableResponse: {
+                                statuses: [0, 200],
+                            },
+                        },
+                    },
                 ],
             },
         }),
