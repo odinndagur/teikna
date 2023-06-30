@@ -129,114 +129,6 @@ export function ImageWithModal({ img }: { img: string }) {
                     }}
                     key={String(mirrored)}
                 >
-                    <form
-                        method="dialog"
-                        className="no-scrollbar"
-                        style={{
-                            // position: 'absolute',
-                            // left: 0,
-                            visibility: showControls ? 'visible' : 'hidden',
-                        }}
-                    >
-                        <button
-                            style={{
-                                position: 'absolute',
-                                transform: 'translate(-000%,00%)',
-                                top: '1rem',
-                                left: '1rem',
-                                zIndex: 5,
-                            }}
-                            className="material-icons"
-                        >
-                            arrow_back
-                        </button>
-                        <button
-                            onClick={(ev) => {
-                                ev.preventDefault()
-                                setRotation((old) => (old + 1) % 4)
-                            }}
-                            style={{
-                                position: 'absolute',
-                                transform: 'translate(0%,300%)',
-                                top: '1rem',
-                                left: '1rem',
-                                zIndex: 5,
-                            }}
-                            className="material-icons"
-                        >
-                            {orientation}
-                        </button>
-                        <button
-                            style={{
-                                position: 'absolute',
-                                top: '1rem',
-                                right: '1rem',
-                                zIndex: 5,
-                                transform: mirrored ? 'scaleX(-1)' : undefined,
-                            }}
-                            className="material-icons"
-                            onClick={(ev) => {
-                                ev.preventDefault()
-                                setMirrored((old) => !old)
-                            }}
-                        >
-                            flip
-                        </button>
-                        <button
-                            style={{
-                                position: 'absolute',
-                                top: '1rem',
-                                right: '1rem',
-                                zIndex: 5,
-                                translate: '0 150%',
-                                color: showGrid
-                                    ? 'var(--main-text-color)'
-                                    : 'gray',
-                                // transform: mirrored
-                                //     ? 'scaleX(-1)'
-                                //     : undefined,
-                            }}
-                            className="material-icons"
-                            onClick={(ev) => {
-                                ev.preventDefault()
-                                setShowGrid((old) => !old)
-                            }}
-                        >
-                            grid_3x3
-                        </button>
-                        <button
-                            style={{
-                                position: 'absolute',
-                                top: '1rem',
-                                left: '1rem',
-                                zIndex: 5,
-                                translate: '0 150%',
-                                transform: mirrored ? 'scaleX(-1)' : undefined,
-                            }}
-                            className="material-icons"
-                            onClick={(ev) => {
-                                ev.preventDefault()
-                                setUserCollections((old: any) => {
-                                    const currentCollection = old.find(
-                                        (c: any) => c.id == 1
-                                    )
-                                    return [
-                                        ...old.filter((c: any) => c.id != 1),
-                                        {
-                                            ...currentCollection,
-                                            images: [
-                                                ...currentCollection.images,
-                                                img,
-                                            ],
-                                        },
-                                    ]
-                                })
-                                // setMirrored((old) => !old)
-                            }}
-                        >
-                            add
-                        </button>
-                    </form>
                     {/* <div> */}
                     <div
                         style={{
@@ -268,6 +160,163 @@ export function ImageWithModal({ img }: { img: string }) {
                             // maxHeight: '95%',
                         }}
                     >
+                        <div
+                            style={{
+                                padding: '1rem',
+                                position: 'absolute',
+                                display: 'flex',
+                                // gridTemplateColumns:
+                                //     'repeat(auto-fill, minmax(50px, 1fr))',
+
+                                justifyContent: 'center',
+                                gap: '1rem',
+                                width: '100%',
+                                maxHeight: '50px',
+                                height: '100%',
+                                bottom: 0,
+                                // width: rotation % 2 == 0 ? '100%' : undefined,
+                                // placeSelf: 'center',
+                                // height: rotation % 2 != 0 ? '100%' : undefined,
+                                // height: '100%',
+                                // left: rotation % 2 != 0 ? 0 : '100%',
+                                // left: rotation % 2 != 0 ? 0 : undefined,
+                                visibility: showControls ? 'visible' : 'hidden',
+                                // rotate: `${rotation * 90}deg`,
+                                // backgroundColor:
+                                //     rotation % 2 == 0 ? 'red' : 'green',
+                            }}
+                        >
+                            <form
+                                method="dialog"
+                                className="no-scrollbar"
+                                // style={{ backgroundColor: 'red' }}
+                            >
+                                <button
+                                    style={{
+                                        height: '50px',
+                                        flexShrink: 1,
+                                        rotate: `-${rotation * 90}deg`,
+                                        // height: 'auto',
+                                        // position: 'absolute',
+                                        // transform: 'translate(-000%,00%)',
+                                        // top: '1rem',
+                                        // left: '1rem',
+                                        zIndex: 5,
+                                    }}
+                                    className="material-icons"
+                                >
+                                    {/* arrow_back */}
+                                    clear
+                                </button>
+                            </form>
+                            {/* <div
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    gap: '2rem',
+                                    flexGrow: 1,
+                                }}
+                            > */}
+                            <button
+                                onClick={(ev) => {
+                                    ev.preventDefault()
+                                    setRotation((old) => (old + 1) % 4)
+                                }}
+                                style={{
+                                    rotate: `-${rotation * 90}deg`,
+                                    // position: 'absolute',
+                                    // transform: 'translate(0%,300%)',
+                                    // top: '1rem',
+                                    // left: '1rem',
+                                    zIndex: 5,
+                                }}
+                                className="material-icons"
+                            >
+                                {/* {orientation} */}
+                                rotate_right
+                            </button>
+                            <button
+                                style={{
+                                    rotate: `-${rotation * 90}deg`,
+                                    // position: 'absolute',
+                                    // top: '1rem',
+                                    // right: '1rem',
+                                    zIndex: 5,
+                                    transform: mirrored
+                                        ? 'scaleX(-1)'
+                                        : undefined,
+                                }}
+                                className="material-icons"
+                                onClick={(ev) => {
+                                    ev.preventDefault()
+                                    setMirrored((old) => !old)
+                                }}
+                            >
+                                flip
+                            </button>
+                            <button
+                                style={{
+                                    rotate: `-${rotation * 90}deg`,
+                                    // position: 'absolute',
+                                    // top: '1rem',
+                                    // right: '1rem',
+                                    zIndex: 5,
+                                    // translate: '0 150%',
+                                    color: showGrid
+                                        ? 'var(--main-text-color)'
+                                        : 'gray',
+                                    // transform: mirrored
+                                    //     ? 'scaleX(-1)'
+                                    //     : undefined,
+                                }}
+                                className="material-icons"
+                                onClick={(ev) => {
+                                    ev.preventDefault()
+                                    setShowGrid((old) => !old)
+                                }}
+                            >
+                                grid_3x3
+                            </button>
+                            <button
+                                style={{
+                                    rotate: `-${rotation * 90}deg`,
+                                    // position: 'absolute',
+                                    // top: '1rem',
+                                    // left: '1rem',
+                                    zIndex: 5,
+                                    // translate: '0 150%',
+                                    transform: mirrored
+                                        ? 'scaleX(-1)'
+                                        : undefined,
+                                }}
+                                className="material-icons"
+                                onClick={(ev) => {
+                                    ev.preventDefault()
+                                    setUserCollections((old: any) => {
+                                        const currentCollection = old.find(
+                                            (c: any) => c.id == 1
+                                        )
+                                        return [
+                                            ...old.filter(
+                                                (c: any) => c.id != 1
+                                            ),
+                                            {
+                                                ...currentCollection,
+                                                images: [
+                                                    ...currentCollection.images,
+                                                    img,
+                                                ],
+                                            },
+                                        ]
+                                    })
+                                    // setMirrored((old) => !old)
+                                }}
+                            >
+                                add
+                            </button>
+                            {/* </div> */}
+                        </div>
+
                         <img
                             className="no-scrollbar"
                             src={img}

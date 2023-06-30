@@ -15,12 +15,12 @@ initBackend(worker)
 window.worker = worker
 window.promiseWorker = promiseWorker
 
-document.addEventListener('keydown', (e) => {
-    if (e.code == 'Enter') {
-        let element: HTMLElement = document!.activeElement! as HTMLElement
-        element.click()
-    }
-})
+// document.addEventListener('keydown', (e) => {
+//     if (e.code == 'Enter') {
+//         let element: HTMLElement = document!.activeElement! as HTMLElement
+//         element.click()
+//     }
+// })
 
 ReactDOM.createRoot(document!.getElementById('root')!).render(
     <React.StrictMode>
