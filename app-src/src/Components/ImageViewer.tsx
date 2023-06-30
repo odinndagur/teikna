@@ -25,7 +25,7 @@ export function ImageWithModal({ img }: { img: string }) {
     }, [])
 
     return (
-        <div key={img}>
+        <div key={img} style={{ scrollSnapType: 'y mandatory' }}>
             {/* <button> */}
             <img
                 className="button"
@@ -38,8 +38,15 @@ export function ImageWithModal({ img }: { img: string }) {
                 }}
                 style={{
                     cursor: 'pointer',
-                    maxWidth: '100%',
-                    maxHeight: '100%',
+                    maxWidth:
+                        orientation == 'landscape'
+                            ? 'var(--max-image-size)'
+                            : undefined,
+                    maxHeight:
+                        orientation == 'portrait'
+                            ? 'var(--max-image-size)'
+                            : undefined,
+                    padding: 0,
                 }}
             />
             {/* </button> */}
@@ -51,8 +58,8 @@ export function ImageWithModal({ img }: { img: string }) {
                     // minWidth: '80%',
                     // maxWidth: '100%',
                     // maxHeight: '100%',
-                    maxWidth: rotation % 2 == 0 ? '100vw' : '100vh',
-                    maxHeight: !(rotation % 2 == 0) ? '100vh' : '100vw',
+                    maxWidth: rotation % 2 == 0 ? '100vw' : 'auto',
+                    maxHeight: rotation % 2 != 0 ? 'auto' : '100vw',
                     // width: '100vw',
                     // height: '100vh',
                     boxSizing: 'border-box',
@@ -75,6 +82,19 @@ export function ImageWithModal({ img }: { img: string }) {
                     }
                 }}
             >
+                {/* <div
+                    style={{
+                        width: '100%',
+                        height: '100%',
+                        position: 'absolute',
+                        inset: 0,
+                        pointerEvents: 'none',
+                        backgroundColor: 'rgba(255,0,0,0.5)',
+                    }}
+                >
+                    lol
+                </div> */}
+
                 <div
                     // style={{
                     //     display: 'flex',
@@ -87,6 +107,7 @@ export function ImageWithModal({ img }: { img: string }) {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        // rotate: `${rotation * 90}deg`,
                         // transform: 'rotate(90deg)',
                         // maxHeight: '100%',
                         // maxWidth: '100%',
@@ -99,6 +120,8 @@ export function ImageWithModal({ img }: { img: string }) {
                         method="dialog"
                         className="no-scrollbar"
                         style={{
+                            // position: 'absolute',
+                            // left: 0,
                             visibility: showControls ? 'visible' : 'hidden',
                         }}
                     >
@@ -207,6 +230,20 @@ export function ImageWithModal({ img }: { img: string }) {
                             // position: 'relative',
                             alignSelf: 'center',
                             placeSelf: 'center',
+                            maxHeight:
+                                // orientation == 'portrait' ?
+                                rotation % 2 == 0
+                                    ? '95vw'
+                                    : // : '95vh'
+                                      undefined,
+                            maxWidth:
+                                // orientation == 'landscape' ?
+                                rotation % 2 != 0
+                                    ? '95vh'
+                                    : // : '95vw'
+                                      undefined,
+                            padding: 0,
+                            boxSizing: 'border-box',
                             // backgroundColor: 'red',
                             // maxHeight: '95%',
                             // maxWidth: '95%',
@@ -226,19 +263,25 @@ export function ImageWithModal({ img }: { img: string }) {
                                 objectFit: 'contain',
                                 // width: '100%',
                                 // height: '100%',
-                                // outline: '5px solid green',
+                                // border: '5px solid green',
                                 padding: 0,
                                 width: '100%',
+                                // rotate: `-${rotation * 90}deg`,
                                 // maxHeight: '100%',
                                 // maxWidth: '100%',
+                                boxSizing: 'border-box',
                                 maxHeight:
                                     orientation == 'portrait'
-                                        ? '100vh'
-                                        : undefined,
+                                        ? rotation % 2 == 0
+                                            ? '95vh'
+                                            : undefined
+                                        : '95vw',
                                 maxWidth:
                                     orientation == 'landscape'
-                                        ? '100vw'
-                                        : undefined,
+                                        ? rotation % 2 != 0
+                                            ? '95vw'
+                                            : undefined
+                                        : '95vh',
                                 height: 'auto',
                                 margin: 'auto',
 
