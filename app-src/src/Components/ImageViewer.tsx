@@ -59,10 +59,12 @@ export function ImageModal({
     useEffect(() => {
         setTimeout(() => {
             imgTest.src = img
-            setOrientation(
-                imgTest.width > imgTest.height ? 'landscape' : 'portrait'
-            )
-            console.log({ imgTest })
+            imgTest.onload = () => {
+                setOrientation(
+                    imgTest.width > imgTest.height ? 'landscape' : 'portrait'
+                )
+                console.log({ imgTest })
+            }
         }, 50)
     }, [])
 
@@ -77,7 +79,7 @@ export function ImageModal({
                 // maxHeight: '100%',
                 overflowX: 'hidden',
                 maxWidth: rotation % 2 == 0 ? '100vw' : '100vh',
-                maxHeight: rotation % 2 != 0 ? '100vh' : '100vw',
+                maxHeight: rotation % 2 == 0 ? '100vh' : '100vw',
                 // maxHeight:
                 //     orientation == 'portrait'
                 //         ? rotation % 2 == 0
@@ -594,10 +596,12 @@ export function ImageElement({
     useEffect(() => {
         setTimeout(() => {
             imgTest.src = img
-            setOrientation(
-                imgTest.width > imgTest.height ? 'landscape' : 'portrait'
-            )
-            console.log({ imgTest })
+            imgTest.onload = () => {
+                setOrientation(
+                    imgTest.width > imgTest.height ? 'landscape' : 'portrait'
+                )
+                console.log({ imgTest })
+            }
         }, 50)
     }, [])
 
@@ -730,13 +734,16 @@ export function ImageViewer({ images }: { images: string[] }) {
             if (e.code == 'ArrowLeft') {
                 e.preventDefault()
                 console.log('back arrow')
-                images && setSelectedIndex((old) => Math.max(0, old - 1))
+                if (images && selectedIndex < images.length) {
+                    setSelectedIndex((old) => Math.max(0, old - 1))
+                }
             }
             if (e.code == 'ArrowRight') {
                 e.preventDefault()
                 console.log('front arrow')
-                images &&
+                if (images && selectedIndex > 0) {
                     setSelectedIndex((old) => Math.min(images.length, old + 1))
+                }
             }
         }
         document.addEventListener('keydown', onKeyDown)
