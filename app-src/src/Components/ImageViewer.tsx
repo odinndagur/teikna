@@ -95,9 +95,12 @@ export function ImageWithModal({ img }: { img: string }) {
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
                     rotate: `${rotation * 90}deg`,
-                    transform: `translate(0,${
-                        ['0', '25%', '0', '-25px'][rotation]
-                    })`,
+                    // transform: `translate(0,${
+                    //     ['0', '25%', '0', '-25%'][rotation]
+                    // })`,
+                    // WebkitTransform: `translate(0,${
+                    //     ['0', '50%', '0', '-50%'][rotation]
+                    // })`,
 
                     // backgroundImage: `url(${movie.images[9]})`,
                 }}
