@@ -63,15 +63,15 @@ export function ImageWithModal({ img }: { img: string }) {
                     maxHeight:
                         orientation == 'portrait'
                             ? rotation % 2 == 0
-                                ? '95vh'
+                                ? '100vh'
                                 : undefined
-                            : '95vw',
+                            : '100vw',
                     maxWidth:
                         orientation == 'landscape'
                             ? rotation % 2 != 0
-                                ? '95vw'
+                                ? '100vw'
                                 : undefined
-                            : '95vh',
+                            : '100vh',
 
                     // width: '100vw',
                     // height: '100vh',
@@ -285,20 +285,20 @@ export function ImageWithModal({ img }: { img: string }) {
                                 // maxHeight: '100%',
                                 // maxWidth: '100%',
                                 boxSizing: 'border-box',
+                                height: 'auto',
+                                margin: 'auto',
                                 maxHeight:
                                     orientation == 'portrait'
                                         ? rotation % 2 == 0
                                             ? '95vh'
-                                            : undefined
-                                        : '95vw',
+                                            : '95vw'
+                                        : undefined,
                                 maxWidth:
                                     orientation == 'landscape'
-                                        ? rotation % 2 != 0
+                                        ? rotation % 2 == 0
                                             ? '95vw'
-                                            : undefined
-                                        : '95vh',
-                                height: 'auto',
-                                margin: 'auto',
+                                            : '95vh'
+                                        : undefined,
 
                                 // maxHeight: 'min(100vh,100%)',
                                 // maxWidth: 'min(100vw,100%)',
