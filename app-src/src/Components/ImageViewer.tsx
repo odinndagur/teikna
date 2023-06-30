@@ -726,12 +726,14 @@ onClick={(ev) => {
 export function ImageViewer({ images }: { images: string[] }) {
     const [selectedIndex, setSelectedIndex] = useState<number>(0)
     useEffect(() => {
-        const onKeyDown = (e) => {
+        const onKeyDown = (e: KeyboardEvent) => {
             if (e.code == 'ArrowLeft') {
+                e.preventDefault()
                 console.log('back arrow')
                 images && setSelectedIndex((old) => Math.max(0, old - 1))
             }
             if (e.code == 'ArrowRight') {
+                e.preventDefault()
                 console.log('front arrow')
                 images &&
                     setSelectedIndex((old) => Math.min(images.length, old + 1))
