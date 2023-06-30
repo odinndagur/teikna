@@ -376,6 +376,7 @@ export function ImageModal({
                             boxSizing: 'border-box',
                             transform: 'translate(0,-50%)',
                             zIndex: 99,
+                            visibility: showControls ? 'visible' : 'hidden',
                         }}
                     >
                         <button
