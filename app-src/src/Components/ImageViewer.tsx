@@ -58,8 +58,21 @@ export function ImageWithModal({ img }: { img: string }) {
                     // minWidth: '80%',
                     // maxWidth: '100%',
                     // maxHeight: '100%',
-                    maxWidth: rotation % 2 == 0 ? '100vw' : 'auto',
-                    maxHeight: rotation % 2 != 0 ? 'auto' : '100vw',
+                    // maxWidth: rotation % 2 == 0 ? '100vw' : 'auto',
+                    // maxHeight: rotation % 2 != 0 ? 'auto' : '100vw',
+                    maxHeight:
+                        orientation == 'portrait'
+                            ? rotation % 2 == 0
+                                ? '95vh'
+                                : undefined
+                            : '95vw',
+                    maxWidth:
+                        orientation == 'landscape'
+                            ? rotation % 2 != 0
+                                ? '95vw'
+                                : undefined
+                            : '95vh',
+
                     // width: '100vw',
                     // height: '100vh',
                     boxSizing: 'border-box',
@@ -230,18 +243,20 @@ export function ImageWithModal({ img }: { img: string }) {
                             // position: 'relative',
                             alignSelf: 'center',
                             placeSelf: 'center',
-                            maxHeight:
-                                // orientation == 'portrait' ?
-                                rotation % 2 == 0
-                                    ? '95vw'
-                                    : // : '95vh'
-                                      undefined,
-                            maxWidth:
-                                // orientation == 'landscape' ?
-                                rotation % 2 != 0
-                                    ? '95vh'
-                                    : // : '95vw'
-                                      undefined,
+                            // maxHeight:
+                            //     // orientation == 'portrait' ?
+                            //     rotation % 2 == 0
+                            //         ? '95vw'
+                            //         : // : '95vh'
+                            //           undefined,
+                            // maxWidth:
+                            //     // orientation == 'landscape' ?
+                            //     rotation % 2 != 0
+                            //         ? '95vh'
+                            //         : // : '95vw'
+                            //           undefined,
+                            height: '100%',
+                            width: '100%',
                             padding: 0,
                             boxSizing: 'border-box',
                             // backgroundColor: 'red',
