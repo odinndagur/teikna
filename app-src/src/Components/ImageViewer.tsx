@@ -17,11 +17,13 @@ export function ImageWithModal({ img }: { img: string }) {
     )
     const imgTest = new Image()
     useEffect(() => {
-        imgTest.src = img
-        setOrientation(
-            imgTest.width > imgTest.height ? 'landscape' : 'portrait'
-        )
-        console.log({ imgTest })
+        setTimeout(() => {
+            imgTest.src = img
+            setOrientation(
+                imgTest.width > imgTest.height ? 'landscape' : 'portrait'
+            )
+            console.log({ imgTest })
+        }, 50)
     }, [])
 
     return (
@@ -64,14 +66,24 @@ export function ImageWithModal({ img }: { img: string }) {
                         orientation == 'portrait'
                             ? rotation % 2 == 0
                                 ? '100vh'
-                                : undefined
+                                : '100vw'
+                            : rotation % 2 == 0
+                            ? '100vh'
                             : '100vw',
                     maxWidth:
-                        orientation == 'landscape'
-                            ? rotation % 2 != 0
+                        orientation == 'portrait'
+                            ? rotation % 2 == 0
                                 ? '100vw'
-                                : undefined
+                                : '100vh'
+                            : rotation % 2 == 0
+                            ? '100vw'
                             : '100vh',
+
+                    // orientation == 'landscape'
+                    //     ? rotation % 2 != 0
+                    //         ? '100vh'
+                    //         : '100vw'
+                    //     : undefined,
 
                     // width: '100vw',
                     // height: '100vh',
@@ -218,6 +230,25 @@ export function ImageWithModal({ img }: { img: string }) {
                                 }}
                             > */}
                             <button
+                                onClick={(ev) => ev.preventDefault()}
+                                style={{
+                                    height: '50px',
+                                    flexShrink: 1,
+                                    rotate: `-${rotation * 90}deg`,
+                                    // height: 'auto',
+                                    // position: 'absolute',
+                                    // transform: 'translate(-000%,00%)',
+                                    // top: '1rem',
+                                    // left: '1rem',
+                                    zIndex: 5,
+                                }}
+                                className="material-icons"
+                            >
+                                {/* arrow_back */}
+                                {orientation}
+                            </button>
+
+                            <button
                                 onClick={(ev) => {
                                     ev.preventDefault()
                                     setRotation((old) => (old + 1) % 4)
@@ -329,25 +360,41 @@ export function ImageWithModal({ img }: { img: string }) {
                                 // height: '100%',
                                 // border: '5px solid green',
                                 padding: 0,
-                                width: '100%',
+                                // width: '100%',
                                 // rotate: `-${rotation * 90}deg`,
                                 // maxHeight: '100%',
                                 // maxWidth: '100%',
                                 boxSizing: 'border-box',
                                 height: 'auto',
                                 margin: 'auto',
+                                // maxHeight:
+                                //     orientation == 'landscape'
+                                //         ? rotation % 2 == 0
+                                //             ? '95vh'
+                                //             : undefined
+                                //         : '95vw',
+                                // maxWidth:
+                                //     orientation == 'portrait'
+                                //         ? rotation % 2 == 0
+                                //             ? '95vw'
+                                //             : undefined
+                                //         : '95vh',
                                 maxHeight:
                                     orientation == 'portrait'
                                         ? rotation % 2 == 0
-                                            ? '95vh'
-                                            : '95vw'
-                                        : undefined,
+                                            ? '100vh'
+                                            : '100vw'
+                                        : rotation % 2 == 0
+                                        ? '100vh'
+                                        : '100vw',
                                 maxWidth:
-                                    orientation == 'landscape'
+                                    orientation == 'portrait'
                                         ? rotation % 2 == 0
-                                            ? '95vw'
-                                            : '95vh'
-                                        : undefined,
+                                            ? '100vw'
+                                            : '100vh'
+                                        : rotation % 2 == 0
+                                        ? '100vw'
+                                        : '100vh',
 
                                 // maxHeight: 'min(100vh,100%)',
                                 // maxWidth: 'min(100vw,100%)',
