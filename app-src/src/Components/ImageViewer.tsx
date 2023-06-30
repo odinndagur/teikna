@@ -3,7 +3,47 @@ import { Grid } from './Grid'
 import './MoviePage.css'
 import { useLocalStorage } from 'usehooks-ts'
 
-export function ImageModal({ img }: { img: string }) {
+export function ImageModal({
+    images,
+    idx,
+    selectImage,
+}: {
+    images: string[]
+    idx: number
+    selectImage: any
+}) {
+    //     <button
+    //     style={{
+    //         rotate: `-${rotation * 90}deg`,
+    //         zIndex: 5,
+    //     }}
+    //     className="material-icons"
+    //     disabled={idx >= (images && images.length)}
+    //     onClick={(ev) => {
+    //         ev.preventDefault()
+    //         selectImage(Math.max(idx - 1, 0))
+    //     }}
+    // >
+    //     arrow_back_ios
+    // </button>
+
+    // <button
+    //     style={{
+    //         rotate: `-${rotation * 90}deg`,
+    //         zIndex: 5,
+    //     }}
+    //     className="material-icons"
+    //     disabled={idx >= (images && images.length)}
+    //     onClick={(ev) => {
+    //         ev.preventDefault()
+    //         selectImage(Math.min(idx + 1, images.length))
+    //     }}
+    // >
+    //     arrow_forward_ios
+    // </button>
+
+    const img = images && images[idx]
+    const modalId = 'image-viewer-modal'
     const [mirrored, setMirrored] = useState(false)
     const [showGrid, setShowGrid] = useState(false)
     const [showControls, setShowControls] = useState(true)
@@ -29,12 +69,13 @@ export function ImageModal({ img }: { img: string }) {
     return (
         <dialog
             className="dialog-screenshot no-scrollbar"
-            id={img}
+            id={modalId}
             style={{
                 border: 'none',
                 // minWidth: '80%',
                 // maxWidth: '100%',
                 // maxHeight: '100%',
+                overflowX: 'hidden',
                 maxWidth: rotation % 2 == 0 ? '100vw' : '100vh',
                 maxHeight: rotation % 2 != 0 ? '100vh' : '100vw',
                 // maxHeight:
@@ -80,7 +121,9 @@ export function ImageModal({ img }: { img: string }) {
                 // backgroundImage: `url(${movie.images[9]})`,
             }}
             onClick={(ev) => {
-                const dialog = document.getElementById(img) as HTMLDialogElement
+                const dialog = document.getElementById(
+                    modalId
+                ) as HTMLDialogElement
                 if (ev.target == dialog) {
                     dialog.close()
                 }
@@ -318,7 +361,52 @@ export function ImageModal({ img }: { img: string }) {
                         >
                             add
                         </button>
+
                         {/* </div> */}
+                    </div>
+
+                    <div
+                        style={{
+                            position: 'absolute',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            width: '100%',
+                            top: '50%',
+                            padding: '1rem',
+                            boxSizing: 'border-box',
+                            transform: 'translate(0,-50%)',
+                            zIndex: 99,
+                        }}
+                    >
+                        <button
+                            style={{
+                                rotate: `-${rotation * 90}deg`,
+                                zIndex: 5,
+                            }}
+                            className="material-icons"
+                            disabled={idx >= (images && images.length)}
+                            onClick={(ev) => {
+                                ev.preventDefault()
+                                selectImage(Math.max(idx - 1, 0))
+                            }}
+                        >
+                            arrow_back_ios
+                        </button>
+
+                        <button
+                            style={{
+                                rotate: `-${rotation * 90}deg`,
+                                zIndex: 5,
+                            }}
+                            className="material-icons"
+                            disabled={idx >= (images && images.length)}
+                            onClick={(ev) => {
+                                ev.preventDefault()
+                                selectImage(Math.min(idx + 1, images.length))
+                            }}
+                        >
+                            arrow_forward_ios
+                        </button>
                     </div>
 
                     <img
@@ -481,7 +569,15 @@ export function ImageModal({ img }: { img: string }) {
         </dialog>
     )
 }
-export function ImageWithModal({ img }: { img: string }) {
+export function ImageElement({
+    img,
+    selectImage,
+}: {
+    img: string
+    selectImage: any
+}) {
+    const modalId = 'image-viewer-modal'
+
     const [mirrored, setMirrored] = useState(false)
     const [showGrid, setShowGrid] = useState(false)
     const [showControls, setShowControls] = useState(true)
@@ -513,7 +609,10 @@ export function ImageWithModal({ img }: { img: string }) {
                 key={img}
                 onClick={() => {
                     setMirrored(false)
-                    const el = document.getElementById(img) as HTMLDialogElement
+                    selectImage()
+                    const el = document.getElementById(
+                        modalId
+                    ) as HTMLDialogElement
                     el.showModal()
                 }}
                 style={{
@@ -624,16 +723,43 @@ onClick={(ev) => {
 }
 
 export function ImageViewer({ images }: { images: string[] }) {
+    const [selectedIndex, setSelectedIndex] = useState<number>(0)
+    useEffect(() => {
+        const onKeyDown = (e) => {
+            if (e.code == 'ArrowLeft') {
+                console.log('back arrow')
+                images && setSelectedIndex((old) => Math.max(0, old - 1))
+            }
+            if (e.code == 'ArrowRight') {
+                console.log('front arrow')
+                images &&
+                    setSelectedIndex((old) => Math.min(images.length, old + 1))
+            }
+        }
+        document.addEventListener('keydown', onKeyDown)
+        return () => {
+            document.removeEventListener('keydown', onKeyDown)
+        }
+    }, [])
+
     return (
         <Grid>
             {images?.map((img, idx) => {
                 return (
                     <>
-                        <ImageWithModal img={img} />
-                        <ImageModal img={img} />
+                        <ImageElement
+                            img={img}
+                            selectImage={() => setSelectedIndex(idx)}
+                        />
                     </>
                 )
             })}
+            <ImageModal
+                images={images}
+                idx={selectedIndex}
+                selectImage={(idx: number) => setSelectedIndex(idx)}
+                // img={img}
+            />
         </Grid>
     )
 }

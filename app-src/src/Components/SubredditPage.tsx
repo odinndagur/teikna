@@ -127,13 +127,15 @@ export function SubredditPage() {
                     }}
                 >
                     <input
+                        style={{ margin: '1rem' }}
                         onChange={(ev) => setInputState(ev.currentTarget.value)}
                         type="text"
                         name=""
                         id=""
                         placeholder="Go to subreddit..."
                         list="subreddits"
-                    />{' '}
+                    />
+                    <br />
                     <button type="submit">Go</button>
                     <button
                         onClick={(ev) => {
