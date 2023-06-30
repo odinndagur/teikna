@@ -36,17 +36,17 @@ export function ImageViewer({ images }: { images: string[] }) {
                         />
                         {/* </button> */}
                         <dialog
-                            className="dialog-screenshot"
+                            className="dialog-screenshot no-scrollbar"
                             id={img}
                             style={{
                                 border: 'none',
-                                minWidth: '80%',
+                                // minWidth: '80%',
                                 // maxWidth: '100%',
                                 // maxHeight: '100%',
-                                // maxWidth: '100%',
-                                // maxHeight: '100%',
-                                width: '100vw',
-                                height: '100vh',
+                                maxWidth: '100vw',
+                                maxHeight: '100vh',
+                                // width: '100vw',
+                                // height: '100vh',
                                 boxSizing: 'border-box',
                                 padding:
                                     'env(safe-area-border-top),env(safe-area-border-right),env(safe-area-border-bottom),env(safe-area-border-left)',
@@ -76,9 +76,11 @@ export function ImageViewer({ images }: { images: string[] }) {
                                 style={{
                                     display: 'flex',
                                     justifyContent: 'center',
-                                    alignContent: 'center',
-                                    height: '100%',
-                                    width: '100%',
+                                    alignItems: 'center',
+                                    // maxHeight: '100%',
+                                    // maxWidth: '100%',
+                                    // padding: '1rem',
+                                    // backgroundColor: 'blue',
                                 }}
                                 key={String(mirrored)}
                             >
@@ -184,14 +186,20 @@ export function ImageViewer({ images }: { images: string[] }) {
                                 {/* <div> */}
                                 <div
                                     style={{
-                                        position: 'relative',
+                                        // position: 'relative',
+                                        alignSelf: 'center',
                                         placeSelf: 'center',
                                         // backgroundColor: 'red',
-                                        // maxHeight: '95vmin',
-                                        // maxWidth: '95vmin',
+                                        // maxHeight: '95%',
+                                        // maxWidth: '95%',
+                                        // padding: '1rem',
+                                        margin: 'auto',
+                                        // maxWidth: '95%',
+                                        // maxHeight: '95%',
                                     }}
                                 >
                                     <img
+                                        className="no-scrollbar"
                                         src={img}
                                         onClick={() =>
                                             setShowControls((old) => !old)
@@ -199,12 +207,18 @@ export function ImageViewer({ images }: { images: string[] }) {
                                         alt=""
                                         style={{
                                             // placeSelf: 'center',
-                                            objectFit: 'fill',
+                                            objectFit: 'contain',
                                             // width: '100%',
                                             // height: '100%',
                                             // outline: '5px solid green',
-                                            maxHeight: '95%',
-                                            maxWidth: '95%',
+                                            padding: 0,
+                                            width: '100%',
+                                            // maxHeight: '100%',
+                                            // maxWidth: '100%',
+                                            maxHeight: '100vmin',
+                                            maxWidth: '100vmin',
+                                            height: 'auto',
+                                            margin: 'auto',
 
                                             // maxHeight: 'min(100vh,100%)',
                                             // maxWidth: 'min(100vw,100%)',
@@ -221,9 +235,18 @@ export function ImageViewer({ images }: { images: string[] }) {
                                             boxSizing: 'border-box',
                                             // outline: '1px solid pink',
                                             position: 'absolute',
+                                            // padding: '1rem',
                                             inset: 0,
-                                            bottom: '4px',
-                                            maxHeight: '100%',
+                                            // bottom: '4px',
+                                            // bottom: '-4px',
+                                            // maxHeight: '95%',
+                                            // height: 'calc(100% - 4px)',
+                                            // width: '95%',
+                                            // maxHeight: '95%',
+                                            // width: '95%',
+                                            height: 'auto',
+                                            width: 'auto',
+                                            margin: 'auto',
                                             // backgroundColor:
                                             //     'rgba(255,255,0,0.3)',
 
