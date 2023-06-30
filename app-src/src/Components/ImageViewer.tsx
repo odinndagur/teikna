@@ -11,7 +11,7 @@ export function ImageWithModal({ img }: { img: string }) {
     const [userCollections, setUserCollections] = useLocalStorage<
         { id: number | string; name: string; images: string[] }[]
     >('user-collections', [{ name: 'Base', id: 1, images: [] }])
-
+    const [rotation, setRotation] = useState(0)
     const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(
         'portrait'
     )
@@ -51,8 +51,8 @@ export function ImageWithModal({ img }: { img: string }) {
                     // minWidth: '80%',
                     // maxWidth: '100%',
                     // maxHeight: '100%',
-                    maxWidth: '100vw',
-                    maxHeight: '100vh',
+                    maxWidth: rotation % 2 == 0 ? '100vw' : '100vh',
+                    maxHeight: !(rotation % 2 == 0) ? '100vh' : '100vw',
                     // width: '100vw',
                     // height: '100vh',
                     boxSizing: 'border-box',
@@ -62,6 +62,8 @@ export function ImageWithModal({ img }: { img: string }) {
                     // boxSizing: 'border-box',
                     backdropFilter: 'blur(10px)',
                     WebkitBackdropFilter: 'blur(10px)',
+                    rotate: `${rotation * 90}deg`,
+
                     // backgroundImage: `url(${movie.images[9]})`,
                 }}
                 onClick={(ev) => {
@@ -85,6 +87,7 @@ export function ImageWithModal({ img }: { img: string }) {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        // transform: 'rotate(90deg)',
                         // maxHeight: '100%',
                         // maxWidth: '100%',
                         // padding: '1rem',
@@ -112,6 +115,10 @@ export function ImageWithModal({ img }: { img: string }) {
                             arrow_back
                         </button>
                         <button
+                            onClick={(ev) => {
+                                ev.preventDefault()
+                                setRotation((old) => (old + 1) % 4)
+                            }}
                             style={{
                                 position: 'absolute',
                                 transform: 'translate(0%,300%)',
