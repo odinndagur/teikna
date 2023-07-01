@@ -68,6 +68,20 @@ export function ImageModal({
         }, 50)
     }, [])
 
+    // const ios = () => {
+    //     if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
+
+    //     return /iPhone|iPad|iPod/i.test(navigator.userAgent || navigator.vendor || (window.opera && opera.toString() === `[object Opera]`));
+    // };
+
+    const ios =
+        !(typeof window === `undefined`) &&
+        !(typeof navigator === `undefined`) &&
+        /iPhone|iPad|iPod/i.test(
+            navigator.userAgent ||
+                navigator.vendor ||
+                (window.opera && opera.toString() === `[object Opera]`)
+        )
     return (
         <dialog
             className="dialog-screenshot no-scrollbar"
@@ -116,9 +130,9 @@ export function ImageModal({
                 // transform: `translate(0,${
                 //     ['0', '25%', '0', '-25%'][rotation]
                 // })`,
-                // WebkitTransform: `translate(0,${
-                //     ['0', '50%', '0', '-50%'][rotation]
-                // })`,
+                WebkitTransform: ios
+                    ? `translate(0,${['0', '50%', '0', '-50%'][rotation]})`
+                    : undefined,
 
                 // backgroundImage: `url(${movie.images[9]})`,
             }}
