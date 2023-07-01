@@ -109,7 +109,7 @@ export default defineConfig({
             workbox: {
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
                 // globPatterns: ['**/*.{js,html,ico,png,svg,jpg,jpeg}'],
-                navigateFallback: 'index.html',
+                navigateFallback: '/teikna/index.html',
                 maximumFileSizeToCacheInBytes: 70000000,
                 runtimeCaching: [
                     {
@@ -177,6 +177,20 @@ export default defineConfig({
                         handler: 'CacheFirst',
                         options: {
                             cacheName: 'reddit-images-cache',
+                            expiration: {
+                                maxEntries: 10,
+                                maxAgeSeconds: 60 * 60 * 24 * 7, // <== 7 days
+                            },
+                            cacheableResponse: {
+                                statuses: [0, 200],
+                            },
+                        },
+                    },
+                    {
+                        urlPattern: /^.*.gif.*/i,
+                        handler: 'CacheFirst',
+                        options: {
+                            cacheName: 'gif-cache',
                             expiration: {
                                 maxEntries: 10,
                                 maxAgeSeconds: 60 * 60 * 24 * 7, // <== 7 days

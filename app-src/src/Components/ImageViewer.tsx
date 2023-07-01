@@ -593,6 +593,7 @@ export function ImageElement({
     const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(
         'portrait'
     )
+    const [imageVisible, setImageVisible] = useState(false)
     const imgTest = new Image()
     useEffect(() => {
         setTimeout(() => {
@@ -601,6 +602,7 @@ export function ImageElement({
                 setOrientation(
                     imgTest.width > imgTest.height ? 'landscape' : 'portrait'
                 )
+                setImageVisible(true)
                 console.log({ imgTest })
             }
         }, 50)
@@ -622,6 +624,7 @@ export function ImageElement({
                     el.showModal()
                 }}
                 style={{
+                    display: !imageVisible ? 'none' : undefined,
                     cursor: 'pointer',
                     maxWidth:
                         orientation == 'landscape'
