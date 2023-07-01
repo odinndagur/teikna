@@ -200,9 +200,9 @@ export function ImageModal({
                         style={{
                             padding: '1rem',
                             position: 'absolute',
-                            display: 'flex',
-                            // gridTemplateColumns:
-                            //     'repeat(auto-fill, minmax(50px, 1fr))',
+                            display: 'grid',
+                            gridTemplateColumns:
+                                'repeat(auto-fill, minmax(50px, 1fr))',
 
                             justifyContent: 'center',
                             gap: '1rem',
@@ -253,7 +253,7 @@ export function ImageModal({
                         flexGrow: 1,
                     }}
                 > */}
-                        <button
+                        {/* <button
                             onClick={(ev) => ev.preventDefault()}
                             style={{
                                 height: '50px',
@@ -268,9 +268,8 @@ export function ImageModal({
                             }}
                             className="material-icons"
                         >
-                            {/* arrow_back */}
-                            {orientation}
-                        </button>
+                            orientation
+                     </button> */}
 
                         <button
                             onClick={(ev) => {
@@ -729,21 +728,33 @@ onClick={(ev) => {
 
 export function ImageViewer({ images }: { images: string[] }) {
     const [selectedIndex, setSelectedIndex] = useState<number>(0)
+    const prevImage = () => {
+        if (images && selectedIndex > 0) {
+            setSelectedIndex((old) => Math.max(0, old - 1))
+        }
+    }
+    const nextImage = () => {
+        if (images && selectedIndex < images.length - 1) {
+            setSelectedIndex((old) => Math.min(images.length - 1, old + 1))
+        }
+    }
     useEffect(() => {
         const onKeyDown = (e: KeyboardEvent) => {
             if (e.code == 'ArrowLeft') {
                 e.preventDefault()
-                console.log('back arrow')
-                if (images && selectedIndex < images.length) {
-                    setSelectedIndex((old) => Math.max(0, old - 1))
-                }
+                prevImage()
+                // console.log('back arrow', selectedIndex)
+                // if (images && selectedIndex > 0) {
+                //     setSelectedIndex((old) => Math.max(0, old - 1))
+                // }
             }
             if (e.code == 'ArrowRight') {
                 e.preventDefault()
-                console.log('front arrow')
-                if (images && selectedIndex > 0) {
-                    setSelectedIndex((old) => Math.min(images.length, old + 1))
-                }
+                nextImage()
+                // console.log('front arrow', selectedIndex)
+                // if (images && selectedIndex < images.length - 1) {
+                //     setSelectedIndex((old) => Math.min(images.length, old + 1))
+                // }
             }
         }
         document.addEventListener('keydown', onKeyDown)
