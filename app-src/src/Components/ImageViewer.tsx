@@ -142,7 +142,9 @@ export function ImageModal({
                 ) as HTMLDialogElement
                 if (ev.target == dialog) {
                     dialog.close()
-                } else {
+                }
+                if (ev.target.tagName.toLocaleLowerCase() != 'button') {
+                    console.log(ev.target.tagName)
                     setShowControls((old) => !old)
                 }
             }}
