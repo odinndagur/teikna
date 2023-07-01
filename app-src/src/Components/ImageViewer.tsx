@@ -142,6 +142,8 @@ export function ImageModal({
                 ) as HTMLDialogElement
                 if (ev.target == dialog) {
                     dialog.close()
+                } else {
+                    setShowControls((old) => !old)
                 }
             }}
         >
@@ -430,7 +432,7 @@ export function ImageModal({
                     <img
                         className="no-scrollbar"
                         src={img}
-                        onClick={() => setShowControls((old) => !old)}
+                        // onClick={() => setShowControls((old) => !old)}
                         alt=""
                         style={{
                             // placeSelf: 'center',
