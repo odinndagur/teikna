@@ -225,7 +225,9 @@ export function ImageModal({
                         <form
                             method="dialog"
                             className="no-scrollbar"
-                            // style={{ backgroundColor: 'red' }}
+                            style={{
+                                zIndex: 5,
+                            }}
                         >
                             <button
                                 style={{
