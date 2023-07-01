@@ -51,7 +51,7 @@ export function SubredditPage() {
         keepPreviousData: true,
         refetchOnMount: false,
         enabled: true,
-        queryKey: [subreddit, shouldGetMoreImages],
+        queryKey: [subreddit],
         // staleTime: Infinity,
         refetchOnWindowFocus: false,
         refetchOnReconnect: false,
@@ -92,26 +92,6 @@ export function SubredditPage() {
                         </option>
                     ))}
                 </datalist>
-                {/*<form
-                    onSubmit={(ev) => {
-                        ev.preventDefault()
-                        setMyStorage((old) => [
-                            ...old,
-                            ev.currentTarget[0].value,
-                        ])
-                    }}
-                >
-                     <input type="text" name="" id="lol" />
-                    <button type="submit">testa add 2 local storage</button>
-                    <button
-                        onClick={(ev) => {
-                            ev.preventDefault()
-                            setMyStorage([])
-                        }}
-                    >
-                        delete
-                    </button>
-                </form> */}
 
                 <form
                     onSubmit={(ev) => {
@@ -167,7 +147,8 @@ export function SubredditPage() {
                     console.log(ev)
                     ev.preventDefault()
                     ev.stopPropagation()
-                    setShouldGetMoreImages((old) => old + 1)
+                    refetch()
+                    // setShouldGetMoreImages((old) => old + 1)
                     // refetch()
                 }}
             >
