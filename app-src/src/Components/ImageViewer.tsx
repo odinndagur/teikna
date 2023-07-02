@@ -131,7 +131,7 @@ export function ImageModal({
                 //     ['0', '25%', '0', '-25%'][rotation]
                 // })`,
                 WebkitTransform: ios
-                    ? `translate(0,${['0', '25%', '0', '-25%'][rotation]})`
+                    ? `translate(0,${['0', '60%', '0', '-60%'][rotation]})`
                     : undefined,
 
                 // backgroundImage: `url(${movie.images[9]})`,
@@ -403,7 +403,7 @@ export function ImageModal({
                     >
                         <button
                             style={{
-                                rotate: `-${rotation * 90}deg`,
+                                // rotate: `-${rotation * 90}deg`,
                                 zIndex: 5,
                             }}
                             className="material-icons"
@@ -418,7 +418,7 @@ export function ImageModal({
 
                         <button
                             style={{
-                                rotate: `-${rotation * 90}deg`,
+                                // rotate: `-${rotation * 90}deg`,
                                 zIndex: 5,
                             }}
                             className="material-icons"
@@ -466,19 +466,19 @@ export function ImageModal({
                             maxHeight:
                                 orientation == 'portrait'
                                     ? rotation % 2 == 0
-                                        ? '100vh'
-                                        : '100vw'
+                                        ? '95vh'
+                                        : '95vw'
                                     : rotation % 2 == 0
-                                    ? '100vh'
-                                    : '100vw',
+                                    ? '95vh'
+                                    : '95vw',
                             maxWidth:
                                 orientation == 'portrait'
                                     ? rotation % 2 == 0
-                                        ? '100vw'
-                                        : '100vh'
+                                        ? '95vw'
+                                        : '95vh'
                                     : rotation % 2 == 0
-                                    ? '100vw'
-                                    : '100vh',
+                                    ? '95vw'
+                                    : '95vh',
 
                             // maxHeight: 'min(100vh,100%)',
                             // maxWidth: 'min(100vw,100%)',
