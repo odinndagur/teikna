@@ -131,7 +131,7 @@ export function ImageModal({
                 //     ['0', '25%', '0', '-25%'][rotation]
                 // })`,
                 WebkitTransform: ios
-                    ? `translate(0,${['0', '50%', '0', '-50%'][rotation]})`
+                    ? `translate(0,${['0', '100%', '0', '-100%'][rotation]})`
                     : undefined,
 
                 // backgroundImage: `url(${movie.images[9]})`,
@@ -142,6 +142,7 @@ export function ImageModal({
                 ) as HTMLDialogElement
                 if (ev.target == dialog) {
                     dialog.close()
+                    return
                 }
                 if (ev.target.tagName.toLocaleLowerCase() != 'button') {
                     console.log(ev.target.tagName)
