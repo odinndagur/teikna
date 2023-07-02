@@ -339,6 +339,7 @@ async function run() {
         console.log('try')
         db.exec('select * from movie limit 5')
         const res = db.query('pragma user_version')
+        console.log({ res })
         const user_version = res[0].user_version
         console.log('pragma user version', user_version, currentVersion)
         if (res.length && user_version != currentVersion) {
@@ -348,6 +349,9 @@ async function run() {
             PRAGMA writable_schema = 0;
             VACUUM;
             PRAGMA INTEGRITY_CHECK`)
+        }
+        if (!res.length) {
+            initDB = true
         }
     } catch (error) {
         console.log('except')
@@ -396,6 +400,7 @@ async function run() {
         // )
         // db.exec(`pragma user_version = ${currentVersion}`)
         let filepathPrefix = `${import.meta.env.BASE_URL}assets/`
+        console.log({ filepathPrefix })
         const filepaths = [
             // `${filepathPrefix}filmgrab-tables.txt`,
             // `${filepathPrefix}assets/filmgrab-sqlite.txt`,

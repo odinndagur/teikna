@@ -84,7 +84,7 @@ function App() {
             } catch (error) {
                 console.error(error)
             }
-        }, 500)
+        }, 1000)
     }, [])
 
     if (!promiseWorkerLoaded) {
@@ -406,10 +406,10 @@ function App() {
                             },
                         ]}
                     >
-                        {!promiseWorkerLoaded && <Header></Header>}
+                        {/* {!promiseWorkerLoaded && <Header></Header>} */}
                         <Outlet />
 
-                        {!promiseWorkerLoaded && <Footer></Footer>}
+                        {/* {!promiseWorkerLoaded && <Footer></Footer>} */}
                         {/* <AppNavBar type="footer" /> */}
                         {/* <div
                             className="dark-mode-switch-container"

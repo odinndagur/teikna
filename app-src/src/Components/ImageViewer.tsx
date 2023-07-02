@@ -88,6 +88,7 @@ export function ImageModal({
             id={modalId}
             style={{
                 border: 'none',
+                inset: 0,
                 // minWidth: '80%',
                 // maxWidth: '100%',
                 // maxHeight: '100%',
@@ -128,11 +129,19 @@ export function ImageModal({
                 WebkitBackdropFilter: 'blur(10px)',
                 rotate: `${rotation * 90}deg`,
                 // transform: `translate(0,${
-                //     ['0', '25%', '0', '-25%'][rotation]
+                //     ['0', 'calc(30%)', '0', '-calc(30%)'][rotation]
                 // })`,
                 WebkitTransform: ios
-                    ? `translate(0,${['0', '60%', '0', '-60%'][rotation]})`
+                    ? `translate(0,${
+                          ['0', '22.5vh', '0', '-22.5vh'][rotation]
+                      })`
                     : undefined,
+                //     : // `translate(0,${['0', '30%', '0', '-60%'][rotation]})`
+                // WebkitTransform: ios
+                //     ? `translate(0,22.5vh)`
+
+                WebkitTransformOrigin: 'center',
+                // WebkitTransform: ios ? `translate(0,50%)` : undefined,
 
                 // backgroundImage: `url(${movie.images[9]})`,
             }}
@@ -252,7 +261,7 @@ export function ImageModal({
                                 style={{
                                     height: '50px',
                                     flexShrink: 1,
-                                    rotate: `-${rotation * 90}deg`,
+                                    // rotate: `-${rotation * 90}deg`,
                                     // height: 'auto',
                                     // position: 'absolute',
                                     // transform: 'translate(-000%,00%)',
@@ -298,7 +307,7 @@ export function ImageModal({
                                 setRotation((old) => (old + 1) % 4)
                             }}
                             style={{
-                                rotate: `-${rotation * 90}deg`,
+                                // rotate: `-${rotation * 90}deg`,
                                 // position: 'absolute',
                                 // transform: 'translate(0%,300%)',
                                 // top: '1rem',
@@ -312,7 +321,7 @@ export function ImageModal({
                         </button>
                         <button
                             style={{
-                                rotate: `-${rotation * 90}deg`,
+                                // rotate: `-${rotation * 90}deg`,
                                 // position: 'absolute',
                                 // top: '1rem',
                                 // right: '1rem',
@@ -329,7 +338,7 @@ export function ImageModal({
                         </button>
                         <button
                             style={{
-                                rotate: `-${rotation * 90}deg`,
+                                // rotate: `-${rotation * 90}deg`,
                                 // position: 'absolute',
                                 // top: '1rem',
                                 // right: '1rem',
@@ -352,7 +361,7 @@ export function ImageModal({
                         </button>
                         <button
                             style={{
-                                rotate: `-${rotation * 90}deg`,
+                                // rotate: `-${rotation * 90}deg`,
                                 // position: 'absolute',
                                 // top: '1rem',
                                 // left: '1rem',
