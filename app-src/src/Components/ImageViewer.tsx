@@ -131,7 +131,7 @@ export function ImageModal({
                 //     ['0', '25%', '0', '-25%'][rotation]
                 // })`,
                 WebkitTransform: ios
-                    ? `translate(0,${['0', '100%', '0', '-100%'][rotation]})`
+                    ? `translate(0,${['0', '25%', '0', '-25%'][rotation]})`
                     : undefined,
 
                 // backgroundImage: `url(${movie.images[9]})`,
