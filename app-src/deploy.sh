@@ -1,5 +1,5 @@
 # npm run build
-npx vite build --base=/ --mode=production
+npx vite build
 cp -r ./dist/* ../
 git add --all
 git commit -am deploy
