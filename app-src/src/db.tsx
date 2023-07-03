@@ -110,10 +110,10 @@ export const searchMovies = async (searchValue?: string) => {
         director,
         director_of_photography,
         production_designer,
-        costume_designer,
-        json_group_array(movie_image.image_url) as images
+        costume_designer
+        --json_group_array(movie_image.image_url) as images
         from movie 
-        join movie_image on movie.id = movie_image.movie_id
+        --join movie_image on movie.id = movie_image.movie_id
         --join director_of_photography as dop on dop.id = movie.dop_id
         --join production_designer on production_designer.id = movie.production_designer_id
         --join costume_designer on costume_designer.id = movie.costume_designer_id
@@ -126,7 +126,7 @@ export const searchMovies = async (searchValue?: string) => {
     const movies: movie[] = res.map((movie: movieJson) => ({
         ...movie,
         year: Number(movie.year),
-        images: JSON.parse(movie.images),
+        //images: JSON.parse(movie.images),
     }))
     DB_CONSOLE_LOGS && console.log(movies)
     return movies
