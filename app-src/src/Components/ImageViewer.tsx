@@ -606,9 +606,15 @@ export function ImageModal({
 export function ImageElement({
     img,
     selectImage,
+    idx,
+    collectionId,
+    images,
 }: {
     img: string
     selectImage: any
+    idx?: number
+    collectionId?: number
+    images?: string[]
 }) {
     const modalId = 'image-viewer-modal'
 
@@ -641,7 +647,10 @@ export function ImageElement({
     return (
         <div key={img} style={{ scrollSnapType: 'y mandatory' }}>
             {/* <button> */}
-            <Link to={`/image`} search={{ imageUrl: img }}>
+            <Link
+                to={`/imageViewer`}
+                search={{ collectionId: collectionId ?? 1, images, idx }}
+            >
                 <img
                     className="button"
                     src={img}
@@ -808,6 +817,7 @@ export function ImageViewer({ images }: { images: string[] }) {
                         <ImageElement
                             img={img}
                             selectImage={() => setSelectedIndex(idx)}
+                            idx={idx}
                         />
                     </>
                 )

@@ -3,31 +3,38 @@ import { Header } from './Header'
 import { Footer } from './Footer'
 import { useEffect, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
+import { useUserCollection } from './UseUserCollection'
 
 export function ImagePage() {
-    const { imageUrl } = useSearch()
-    console.log(imageUrl)
+    const { idx, collectionId } = useSearch()
+    const [img, setImg] = useState('')
+    // const {
+    //     data: { currentImage },
+    // } = useMatch()
     // const imageUrl = 'https://i.redd.it/t48gxtvudf8b1.jpg'
     // const [mirrored, setMirrored] = useState(false)
     // const [showControls, setShowControls] = useState(true)
     const navigate = useNavigate()
 
     // const img = images && images[idx]
-    const img = imageUrl
+    // const img = imageUrl
     const modalId = 'image-viewer-modal'
     const [mirrored, setMirrored] = useState(false)
     const [showGrid, setShowGrid] = useState(false)
     const [showControls, setShowControls] = useState(true)
     const [currentImageSize, setCurrentImageSize] = useState()
-    const [userCollections, setUserCollections] = useLocalStorage<
-        { id: number | string; name: string; images: string[] }[]
-    >('user-collections', [{ name: 'Base', id: 1, images: [] }])
+    const [userCollections, setUserCollections] = useUserCollection()
+    const currentCollection = userCollections.find((c) => c.id == collectionId)
+    const images = currentCollection?.images
     const [rotation, setRotation] = useState(0)
     const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(
         'portrait'
     )
     const imgTest = new Image()
     useEffect(() => {
+        setImg(currentCollection?.images[idx])
+        console.log({ idx })
+        console.log(img)
         setTimeout(() => {
             imgTest.src = img
             imgTest.onload = () => {
@@ -37,7 +44,7 @@ export function ImagePage() {
                 console.log({ imgTest })
             }
         }, 50)
-    }, [])
+    }, [idx])
 
     // const ios = () => {
     //     if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
@@ -107,6 +114,7 @@ export function ImagePage() {
                         <img
                             className="no-scrollbar"
                             src={img}
+                            key={img + idx}
                             // onClick={() => setShowControls((old) => !old)}
                             alt=""
                             style={{
@@ -280,25 +288,22 @@ export function ImagePage() {
                     visibility: showControls ? 'visible' : 'hidden',
                 }}
             >
-                <form
-                    method="dialog"
-                    className="no-scrollbar"
+                <button
+                    onClick={() =>
+                        navigate({
+                            to: `/collections/${collectionId}`,
+                        })
+                    }
                     style={{
+                        height: '50px',
+                        flexShrink: 1,
                         zIndex: 5,
                     }}
+                    className="material-icons"
                 >
-                    <button
-                        style={{
-                            height: '50px',
-                            flexShrink: 1,
-                            zIndex: 5,
-                        }}
-                        className="material-icons"
-                    >
-                        {/* arrow_back */}
-                        clear
-                    </button>
-                </form>
+                    {/* arrow_back */}
+                    clear
+                </button>
 
                 <button
                     onClick={(ev) => {
@@ -369,7 +374,11 @@ export function ImagePage() {
                     position: 'absolute',
                     display: 'flex',
                     justifyContent: 'space-between',
+                    // rotate: `${rotation * 90}deg`,
                     width: '100%',
+                    left: 0,
+                    // backgroundColor: 'red',
+                    maxWidth: '100%',
                     top: '50%',
                     padding: '1rem',
                     boxSizing: 'border-box',
@@ -383,9 +392,17 @@ export function ImagePage() {
                         zIndex: 5,
                     }}
                     className="material-icons"
-                    // disabled={idx >= (images && images.length)}
+                    disabled={idx >= (images && images.length)}
                     onClick={(ev) => {
                         ev.preventDefault()
+                        navigate({
+                            search: (old) => ({
+                                ...old,
+                                idx: Math.max(idx - 1, 0),
+                            }),
+                            replace: true,
+                        })
+
                         // selectImage(Math.max(idx - 1, 0))
                     }}
                 >
@@ -397,9 +414,17 @@ export function ImagePage() {
                         zIndex: 5,
                     }}
                     className="material-icons"
-                    // disabled={idx >= (images && images.length)}
+                    disabled={idx >= (images && images.length)}
                     onClick={(ev) => {
                         ev.preventDefault()
+                        navigate({
+                            search: (old) => ({
+                                ...old,
+                                idx: Math.min(idx + 1, images.length - 1),
+                            }),
+                            replace: true,
+                        })
+
                         // selectImage(Math.min(idx + 1, images.length))
                     }}
                 >

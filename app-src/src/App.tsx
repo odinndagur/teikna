@@ -206,6 +206,14 @@ function App() {
                             },
                             { path: 'image', element: <ImagePage /> },
                             {
+                                path: 'imageViewer',
+                                element: <ImagePage />,
+                                loader: async ({ search }) => ({
+                                    collectionId: 1,
+                                    currentImage: search.currentImage,
+                                }),
+                            },
+                            {
                                 path: 'videos',
                                 children: [
                                     {
