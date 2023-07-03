@@ -109,7 +109,7 @@ export default defineConfig({
             workbox: {
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
                 // globPatterns: ['**/*.{js,html,ico,png,svg,jpg,jpeg}'],
-                navigateFallback: '/teikna/index.html',
+                navigateFallback: '/index.html',
                 maximumFileSizeToCacheInBytes: 70000000,
                 runtimeCaching: [
                     {
