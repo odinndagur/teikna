@@ -1,9 +1,67 @@
-import { useMatch, useNavigate, useSearch } from '@tanstack/react-location'
+import {
+    Link,
+    useMatch,
+    useNavigate,
+    useSearch,
+} from '@tanstack/react-location'
 import { Header } from './Header'
 import { Footer } from './Footer'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import { useUserCollection } from './UseUserCollection'
+
+export function ImagePlayerControls({
+    nextImage,
+    prevImage,
+    seconds,
+}: {
+    nextImage: any
+    prevImage: any
+    seconds?: number
+}) {
+    const [isPlaying, setIsPlaying] = useState(false)
+    const [secondsLeft, setSecondsLeft] = useState(seconds ?? 4)
+    useEffect(() => {
+        if (isPlaying) {
+            if (secondsLeft <= 0) {
+                setSecondsLeft(seconds ?? 4)
+                nextImage()
+            }
+            const timer =
+                secondsLeft > 0 &&
+                setInterval(() => setSecondsLeft((old) => old - 1), 1000)
+            return () => clearInterval(timer)
+        }
+    }, [secondsLeft, isPlaying])
+
+    const formattedTimeLeft = useMemo(() => {
+        const minutes = Math.floor(secondsLeft / 60)
+        const seconds = secondsLeft - minutes * 60
+        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(
+            2,
+            '0'
+        )}`
+    }, [secondsLeft])
+    return (
+        <button
+            style={{
+                zIndex: 5,
+                minWidth: isPlaying ? '8rem' : undefined,
+                display: 'flex',
+                justifyContent: 'space-between',
+            }}
+            onClick={() => {
+                setIsPlaying((old) => !old)
+            }}
+        >
+            {' '}
+            <span className="material-icons">
+                {!isPlaying ? 'play_arrow' : 'pause'}
+            </span>
+            {isPlaying && <span>{formattedTimeLeft}</span>}
+        </button>
+    )
+}
 
 export function ImagePage() {
     const [img, setImg] = useState('')
@@ -49,6 +107,63 @@ export function ImagePage() {
         }, 50)
     }, [idx])
 
+    const onKeyDown = useCallback(
+        (e: KeyboardEvent) => {
+            if (e.code == 'ArrowLeft') {
+                e.preventDefault()
+                prevImage()
+                // console.log('back arrow', selectedIndex)
+                // if (images && selectedIndex > 0) {
+                //     setSelectedIndex((old) => Math.max(0, old - 1))
+                // }
+            }
+            if (e.code == 'ArrowRight') {
+                e.preventDefault()
+                nextImage()
+                // console.log('front arrow', selectedIndex)
+                // if (images && selectedIndex < images.length - 1) {
+                //     setSelectedIndex((old) => Math.min(images.length, old + 1))
+                // }
+            }
+            if (e.code == 'Escape') {
+                exitViewer()
+            }
+        },
+        [idx]
+    )
+    useEffect(() => {
+        document.addEventListener('keydown', onKeyDown)
+        return () => {
+            document.removeEventListener('keydown', onKeyDown)
+        }
+    }, [onKeyDown])
+
+    const nextImage = useCallback(() => {
+        navigate({
+            search: (old) => ({
+                ...old,
+                idx: Math.min(idx + 1, images.length - 1),
+            }),
+            replace: true,
+        })
+    }, [idx])
+    const prevImage = useCallback(() => {
+        navigate({
+            search: (old) => ({
+                ...old,
+                idx: Math.max(idx - 1, 0),
+            }),
+            replace: true,
+        })
+    }, [idx])
+
+    const exitViewer = () => {
+        navigate({
+            to: collectionId
+                ? `/collections/${collectionId}`
+                : `/movies/${movie?.id}`,
+        })
+    }
     // const ios = () => {
     //     if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
 
@@ -292,13 +407,7 @@ export function ImagePage() {
                 }}
             >
                 <button
-                    onClick={() =>
-                        navigate({
-                            to: collectionId
-                                ? `/collections/${collectionId}`
-                                : `/movies/${movie?.id}`,
-                        })
-                    }
+                    onClick={() => exitViewer()}
                     style={{
                         height: '50px',
                         flexShrink: 1,
@@ -372,6 +481,12 @@ export function ImagePage() {
                 >
                     add
                 </button>
+                <ImagePlayerControls
+                    seconds={60}
+                    // key={images[idx]}
+                    nextImage={nextImage}
+                    prevImage={prevImage}
+                />
             </div>
 
             <div
@@ -392,49 +507,48 @@ export function ImagePage() {
                     visibility: showControls ? 'visible' : 'hidden',
                 }}
             >
-                <button
+                <Link
                     style={{
                         zIndex: 5,
+                        textDecoration: 'none',
                     }}
+                    search={(old) => ({
+                        ...old,
+                        idx: Math.max(idx - 1, 0),
+                    })}
                     className="material-icons"
                     disabled={idx >= (images && images.length)}
-                    onClick={(ev) => {
-                        ev.preventDefault()
-                        navigate({
-                            search: (old) => ({
-                                ...old,
-                                idx: Math.max(idx - 1, 0),
-                            }),
-                            replace: true,
-                        })
+                    // onClick={(ev) => {
+                    //     ev.preventDefault()
+                    //     // prevImage()
 
-                        // selectImage(Math.max(idx - 1, 0))
-                    }}
+                    //     // selectImage(Math.max(idx - 1, 0))
+                    // }}
                 >
                     arrow_back_ios
-                </button>
+                </Link>
 
-                <button
+                <Link
                     style={{
                         zIndex: 5,
+                        textDecoration: 'none',
                     }}
                     className="material-icons"
                     disabled={idx >= (images && images.length)}
-                    onClick={(ev) => {
-                        ev.preventDefault()
-                        navigate({
-                            search: (old) => ({
-                                ...old,
-                                idx: Math.min(idx + 1, images.length - 1),
-                            }),
-                            replace: true,
-                        })
+                    search={(old) => ({
+                        ...old,
+                        idx: Math.min(idx + 1, images.length - 1),
+                    })}
 
-                        // selectImage(Math.min(idx + 1, images.length))
-                    }}
+                    // onClick={(ev) => {
+                    //     ev.preventDefault()
+                    //     // nextImage()
+
+                    //     // selectImage(Math.min(idx + 1, images.length))
+                    // }}
                 >
                     arrow_forward_ios
-                </button>
+                </Link>
             </div>
         </>
     )

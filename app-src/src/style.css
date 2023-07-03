@@ -456,6 +456,7 @@ button:disabled {
     /* max-width: 100%; */
     /* overflow: visible; */
     padding: 0.5rem 1rem;
+    margin: 0;
     /* position: relative; */
     text-align: center;
     text-transform: none;
