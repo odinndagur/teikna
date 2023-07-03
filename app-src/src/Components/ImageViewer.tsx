@@ -813,13 +813,12 @@ export function ImageViewer({ images }: { images: string[] }) {
         <Grid>
             {images?.map((img, idx) => {
                 return (
-                    <>
-                        <ImageElement
-                            img={img}
-                            selectImage={() => setSelectedIndex(idx)}
-                            idx={idx}
-                        />
-                    </>
+                    <ImageElement
+                        key={img + idx}
+                        img={img}
+                        selectImage={() => setSelectedIndex(idx)}
+                        idx={idx}
+                    />
                 )
             })}
             <ImageModal

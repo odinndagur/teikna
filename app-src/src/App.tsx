@@ -204,13 +204,29 @@ function App() {
                                     movie: await getRandomMovie(),
                                 }),
                             },
-                            { path: 'image', element: <ImagePage /> },
+                            {
+                                // const { idx, collectionId } = useSearch()
+
+                                path: 'image',
+                                element: <ImagePage />,
+                                loader: ({ search }) => ({
+                                    idx: search.idx,
+                                    collectionId: search.collectionId,
+                                }),
+                            },
+                            {
+                                path: 'image',
+                                id: 'imageViewerFilmGrab',
+                                search: (search) => 'movieId' in search,
+                                // loader
+                                element: <ImagePage />,
+                            },
                             {
                                 path: 'imageViewer',
                                 element: <ImagePage />,
                                 loader: async ({ search }) => ({
-                                    collectionId: 1,
-                                    currentImage: search.currentImage,
+                                    collectionId: search.collectionId,
+                                    idx: search.idx,
                                 }),
                             },
                             {

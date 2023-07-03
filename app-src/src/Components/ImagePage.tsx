@@ -6,11 +6,11 @@ import { useLocalStorage } from 'usehooks-ts'
 import { useUserCollection } from './UseUserCollection'
 
 export function ImagePage() {
-    const { idx, collectionId } = useSearch()
     const [img, setImg] = useState('')
     // const {
     //     data: { currentImage },
     // } = useMatch()
+    const { collectionId, idx } = useSearch()
     // const imageUrl = 'https://i.redd.it/t48gxtvudf8b1.jpg'
     // const [mirrored, setMirrored] = useState(false)
     // const [showControls, setShowControls] = useState(true)

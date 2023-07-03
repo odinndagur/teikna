@@ -3,7 +3,7 @@ import { Grid } from './Grid'
 import './MoviePage.css'
 import { useLocalStorage } from 'usehooks-ts'
 
-export function ImageModal({
+export function ImageModalBackup({
     images,
     idx,
     selectImage,
@@ -602,7 +602,7 @@ export function ImageModal({
         </dialog>
     )
 }
-export function ImageElement({
+export function ImageElementBackup({
     img,
     selectImage,
 }: {
@@ -760,7 +760,7 @@ onClick={(ev) => {
     )
 }
 
-export function ImageViewer({ images }: { images: string[] }) {
+export function ImageViewerBackup({ images }: { images: string[] }) {
     const [selectedIndex, setSelectedIndex] = useState<number>(0)
     const prevImage = () => {
         if (images && selectedIndex > 0) {
@@ -802,14 +802,14 @@ export function ImageViewer({ images }: { images: string[] }) {
             {images?.map((img, idx) => {
                 return (
                     <>
-                        <ImageElement
+                        <ImageElementBackup
                             img={img}
                             selectImage={() => setSelectedIndex(idx)}
                         />
                     </>
                 )
             })}
-            <ImageModal
+            <ImageModalBackup
                 images={images}
                 idx={selectedIndex}
                 selectImage={(idx: number) => setSelectedIndex(idx)}

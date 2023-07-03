@@ -16,6 +16,7 @@ import { Carousel } from './Carousel'
 import { ImageViewer } from './ImageViewer'
 import { useEffect, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
+import { ImageViewerBackup } from './ImageViewerBackup'
 
 export function SubredditPage() {
     const queryClient = useQueryClient()
@@ -137,7 +138,7 @@ export function SubredditPage() {
                 </form>
             </Header>
             {/* {JSON.stringify(movie)} */}
-            <ImageViewer
+            <ImageViewerBackup
                 // key={currentSubreddit}
                 images={data?.images}
             />
