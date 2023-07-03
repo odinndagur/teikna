@@ -657,14 +657,6 @@ export function ImageElement({
                     className="button"
                     src={img}
                     key={img}
-                    onClick={() => {
-                        setMirrored(false)
-                        selectImage()
-                        // const el = document.getElementById(
-                        //     modalId
-                        // ) as HTMLDialogElement
-                        // el.showModal()
-                    }}
                     style={{
                         display: !imageVisible ? 'none' : undefined,
                         cursor: 'pointer',

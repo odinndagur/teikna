@@ -8,8 +8,12 @@ import { Header } from './Header'
 import { Footer } from './Footer'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
-import { useUserCollection } from './UseUserCollection'
-
+import { useUserCollection } from './useUserCollection'
+function spliceNoMutate(myArray: any[], indexToRemove: number) {
+    return myArray
+        .slice(0, indexToRemove)
+        .concat(myArray.slice(indexToRemove + 1))
+}
 export function ImagePlayerControls({
     nextImage,
     prevImage,
@@ -85,7 +89,9 @@ export function ImagePage() {
     const [showControls, setShowControls] = useState(true)
     const [currentImageSize, setCurrentImageSize] = useState()
     const [userCollections, setUserCollections] = useUserCollection()
-    const currentCollection = userCollections.find((c) => c.id == collectionId)
+    const currentCollection = collectionId
+        ? userCollections.find((c) => c.id == collectionId)
+        : userCollections.find((c) => c.id == 1)
     const images = collectionId ? currentCollection?.images : movie?.images ?? 1
     const [rotation, setRotation] = useState(0)
     const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(
@@ -464,22 +470,70 @@ export function ImagePage() {
                     }}
                     className="material-icons"
                     onClick={(ev) => {
-                        ev.preventDefault()
-                        setUserCollections((old: any) => {
-                            const currentCollection = old.find(
-                                (c: any) => c.id == 1
-                            )
-                            return [
-                                ...old.filter((c: any) => c.id != 1),
+                        if (currentCollection?.images.includes(img)) {
+                            setUserCollections((old: any) => [
+                                ...old.filter(
+                                    (c) => c.id != (collectionId ?? 1)
+                                ),
+                                {
+                                    ...currentCollection,
+                                    images: spliceNoMutate(
+                                        currentCollection.images,
+                                        idx
+                                    ),
+                                },
+                            ])
+                        } else {
+                            setUserCollections((old: any) => [
+                                ...old.filter(
+                                    (c) => c.id != (collectionId ?? 1)
+                                ),
                                 {
                                     ...currentCollection,
                                     images: [...currentCollection.images, img],
                                 },
-                            ]
-                        })
+                            ])
+                        }
                     }}
+                    //     onClick={(ev) => {
+                    //         ev.preventDefault()
+                    //         if (currentCollection?.images.includes(img)) {
+                    //             setUserCollections((old: any) => {
+                    //                 const currentCollection = old.find(
+                    //                     (c: any) => c.id == 1
+                    //                 )
+                    //                 return [
+                    //                     ...old.filter((c: any) => c.id != 1),
+                    //                     {
+                    //                         ...currentCollection,
+                    //                         images: currentCollection.images
+                    //                         ),
+                    //                     },
+                    //                 ]
+                    //             })
+                    //         }
+                    //         else {
+                    //             setUserCollections((old: any) => {
+                    //                 const currentCollection = old.find(
+                    //                     (c: any) => c.id == 1
+                    //                 )
+                    //                 return [
+                    //                     ...old.filter((c: any) => c.id != 1),
+                    //                     {
+                    //                         ...currentCollection,
+                    //                         images: [
+                    //                             ...currentCollection.images,
+                    //                             img,
+                    //                         ],
+                    //                     },
+                    //                 ]
+                    //             })
+                    //         }
+                    //     }
+                    // }
                 >
-                    add
+                    {currentCollection?.images.includes(img) ? 'delete' : 'add'}
+                    {/* add */}
                 </button>
                 <ImagePlayerControls
                     seconds={60}
