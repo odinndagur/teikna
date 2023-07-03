@@ -9,6 +9,7 @@ type movieJson = {
     costume_designer: string
     year: number
     images: string
+    total_count: number
 }
 
 type movie = {
@@ -20,6 +21,7 @@ type movie = {
     costume_designer: string
     year: number
     images: string[]
+    total_count: number
 }
 
 export const query = async (query: string) => {
@@ -106,7 +108,7 @@ export const getSomeMovies = async () => {
 
 export const searchMovies = async (searchValue?: string) => {
     const res = await query(`
-        select movie.id, movie.title, movie.year,
+        select count(*) over() as total_count, movie.id, movie.title, movie.year,
         director,
         director_of_photography,
         production_designer,
@@ -121,15 +123,15 @@ export const searchMovies = async (searchValue?: string) => {
         ${searchValue ? 'where movie_fts match "' + searchValue + '*"' : ''}
         group by movie.id
         order by levenshtein(movie.title,"${searchValue}")
-        limit 100
     `)
     const movies: movie[] = res.map((movie: movieJson) => ({
         ...movie,
         year: Number(movie.year),
         //images: JSON.parse(movie.images),
     }))
+    const total_count = Number(movies[0].total_count)
     DB_CONSOLE_LOGS && console.log(movies)
-    return movies
+    return { movies, total_count: total_count ?? 0 }
 }
 
 export const getRandomMovie = async () => {

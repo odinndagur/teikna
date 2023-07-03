@@ -218,8 +218,8 @@ export function ImagePage() {
                 onClick={(ev) => {
                     const target = ev.target as HTMLElement
 
-                    if (ev.target.tagName.toLocaleLowerCase() != 'button') {
-                        console.log(ev.target.tagName)
+                    if (target.tagName.toLocaleLowerCase() != 'button') {
+                        console.log(target.tagName)
                         setShowControls((old) => !old)
                     }
                 }}
@@ -286,6 +286,7 @@ export function ImagePage() {
 
                                 // maxHeight: 'min(100vh,100%)',
                                 // maxWidth: 'min(100vw,100%)',
+                                zIndex: 5,
                                 transform: mirrored ? 'scaleX(-1)' : undefined,
                                 // backgroundColor: 'red',
                             }}
@@ -400,13 +401,13 @@ export function ImagePage() {
                     position: 'absolute',
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fill, minmax(50px, 1fr))',
-
+                    gridTemplateRows: '1fr',
                     justifyContent: 'center',
                     gap: '1rem',
-                    width: '100%',
-                    maxWidth: '100vw',
-                    maxHeight: '50px',
-                    height: '100%',
+                    width: '80%',
+                    maxWidth: '100%',
+                    // maxHeight: '50px',
+                    // height: '100%',
                     boxSizing: 'border-box',
                     bottom: '2rem',
                     visibility: showControls ? 'visible' : 'hidden',
@@ -463,6 +464,19 @@ export function ImagePage() {
                 >
                     grid_3x3
                 </button>
+                {/* <button
+                    style={{
+                        zIndex: 5,
+                        color: showControls ? 'var(--main-text-color)' : 'gray',
+                    }}
+                    className="material-icons"
+                    onClick={(ev) => {
+                        ev.preventDefault()
+                        setShowControls((old) => !old)
+                    }}
+                >
+                    menu
+                </button> */}
                 <button
                     style={{
                         zIndex: 5,
@@ -545,31 +559,42 @@ export function ImagePage() {
 
             <div
                 style={{
+                    pointerEvents: 'none',
                     position: 'absolute',
                     display: 'flex',
                     justifyContent: 'space-between',
+                    alignItems: 'center',
                     // rotate: `${rotation * 90}deg`,
                     width: '100%',
                     left: 0,
                     // backgroundColor: 'red',
                     maxWidth: '100%',
                     top: '50%',
+                    // top: 0,
+                    // height: '100%',
                     padding: '1rem',
                     boxSizing: 'border-box',
                     transform: 'translate(0,-50%)',
-                    zIndex: 99,
+                    zIndex: 4,
                     visibility: showControls ? 'visible' : 'hidden',
                 }}
             >
                 <Link
                     style={{
+                        pointerEvents: 'auto',
                         zIndex: 5,
                         textDecoration: 'none',
+                        color: images && idx <= 0 ? 'gray' : undefined,
+                        width: '2rem',
+                        padding: '5rem 1rem',
+                        textAlign: 'center',
+                        // backgroundColor: 'red',
                     }}
                     search={(old) => ({
                         ...old,
                         idx: Math.max(idx - 1, 0),
                     })}
+                    replace
                     className="material-icons"
                     disabled={idx >= (images && images.length)}
                     // onClick={(ev) => {
@@ -585,10 +610,20 @@ export function ImagePage() {
                 <Link
                     style={{
                         zIndex: 5,
+                        pointerEvents: 'auto',
+
                         textDecoration: 'none',
+                        color:
+                            images && idx >= images.length - 1
+                                ? 'gray'
+                                : undefined,
+                        width: '2rem',
+                        padding: '5rem 1rem',
+                        textAlign: 'center',
+                        // backgroundColor: 'red',
+                        // backgroundColor: 'red',
                     }}
                     className="material-icons"
-                    disabled={idx >= (images && images.length)}
                     search={(old) => ({
                         ...old,
                         idx: Math.min(idx + 1, images.length - 1),

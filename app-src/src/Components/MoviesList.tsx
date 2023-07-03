@@ -8,8 +8,9 @@ import {
     useNavigate,
     useSearch,
 } from '@tanstack/react-location'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { movieGenerics } from './MoviePage'
+import { useVirtualizer } from '@tanstack/react-virtual'
 
 export function MoviesList() {
     // const { data: movies } = useQuery({
@@ -37,14 +38,29 @@ export function MoviesList() {
 
     const search = useSearch()
 
-    const { data: movies } = useQuery({
+    const { data } = useQuery({
         queryFn: () => searchMovies(String(search.query ?? '')),
         queryKey: ['search', search],
         staleTime: 0,
         cacheTime: 0,
     })
-    console.log(movies)
+    // console.log(movies)
     useEffect(() => {}, [searchValue])
+
+    const movieListRef = useRef(null)
+    const rowVirtualizer = useVirtualizer({
+        count: Number(data?.total_count),
+        getScrollElement: () => movieListRef.current,
+        estimateSize: () => 100,
+        overscan: 150,
+        debug: true,
+        // scrollToFn
+    })
+
+    useEffect(() => {
+        rowVirtualizer.scrollToOffset(10000)
+    }, [])
+
     return (
         <>
             <Header>
@@ -53,40 +69,121 @@ export function MoviesList() {
                     onChange={(ev) => handleInput(ev.target.value)}
                 ></input>
             </Header>
-            {movies?.map((movie) => {
-                return (
-                    <Link
-                        key={searchValue + movie.id}
-                        to={`/movies/${movie.id}`}
-                        className=""
-                        style={{
-                            boxShadow: 'var(--card-box-shadow)',
-                            borderBottom: '1px solid var(--main-text-color)',
-                            padding: '1rem',
-                            // width: '100%',
-                            // boxSizing: 'border-box',
-                        }}
-                    >
-                        <div
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                            }}
-                        >
-                            <b>{movie.title}</b> <i>{movie.year}</i>
-                        </div>
-                        <div
-                            style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                            }}
-                        >
-                            <p>{movie.director}</p>
-                        </div>
-                        {/* <img src={movie.images[0]}></img> */}
-                    </Link>
-                )
-            })}
+            <div
+                className="movie-list"
+                ref={movieListRef}
+                style={{
+                    height: `100%`,
+                    overflow: 'auto', // Make it scroll!
+                }}
+            >
+                {/* The large inner element to hold all of the items */}
+                <div
+                    style={{
+                        height: `${rowVirtualizer.getTotalSize()}px`,
+                        width: '100%',
+                        position: 'relative',
+                    }}
+                >
+                    {/* Only the visible items in the virtualizer, manually positioned to be in view */}
+                    {rowVirtualizer.getVirtualItems().map((virtualItem) => {
+                        const movie = data?.movies[virtualItem.index]
+                        if (movie) {
+                            return (
+                                <div
+                                    key={virtualItem.key}
+                                    style={{
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: 0,
+                                        width: '100%',
+                                        height: `${virtualItem.size}px`,
+                                        transform: `translateY(${virtualItem.start}px)`,
+                                        boxShadow: 'var(--card-box-shadow)',
+                                        borderBottom:
+                                            '1px solid var(--main-text-color)',
+                                        padding: '1rem',
+                                        boxSizing: 'border-box',
+                                    }}
+                                >
+                                    <Link
+                                        key={searchValue + movie.id}
+                                        to={`/movies/${movie.id}`}
+                                        className=""
+                                        style={
+                                            {
+                                                // boxShadow:
+                                                //     'var(--card-box-shadow)',
+                                                // borderBottom:
+                                                //     '1px solid var(--main-text-color)',
+                                                // padding: '1rem',
+                                                // width: '100%',
+                                                // boxSizing: 'border-box',
+                                            }
+                                        }
+                                    >
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                            }}
+                                        >
+                                            <b>{movie.title}</b>{' '}
+                                            <i>{movie.year}</i>
+                                        </div>
+                                        <div
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'space-between',
+                                            }}
+                                        >
+                                            <p>{movie.director}</p>
+                                        </div>
+                                        {/* <img src={movie.images[0]}></img> */}
+                                    </Link>
+                                </div>
+                            )
+                        }
+                    })}
+                </div>
+
+                {false &&
+                    data?.movies?.map((movie) => {
+                        return (
+                            <Link
+                                key={searchValue + movie.id}
+                                to={`/movies/${movie.id}`}
+                                className=""
+                                style={{
+                                    boxShadow: 'var(--card-box-shadow)',
+                                    borderBottom:
+                                        '1px solid var(--main-text-color)',
+                                    padding: '1rem',
+                                    // width: '100%',
+                                    // boxSizing: 'border-box',
+                                }}
+                            >
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <b>{movie.title}</b> <i>{movie.year}</i>
+                                </div>
+                                <div
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                    }}
+                                >
+                                    <p>{movie.director}</p>
+                                </div>
+                                {/* <img src={movie.images[0]}></img> */}
+                            </Link>
+                        )
+                    })}
+            </div>
             <Footer></Footer>
         </>
     )

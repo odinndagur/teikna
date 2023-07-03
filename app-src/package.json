@@ -19,6 +19,7 @@
         "@notionhq/client": "^2.2.5",
         "@tanstack/react-location": "^3.7.4",
         "@tanstack/react-query": "^4.29.1",
+        "@tanstack/react-virtual": "^3.0.0-beta.54",
         "@tanstack/router-devtools": "^0.0.1-beta.89",
         "absurd-sql": "^0.0.46",
         "express": "^4.18.2",
