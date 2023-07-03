@@ -608,12 +608,14 @@ export function ImageElement({
     selectImage,
     idx,
     collectionId,
+    movieId,
     images,
 }: {
     img: string
     selectImage: any
     idx?: number
     collectionId?: number
+    movieId?: string | number
     images?: string[]
 }) {
     const modalId = 'image-viewer-modal'
@@ -649,7 +651,7 @@ export function ImageElement({
             {/* <button> */}
             <Link
                 to={`/imageViewer`}
-                search={{ collectionId: collectionId ?? 1, images, idx }}
+                search={{ collectionId, movieId, images, idx }}
             >
                 <img
                     className="button"
@@ -772,7 +774,15 @@ onClick={(ev) => {
     )
 }
 
-export function ImageViewer({ images }: { images: string[] }) {
+export function ImageViewer({
+    images,
+    movieId,
+    collectionId,
+}: {
+    images: string[]
+    movieId?: number | string
+    collectionId?: number | string
+}) {
     const [selectedIndex, setSelectedIndex] = useState<number>(0)
     const prevImage = () => {
         if (images && selectedIndex > 0) {
@@ -818,15 +828,17 @@ export function ImageViewer({ images }: { images: string[] }) {
                         img={img}
                         selectImage={() => setSelectedIndex(idx)}
                         idx={idx}
+                        movieId={movieId}
+                        collectionId={collectionId}
                     />
                 )
             })}
-            <ImageModal
+            {/* <ImageModal
                 images={images}
                 idx={selectedIndex}
                 selectImage={(idx: number) => setSelectedIndex(idx)}
                 // img={img}
-            />
+            /> */}
         </Grid>
     )
 }

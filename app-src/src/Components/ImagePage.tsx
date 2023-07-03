@@ -11,6 +11,9 @@ export function ImagePage() {
     //     data: { currentImage },
     // } = useMatch()
     const { collectionId, idx } = useSearch()
+    const {
+        data: { movie },
+    } = useMatch()
     // const imageUrl = 'https://i.redd.it/t48gxtvudf8b1.jpg'
     // const [mirrored, setMirrored] = useState(false)
     // const [showControls, setShowControls] = useState(true)
@@ -25,14 +28,14 @@ export function ImagePage() {
     const [currentImageSize, setCurrentImageSize] = useState()
     const [userCollections, setUserCollections] = useUserCollection()
     const currentCollection = userCollections.find((c) => c.id == collectionId)
-    const images = currentCollection?.images
+    const images = collectionId ? currentCollection?.images : movie?.images ?? 1
     const [rotation, setRotation] = useState(0)
     const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(
         'portrait'
     )
     const imgTest = new Image()
     useEffect(() => {
-        setImg(currentCollection?.images[idx])
+        setImg(images[idx])
         console.log({ idx })
         console.log(img)
         setTimeout(() => {
@@ -291,7 +294,9 @@ export function ImagePage() {
                 <button
                     onClick={() =>
                         navigate({
-                            to: `/collections/${collectionId}`,
+                            to: collectionId
+                                ? `/collections/${collectionId}`
+                                : `/movies/${movie?.id}`,
                         })
                     }
                     style={{

@@ -50,7 +50,7 @@ export function MoviePage() {
                     All images from{' '}
                     <a href={movie?.filmgrab_url}>filmgrab.com</a>
                 </i>
-                <ImageViewer images={movie?.images!} />
+                <ImageViewer images={movie?.images!} movieId={movie?.id} />
             </div>
             <Footer></Footer>
         </>

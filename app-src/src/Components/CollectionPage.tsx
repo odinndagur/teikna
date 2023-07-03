@@ -134,6 +134,7 @@ export function CollectionPage() {
             </div>
             <ImageViewer
                 key={Number(collectionId)}
+                collectionId={collectionId}
                 images={
                     userCollections?.find((c) => c.id == collectionId)
                         ?.images ?? []

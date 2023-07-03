@@ -801,12 +801,11 @@ export function ImageViewerBackup({ images }: { images: string[] }) {
         <Grid>
             {images?.map((img, idx) => {
                 return (
-                    <>
-                        <ImageElementBackup
-                            img={img}
-                            selectImage={() => setSelectedIndex(idx)}
-                        />
-                    </>
+                    <ImageElementBackup
+                        key={img + idx}
+                        img={img}
+                        selectImage={() => setSelectedIndex(idx)}
+                    />
                 )
             })}
             <ImageModalBackup

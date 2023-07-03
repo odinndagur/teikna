@@ -215,10 +215,12 @@ function App() {
                                 }),
                             },
                             {
-                                path: 'image',
+                                path: 'imageViewer',
                                 id: 'imageViewerFilmGrab',
                                 search: (search) => 'movieId' in search,
-                                // loader
+                                loader: async ({ search }) => ({
+                                    movie: await getMovieById(search.movieId),
+                                }),
                                 element: <ImagePage />,
                             },
                             {
