@@ -57,20 +57,20 @@ export function ImagePage() {
     return (
         <>
             <div
-                className=""
+                className="no-scrollbar"
                 id={img}
                 style={{
                     // border: 'none',
                     // border: '10px solid red',
                     // backgroundColor: 'green',
                     inset: 0,
-                    overflowX: 'hidden',
-                    maxWidth: rotation % 2 == 0 ? '100vw' : '100vh',
-                    maxHeight: rotation % 2 == 0 ? '100vh' : '100vw',
+                    // overflowX: 'hidden',
+                    // maxWidth: rotation % 2 == 0 ? '100vw' : '100vh',
+                    // maxHeight: rotation % 2 == 0 ? '100vh' : '100vw',
                     // width: rotation % 2 == 0 ? '100vw' : '100vh',
                     // height: rotation % 2 == 0 ? '100vh' : '100vw',
-                    width: '100vmin',
-                    height: '100vmin',
+                    // width: '100vmin',
+                    // height: '100vmin',
                     // width: '100vw',
                     // height: '100vh',
                     // backgroundColor: 'blue',
