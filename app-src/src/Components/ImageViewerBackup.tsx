@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { Grid } from './Grid'
 import './MoviePage.css'
 import { useLocalStorage } from 'usehooks-ts'
-import { Link } from '@tanstack/react-location'
 
 export function ImageModal({
     images,
@@ -641,34 +640,32 @@ export function ImageElement({
     return (
         <div key={img} style={{ scrollSnapType: 'y mandatory' }}>
             {/* <button> */}
-            <Link to={`/image`} search={{ imageUrl: img }}>
-                <img
-                    className="button"
-                    src={img}
-                    key={img}
-                    onClick={() => {
-                        setMirrored(false)
-                        selectImage()
-                        // const el = document.getElementById(
-                        //     modalId
-                        // ) as HTMLDialogElement
-                        // el.showModal()
-                    }}
-                    style={{
-                        display: !imageVisible ? 'none' : undefined,
-                        cursor: 'pointer',
-                        maxWidth:
-                            orientation == 'landscape'
-                                ? 'var(--max-image-size)'
-                                : undefined,
-                        maxHeight:
-                            orientation == 'portrait'
-                                ? 'var(--max-image-size)'
-                                : undefined,
-                        padding: 0,
-                    }}
-                />
-            </Link>
+            <img
+                className="button"
+                src={img}
+                key={img}
+                onClick={() => {
+                    setMirrored(false)
+                    selectImage()
+                    const el = document.getElementById(
+                        modalId
+                    ) as HTMLDialogElement
+                    el.showModal()
+                }}
+                style={{
+                    display: !imageVisible ? 'none' : undefined,
+                    cursor: 'pointer',
+                    maxWidth:
+                        orientation == 'landscape'
+                            ? 'var(--max-image-size)'
+                            : undefined,
+                    maxHeight:
+                        orientation == 'portrait'
+                            ? 'var(--max-image-size)'
+                            : undefined,
+                    padding: 0,
+                }}
+            />
             {/* </button> */}
             {/* {false && (
 <dialog

@@ -9,7 +9,7 @@ export function CollectionsPage() {
     // } = useMatch()
     const [userCollections, setUserCollections] = useLocalStorage<
         { id: number | string; name: string; images: string[] }[]
-    >('user-collections', [{ name: 'Base', id: 1, images: [] }])
+    >('user-collections', [{ name: 'User collection', id: 1, images: [] }])
     return (
         <>
             <Header></Header>

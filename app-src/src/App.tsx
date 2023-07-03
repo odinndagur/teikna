@@ -40,6 +40,7 @@ import { SubredditPage } from './Components/SubredditPage'
 import { RandomMovie } from './Components/RandomMovie'
 import { CollectionsPage } from './Components/CollectionsPage'
 import { CollectionPage } from './Components/CollectionPage'
+import { ImagePage } from './Components/ImagePage'
 
 const reactLocation = new ReactLocation()
 
@@ -203,6 +204,7 @@ function App() {
                                     movie: await getRandomMovie(),
                                 }),
                             },
+                            { path: 'image', element: <ImagePage /> },
                             {
                                 path: 'videos',
                                 children: [
