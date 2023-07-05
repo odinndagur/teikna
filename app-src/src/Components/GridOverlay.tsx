@@ -1,9 +1,13 @@
 export function GridOverlay({
     showGrid,
     key,
+    height,
+    width,
 }: {
     showGrid?: boolean
-    key: any
+    key?: any
+    height?: any
+    width?: any
 }) {
     return (
         <div
@@ -22,8 +26,8 @@ export function GridOverlay({
                 // width: '95%',
                 // maxHeight: '95%',
                 // width: '95%',
-                height: 'auto',
-                width: 'auto',
+                height: height ?? 'auto',
+                width: width ?? 'auto',
                 margin: 'auto',
                 // backgroundColor:
                 //     'rgba(255,255,0,0.3)',

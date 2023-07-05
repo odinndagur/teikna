@@ -354,7 +354,12 @@ export function ImagePage() {
                         }}
                         // ref={currentImageRef}
                     />
-                    <GridOverlay showGrid={showGrid} />
+                    <GridOverlay
+                        height={imgContainerMaxHeight}
+                        width={imgContainerMaxWidth}
+                        key={img}
+                        showGrid={showGrid}
+                    />
                     <div
                         style={{
                             visibility: showImageTimer ? 'visible' : 'hidden',
