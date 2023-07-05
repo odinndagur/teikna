@@ -17,17 +17,24 @@ import { GridOverlay } from './GridOverlay'
 export function RotateButton({ setRotation }) {
     const [shouldReset, setShouldReset] = useState(false)
 
+    const [timeoutId, setTimeoutId] = useState<number>()
+
     return (
         <button
             onClick={(ev) => {
                 ev.preventDefault()
-                setTimeout(() => setShouldReset(true), 9000)
+                const newTimeoutId = setTimeout(
+                    () => setShouldReset(true),
+                    9000
+                )
+                setTimeoutId(newTimeoutId)
                 if (shouldReset) {
                     setRotation((old) => (old == 0 ? 1 : 0))
                 } else {
                     setRotation((old) => (old + 1) % 4)
                 }
                 setShouldReset(false)
+                timeoutId && clearTimeout(timeoutId)
             }}
             style={{
                 height: '50px',
@@ -527,16 +534,17 @@ export function ImagePage() {
                 <button
                     style={{
                         height: '50px',
+                        rotate: `${rotation * 90}deg`,
                         zIndex: 5,
                         transform: mirrored ? 'scaleX(-1)' : undefined,
                     }}
-                    className="material-icons"
+                    // className="material-icons"
                     onClick={(ev) => {
                         ev.preventDefault()
                         setMirrored((old) => !old)
                     }}
                 >
-                    flip
+                    <span className="material-icons">flip</span>
                 </button>
                 <button
                     style={{
@@ -544,13 +552,12 @@ export function ImagePage() {
                         zIndex: 5,
                         color: showGrid ? 'var(--main-text-color)' : 'gray',
                     }}
-                    className="material-icons"
                     onClick={(ev) => {
                         ev.preventDefault()
                         setShowGrid((old) => !old)
                     }}
                 >
-                    grid_3x3
+                    <span className="material-icons">grid_3x3</span>
                 </button>
                 {/* <button
                     style={{
@@ -571,7 +578,6 @@ export function ImagePage() {
                         zIndex: 5,
                         transform: mirrored ? 'scaleX(-1)' : undefined,
                     }}
-                    className="material-icons"
                     onClick={(ev) => {
                         if (currentCollection?.images.includes(img)) {
                             setUserCollections((old: any) => [
@@ -599,7 +605,11 @@ export function ImagePage() {
                         }
                     }}
                 >
-                    {currentCollection?.images.includes(img) ? 'delete' : 'add'}
+                    <span className="material-icons">
+                        {currentCollection?.images.includes(img)
+                            ? 'delete'
+                            : 'add'}
+                    </span>
                     {/* add */}
                 </button>
                 <ImagePlayerControls

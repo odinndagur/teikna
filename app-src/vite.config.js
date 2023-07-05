@@ -3,11 +3,19 @@ import { VitePWA } from 'vite-plugin-pwa'
 import react from '@vitejs/plugin-react'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
     base: '/',
     define: {
         'process.env': {},
     },
+    esbuild:
+        command == 'build'
+            ? {
+                  drop: ['console', 'debugger'],
+                  minify: true,
+              }
+            : undefined,
+
     plugins: [
         react({
             include: '**/*.tsx',
@@ -219,4 +227,4 @@ export default defineConfig({
             },
         }),
     ],
-})
+}))

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
+import { TimeField } from './TimeField'
 
 export function SlideshowSettings() {
     const modalId = 'slideshow-settings-modal'
@@ -81,7 +82,7 @@ export function SlideshowSettings() {
                     </button>
                 </form>
 
-                <form
+                {/* <form
                     style={{
                         display: 'flex',
                         gap: '1rem',
@@ -103,17 +104,13 @@ export function SlideshowSettings() {
                 >
                     <label htmlFor="">
                         Time per image
-                        <input
-                            style={{ margin: '1rem' }}
-                            type="time"
-                            id="secondsInput"
-                            defaultValue="00:30"
-                        />
+                        <input style={{ margin: '1rem' }} type="range" />
                     </label>
                     <button type="submit">
                         <span className="material-icons">check</span>
                     </button>
-                </form>
+                </form> */}
+                {/* <TimeField /> */}
             </dialog>
         </>
     )

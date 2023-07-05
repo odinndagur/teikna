@@ -53,7 +53,7 @@ export function MoviesList() {
         getScrollElement: () => movieListRef.current,
         estimateSize: () => 100,
         overscan: 150,
-        debug: true,
+        debug: import.meta.env.MODE == 'development',
         // scrollToFn
     })
 
