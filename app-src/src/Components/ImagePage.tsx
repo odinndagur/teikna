@@ -149,6 +149,7 @@ export function ImagePage() {
                 c sýnir 'controls'
                 g sýnir 'grid'
                 escape fer til baka í myndasafn
+                space byrjar slideshow
                 örvar skipta á milli mynda
                 `)
             }
