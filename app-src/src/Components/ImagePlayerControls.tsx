@@ -9,6 +9,7 @@ export function ImagePlayerControls({
     rotation,
     setTimeLeft,
     setShowImageTimer,
+    currentImage,
 }: {
     nextImage: any
     prevImage: any
@@ -16,6 +17,7 @@ export function ImagePlayerControls({
     rotation?: number
     setTimeLeft: any
     setShowImageTimer: any
+    currentImage: string
 }) {
     const [totalSeconds, setTotalSeconds] = useLocalStorage(
         'seconds-per-image',
@@ -27,6 +29,9 @@ export function ImagePlayerControls({
         setIsPlaying((old) => !old)
         setSecondsLeft(totalSeconds ?? seconds)
     }
+    useEffect(() => {
+        setSecondsLeft(totalSeconds ?? seconds)
+    }, [currentImage])
 
     useEffect(() => {
         // setTotalSeconds(15)

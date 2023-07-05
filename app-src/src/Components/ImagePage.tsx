@@ -328,8 +328,17 @@ export function ImagePage() {
                                     pointerEvents: 'auto',
                                     zIndex: 5,
                                     textDecoration: 'none',
+                                    // color:
+                                    //     images && idx <= 0 ? 'gray' : undefined,
                                     color:
-                                        images && idx <= 0 ? 'gray' : undefined,
+                                        images && idx <= 0
+                                            ? 'gray'
+                                            : 'rgba(127,127,127,1)',
+                                    visibility:
+                                        images && idx <= 0
+                                            ? 'hidden'
+                                            : 'visible',
+
                                     width: '2rem',
                                     padding: '5rem 1rem',
                                     textAlign: 'center',
@@ -361,7 +370,11 @@ export function ImagePage() {
                                     color:
                                         images && idx >= images.length - 1
                                             ? 'gray'
-                                            : undefined,
+                                            : 'rgba(127,127,127,1)',
+                                    visibility:
+                                        images && idx >= images.length - 1
+                                            ? 'hidden'
+                                            : 'visible',
                                     width: '2rem',
                                     padding: '5rem 1rem',
                                     textAlign: 'center',
@@ -615,6 +628,7 @@ export function ImagePage() {
                 <ImagePlayerControls
                     // seconds={60}
                     // key={images[idx]}
+                    currentImage={images[idx]}
                     setShowImageTimer={setShowImageTimer}
                     setTimeLeft={setTimeLeft}
                     nextImage={nextImage}
