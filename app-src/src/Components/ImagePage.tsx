@@ -1,7 +1,9 @@
 import {
     Link,
+    useLocation,
     useMatch,
     useNavigate,
+    useRouter,
     useSearch,
 } from '@tanstack/react-location'
 import { Header } from './Header'
@@ -67,6 +69,7 @@ export function ImagePage() {
     // const img = imageUrl
     const modalId = 'image-viewer-modal'
     const [mirrored, setMirrored] = useState(false)
+    const [fullScreen, setFullScreen] = useState(false)
     const [showGrid, setShowGrid] = useState(false)
     const [showControls, setShowControls] = useState(true)
     const [currentImageSize, setCurrentImageSize] = useState()
@@ -92,6 +95,7 @@ export function ImagePage() {
         'portrait'
     )
     const imgTest = new Image()
+
     useEffect(() => {
         setImg(images[idx])
         console.log({ idx })
@@ -129,7 +133,7 @@ export function ImagePage() {
                 exitViewer()
             }
         },
-        [idx]
+        [idx, images]
     )
     useEffect(() => {
         document.addEventListener('keydown', onKeyDown)
@@ -146,7 +150,7 @@ export function ImagePage() {
             }),
             replace: true,
         })
-    }, [idx])
+    }, [idx, images])
     const prevImage = useCallback(() => {
         navigate({
             search: (old) => ({
@@ -155,20 +159,52 @@ export function ImagePage() {
             }),
             replace: true,
         })
-    }, [idx])
+    }, [idx, images])
 
     const exitViewer = () => {
+        let targetRoute
+        if (collectionId) {
+            targetRoute = `/collections/${collectionId}`
+        }
+        if (movie) {
+            targetRoute = `/movies/${movie?.id}`
+        }
+        if (subredditImages) {
+            targetRoute = `/subreddit/`
+        }
         navigate({
-            to: collectionId
-                ? `/collections/${collectionId}`
-                : `/movies/${movie?.id}`,
+            to: targetRoute,
             search: (old) => ({
                 ...old,
                 movieId: undefined,
                 collectionId: undefined,
+                subredditImages: undefined,
             }),
         })
     }
+
+    const [imgMaxWidth, setImgMaxWidth] = useState<string>()
+    const [imgMaxHeight, setImgMaxHeight] = useState<string>()
+    useEffect(() => {
+        setImgMaxHeight(
+            orientation == 'portrait'
+                ? rotation % 2 == 0
+                    ? '95vh'
+                    : '95vw'
+                : rotation % 2 == 0
+                ? '95vh'
+                : '95vw'
+        )
+        setImgMaxWidth(
+            orientation == 'portrait'
+                ? rotation % 2 == 0
+                    ? '95vw'
+                    : '95vh'
+                : rotation % 2 == 0
+                ? '95vw'
+                : '95vh'
+        )
+    }, [orientation, rotation])
     // const ios = () => {
     //     if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
 
@@ -255,36 +291,29 @@ export function ImagePage() {
                                 // maxHeight: '100%',
                                 // maxWidth: '100%',
                                 boxSizing: 'border-box',
-                                height: 'auto',
                                 margin: 'auto',
+                                // height: fullScreen ? imgMaxHeight : 'auto',
+                                // width: fullScreen ? imgMaxWidth : 'auto',
+                                height: imgMaxHeight,
+                                width: imgMaxWidth,
+                                maxHeight: imgMaxHeight,
+                                maxWidth: imgMaxWidth,
                                 // maxHeight:
-                                //     orientation == 'landscape'
+                                //     orientation == 'portrait'
                                 //         ? rotation % 2 == 0
                                 //             ? '95vh'
-                                //             : undefined
+                                //             : '95vw'
+                                //         : rotation % 2 == 0
+                                //         ? '95vh'
                                 //         : '95vw',
                                 // maxWidth:
                                 //     orientation == 'portrait'
                                 //         ? rotation % 2 == 0
                                 //             ? '95vw'
-                                //             : undefined
+                                //             : '95vh'
+                                //         : rotation % 2 == 0
+                                //         ? '95vw'
                                 //         : '95vh',
-                                maxHeight:
-                                    orientation == 'portrait'
-                                        ? rotation % 2 == 0
-                                            ? '95vh'
-                                            : '95vw'
-                                        : rotation % 2 == 0
-                                        ? '95vh'
-                                        : '95vw',
-                                maxWidth:
-                                    orientation == 'portrait'
-                                        ? rotation % 2 == 0
-                                            ? '95vw'
-                                            : '95vh'
-                                        : rotation % 2 == 0
-                                        ? '95vw'
-                                        : '95vh',
 
                                 // maxHeight: 'min(100vh,100%)',
                                 // maxWidth: 'min(100vw,100%)',
@@ -556,6 +585,21 @@ export function ImagePage() {
                 </button>
 
                 <RotateButton setRotation={setRotation} />
+                <button
+                    style={{
+                        height: '50px',
+                        rotate: `${rotation * 90}deg`,
+                        zIndex: 5,
+                        transform: mirrored ? 'scaleX(-1)' : undefined,
+                    }}
+                    // className="material-icons"
+                    onClick={(ev) => {
+                        ev.preventDefault()
+                        setFullScreen((old) => !old)
+                    }}
+                >
+                    <span className="material-icons">fullscreen</span>
+                </button>
                 <button
                     style={{
                         height: '50px',
