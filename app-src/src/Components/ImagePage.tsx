@@ -242,31 +242,30 @@ export function ImagePage() {
         )
 
     return (
-        <>
+        <div
+            style={{
+                maxWidth: '100vw',
+                maxHeight: '100vh',
+                boxSizing: 'border-box',
+                overflow: 'hidden',
+            }}
+        >
             <div
                 className="no-scrollbar"
                 id={img}
                 style={{
-                    // border: 'none',
-                    // border: '10px solid red',
-                    // backgroundColor: 'green',
+                    // maxWidth: '100vw',
+                    // maxHeight: '100vh',
+                    width: '100%',
+                    height: '100%',
+                    boxSizing: 'border-box',
+                    overflow: 'hidden',
                     inset: 0,
-                    // overflowX: 'hidden',
-                    // maxWidth: rotation % 2 == 0 ? '100vw' : '100vh',
-                    // maxHeight: rotation % 2 == 0 ? '100vh' : '100vw',
-                    // width: rotation % 2 == 0 ? '100vw' : '100vh',
-                    // height: rotation % 2 == 0 ? '100vh' : '100vw',
-                    // width: '100vmin',
-                    // height: '100vmin',
-                    // width: '100vw',
-                    // height: '100vh',
-                    // backgroundColor: 'blue',
                     margin: 0,
                     position: 'absolute',
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    // boxSizing: 'border-box',
                     padding:
                         'env(safe-area-border-top),env(safe-area-border-right),env(safe-area-border-bottom),env(safe-area-border-left)',
                     rotate: `${rotation * 90}deg`,
@@ -282,303 +281,190 @@ export function ImagePage() {
                         setShowControls((old) => !old)
                     }
                 }}
+                key={String(mirrored)}
             >
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        position: 'relative',
-                        // top: '50%',
-                    }}
-                    key={String(mirrored)}
-                >
-                    <div style={{ position: 'absolute' }}>
-                        <img
-                            className="no-scrollbar"
-                            src={img}
-                            key={img + idx}
-                            // onClick={() => setShowControls((old) => !old)}
-                            alt=""
-                            style={{
-                                // placeSelf: 'center',
-                                objectFit: 'contain',
-                                // width: '100%',
-                                // height: '100%',
-                                // border: '5px solid green',
-                                padding: `${[0, 3, 2, 1]
-                                    .map((val) => {
-                                        return rotation === val
-                                            ? // ? '10rem'
-                                              'env(safe-area-inset-top)'
-                                            : '0px'
-                                    })
-                                    .join(' ')}
+                <div style={{ position: 'absolute' }}>
+                    <img
+                        className="no-scrollbar"
+                        src={img}
+                        key={img + idx}
+                        // onClick={() => setShowControls((old) => !old)}
+                        alt=""
+                        style={{
+                            // placeSelf: 'center',
+                            objectFit: 'contain',
+                            // width: '100%',
+                            // height: '100%',
+                            // border: '5px solid green',
+                            padding: `${[0, 3, 2, 1]
+                                .map((val) => {
+                                    return rotation === val
+                                        ? // ? '10rem'
+                                          'env(safe-area-inset-top)'
+                                        : '0px'
+                                })
+                                .join(' ')}
                                 `,
-                                // padding: '0 0 0 10px',
-                                // outline: '1px solid white',
-                                // width: '100%',
-                                // rotate: `-${rotation * 90}deg`,
-                                // maxHeight: '100%',
-                                // maxWidth: '100%',
-                                boxSizing: 'border-box',
-                                margin: 'auto',
-                                // height: fullScreen ? imgMaxHeight : 'auto',
-                                // width: fullScreen ? imgMaxWidth : 'auto',
-                                // height: imgMaxHeight,
-                                // width: imgMaxWidth,
-                                height: 'auto',
-                                width: 'auto',
-                                // height: imgContainerMaxHeight,
-                                // width: imgContainerMaxWidth,
-                                // height: `calc(min(100%,${imgContainerMaxHeight}))`,
-                                // width: `calc(min(100%,${imgContainerMaxWidth}))`,
-                                maxHeight: imgMaxHeight,
-                                maxWidth: imgMaxWidth,
-                                // maxHeight:
-                                //     orientation == 'portrait'
-                                //         ? rotation % 2 == 0
-                                //             ? '95vh'
-                                //             : '95vw'
-                                //         : rotation % 2 == 0
-                                //         ? '95vh'
-                                //         : '95vw',
-                                // maxWidth:
-                                //     orientation == 'portrait'
-                                //         ? rotation % 2 == 0
-                                //             ? '95vw'
-                                //             : '95vh'
-                                //         : rotation % 2 == 0
-                                //         ? '95vw'
-                                //         : '95vh',
+                            // padding: '0 0 0 10px',
+                            // outline: '1px solid white',
+                            // width: '100%',
+                            // rotate: `-${rotation * 90}deg`,
+                            // maxHeight: '100%',
+                            // maxWidth: '100%',
+                            boxSizing: 'border-box',
+                            margin: 'auto',
+                            // height: fullScreen ? imgMaxHeight : 'auto',
+                            // width: fullScreen ? imgMaxWidth : 'auto',
+                            // height: imgMaxHeight,
+                            // width: imgMaxWidth,
+                            height: 'auto',
+                            width: 'auto',
+                            // height: imgContainerMaxHeight,
+                            // width: imgContainerMaxWidth,
+                            // height: `calc(min(100%,${imgContainerMaxHeight}))`,
+                            // width: `calc(min(100%,${imgContainerMaxWidth}))`,
+                            maxHeight: imgMaxHeight,
+                            maxWidth: imgMaxWidth,
+                            // maxHeight:
+                            //     orientation == 'portrait'
+                            //         ? rotation % 2 == 0
+                            //             ? '95vh'
+                            //             : '95vw'
+                            //         : rotation % 2 == 0
+                            //         ? '95vh'
+                            //         : '95vw',
+                            // maxWidth:
+                            //     orientation == 'portrait'
+                            //         ? rotation % 2 == 0
+                            //             ? '95vw'
+                            //             : '95vh'
+                            //         : rotation % 2 == 0
+                            //         ? '95vw'
+                            //         : '95vh',
 
-                                // maxHeight: 'min(100vh,100%)',
-                                // maxWidth: 'min(100vw,100%)',
+                            // maxHeight: 'min(100vh,100%)',
+                            // maxWidth: 'min(100vw,100%)',
+                            zIndex: 5,
+                            transform: mirrored ? 'scaleX(-1)' : undefined,
+                            // backgroundColor: 'red',
+                        }}
+                        // ref={currentImageRef}
+                    />
+                    <GridOverlay showGrid={showGrid} />
+                    <div
+                        style={{
+                            visibility: showImageTimer ? 'visible' : 'hidden',
+                            inset: 0,
+                            position: 'absolute',
+                            textAlign: 'center',
+                        }}
+                    >
+                        {timeLeft}
+                    </div>
+                    <div
+                        style={{
+                            pointerEvents: 'none',
+                            position: 'absolute',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            // height: '100%',
+                            inset: 0,
+                            // rotate: `${rotation * 90}deg`,
+                            // left: 0,
+                            // backgroundColor: 'red',
+                            // maxWidth:
+                            //     rotation % 2 == 0 ? '100%' : undefined,
+                            // maxHeight:
+                            //     rotation % 2 != 0 ? '100%' : undefined,
+                            // width: rotation % 2 == 0 ? '100%' : undefined,
+                            // height: rotation % 2 != 0 ? '100%' : undefined,
+                            // top: '50%',
+                            // top: 0,
+                            // height: '100%',
+                            padding: '2rem',
+                            boxSizing: 'border-box',
+                            // transform: 'translate(0,-50%)',
+                            zIndex: 4,
+                            visibility: showControls ? 'visible' : 'hidden',
+                        }}
+                    >
+                        <Link
+                            style={{
+                                pointerEvents: 'auto',
                                 zIndex: 5,
-                                transform: mirrored ? 'scaleX(-1)' : undefined,
-                                // backgroundColor: 'red',
-                            }}
-                            // ref={currentImageRef}
-                        />
-                        <GridOverlay showGrid={showGrid} />
-                        <div
-                            style={{
-                                visibility: showImageTimer
-                                    ? 'visible'
-                                    : 'hidden',
-                                inset: 0,
-                                position: 'absolute',
+                                textDecoration: 'none',
+                                // color:
+                                //     images && idx <= 0 ? 'gray' : undefined,
+                                color:
+                                    images && idx <= 0
+                                        ? 'gray'
+                                        : 'rgba(127,127,127,1)',
+                                visibility:
+                                    images && idx <= 0 ? 'hidden' : 'visible',
+
+                                width: '2rem',
+                                padding: '5rem 1rem',
                                 textAlign: 'center',
-                            }}
-                        >
-                            {timeLeft}
-                        </div>
-                        <div
-                            style={{
-                                pointerEvents: 'none',
-                                position: 'absolute',
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                // height: '100%',
-                                inset: 0,
-                                // rotate: `${rotation * 90}deg`,
-                                // left: 0,
                                 // backgroundColor: 'red',
-                                // maxWidth:
-                                //     rotation % 2 == 0 ? '100%' : undefined,
-                                // maxHeight:
-                                //     rotation % 2 != 0 ? '100%' : undefined,
-                                // width: rotation % 2 == 0 ? '100%' : undefined,
-                                // height: rotation % 2 != 0 ? '100%' : undefined,
-                                // top: '50%',
-                                // top: 0,
-                                // height: '100%',
-                                padding: '2rem',
-                                boxSizing: 'border-box',
-                                // transform: 'translate(0,-50%)',
-                                zIndex: 4,
-                                visibility: showControls ? 'visible' : 'hidden',
                             }}
+                            search={(old) => ({
+                                ...old,
+                                idx: Math.max(idx - 1, 0),
+                            })}
+                            replace
+                            className="material-icons"
+                            disabled={idx >= (images && images.length)}
+                            // onClick={(ev) => {
+                            //     ev.preventDefault()
+                            //     // prevImage()
+
+                            //     // selectImage(Math.max(idx - 1, 0))
+                            // }}
                         >
-                            <Link
-                                style={{
-                                    pointerEvents: 'auto',
-                                    zIndex: 5,
-                                    textDecoration: 'none',
-                                    // color:
-                                    //     images && idx <= 0 ? 'gray' : undefined,
-                                    color:
-                                        images && idx <= 0
-                                            ? 'gray'
-                                            : 'rgba(127,127,127,1)',
-                                    visibility:
-                                        images && idx <= 0
-                                            ? 'hidden'
-                                            : 'visible',
+                            arrow_back_ios
+                        </Link>
 
-                                    width: '2rem',
-                                    padding: '5rem 1rem',
-                                    textAlign: 'center',
-                                    // backgroundColor: 'red',
-                                }}
-                                search={(old) => ({
-                                    ...old,
-                                    idx: Math.max(idx - 1, 0),
-                                })}
-                                replace
-                                className="material-icons"
-                                disabled={idx >= (images && images.length)}
-                                // onClick={(ev) => {
-                                //     ev.preventDefault()
-                                //     // prevImage()
-
-                                //     // selectImage(Math.max(idx - 1, 0))
-                                // }}
-                            >
-                                arrow_back_ios
-                            </Link>
-
-                            <Link
-                                style={{
-                                    zIndex: 5,
-                                    pointerEvents: 'auto',
-
-                                    textDecoration: 'none',
-                                    color:
-                                        images && idx >= images.length - 1
-                                            ? 'gray'
-                                            : 'rgba(127,127,127,1)',
-                                    visibility:
-                                        images && idx >= images.length - 1
-                                            ? 'hidden'
-                                            : 'visible',
-                                    width: '2rem',
-                                    padding: '5rem 1rem',
-                                    textAlign: 'center',
-                                    // backgroundColor: 'red',
-                                    // backgroundColor: 'red',
-                                }}
-                                className="material-icons"
-                                search={(old) => ({
-                                    ...old,
-                                    idx: Math.min(idx + 1, images.length - 1),
-                                })}
-
-                                // onClick={(ev) => {
-                                //     ev.preventDefault()
-                                //     // nextImage()
-
-                                //     // selectImage(Math.min(idx + 1, images.length))
-                                // }}
-                            >
-                                arrow_forward_ios
-                            </Link>
-                        </div>
-
-                        {/* <div
+                        <Link
                             style={{
-                                pointerEvents: 'none',
-                                boxSizing: 'border-box',
-                                // outline: '1px solid pink',
-                                position: 'absolute',
-                                // padding: '1rem',
-                                inset: 0,
-                                // bottom: '4px',
-                                // bottom: '-4px',
-                                // maxHeight: '95%',
-                                // height: 'calc(100% - 4px)',
-                                // width: '95%',
-                                // maxHeight: '95%',
-                                // width: '95%',
-                                height: 'auto',
-                                width: 'auto',
-                                margin: 'auto',
-                                // backgroundColor:
-                                //     'rgba(255,255,0,0.3)',
+                                zIndex: 5,
+                                pointerEvents: 'auto',
 
-                                display: 'grid',
-                                visibility: showGrid ? 'visible' : 'hidden',
-                                gridTemplateColumns: '1fr 1fr 1fr',
+                                textDecoration: 'none',
+                                color:
+                                    images && idx >= images.length - 1
+                                        ? 'gray'
+                                        : 'rgba(127,127,127,1)',
+                                visibility:
+                                    images && idx >= images.length - 1
+                                        ? 'hidden'
+                                        : 'visible',
+                                width: '2rem',
+                                padding: '5rem 1rem',
+                                textAlign: 'center',
+                                // backgroundColor: 'red',
+                                // backgroundColor: 'red',
                             }}
+                            className="material-icons"
+                            search={(old) => ({
+                                ...old,
+                                idx: Math.min(idx + 1, images.length - 1),
+                            })}
+
+                            // onClick={(ev) => {
+                            //     ev.preventDefault()
+                            //     // nextImage()
+
+                            //     // selectImage(Math.min(idx + 1, images.length))
+                            // }}
                         >
-                            <div
-                                style={{
-                                    height: '100%',
-                                    width: '100%',
-                                    border: '1px solid var(--grid-color)',
-                                    boxSizing: 'border-box',
-                                }}
-                            ></div>
-                            <div
-                                style={{
-                                    height: '100%',
-                                    width: '100%',
-                                    border: '1px solid var(--grid-color)',
-                                    boxSizing: 'border-box',
-                                }}
-                            ></div>
-                            <div
-                                style={{
-                                    height: '100%',
-                                    width: '100%',
-                                    border: '1px solid var(--grid-color)',
-                                    boxSizing: 'border-box',
-                                }}
-                            ></div>
-                            <div
-                                style={{
-                                    height: '100%',
-                                    width: '100%',
-                                    border: '1px solid var(--grid-color)',
-                                    boxSizing: 'border-box',
-                                }}
-                            ></div>
-                            <div
-                                style={{
-                                    height: '100%',
-                                    width: '100%',
-                                    border: '1px solid var(--grid-color)',
-                                    boxSizing: 'border-box',
-                                }}
-                            ></div>
-                            <div
-                                style={{
-                                    height: '100%',
-                                    width: '100%',
-                                    border: '1px solid var(--grid-color)',
-                                    boxSizing: 'border-box',
-                                }}
-                            ></div>
-                            <div
-                                style={{
-                                    height: '100%',
-                                    width: '100%',
-                                    border: '1px solid var(--grid-color)',
-                                    boxSizing: 'border-box',
-                                }}
-                            ></div>
-                            <div
-                                style={{
-                                    height: '100%',
-                                    width: '100%',
-                                    border: '1px solid var(--grid-color)',
-                                    boxSizing: 'border-box',
-                                }}
-                            ></div>
-                            <div
-                                style={{
-                                    height: '100%',
-                                    width: '100%',
-                                    border: '1px solid var(--grid-color)',
-                                    boxSizing: 'border-box',
-                                }}
-                            ></div>
-                        </div> */}
+                            arrow_forward_ios
+                        </Link>
                     </div>
                 </div>
-                {/* </div> */}
             </div>
+            {/* </div> */}
+            {/* </div> */}
             <div
                 style={{
                     padding: '1rem',
@@ -612,6 +498,7 @@ export function ImagePage() {
                     onClick={() => exitViewer()}
                     style={{
                         height: '50px',
+                        width: '50px',
                         // flexShrink: 1,
                         zIndex: 5,
                     }}
@@ -625,6 +512,7 @@ export function ImagePage() {
                 <button
                     style={{
                         height: '50px',
+                        width: '50px',
                         rotate: `${rotation * 90}deg`,
                         zIndex: 5,
                         transform: mirrored ? 'scaleX(-1)' : undefined,
@@ -640,6 +528,7 @@ export function ImagePage() {
                 <button
                     style={{
                         height: '50px',
+                        width: '50px',
                         rotate: `${rotation * 90}deg`,
                         zIndex: 5,
                         transform: mirrored ? 'scaleX(-1)' : undefined,
@@ -655,6 +544,7 @@ export function ImagePage() {
                 <button
                     style={{
                         height: '50px',
+                        width: '50px',
                         zIndex: 5,
                         color: showGrid ? 'var(--main-text-color)' : 'gray',
                     }}
@@ -681,6 +571,7 @@ export function ImagePage() {
                 <button
                     style={{
                         height: '50px',
+                        width: '50px',
                         zIndex: 5,
                         transform: mirrored ? 'scaleX(-1)' : undefined,
                     }}
@@ -728,6 +619,6 @@ export function ImagePage() {
                     prevImage={prevImage}
                 />
             </div>
-        </>
+        </div>
     )
 }
