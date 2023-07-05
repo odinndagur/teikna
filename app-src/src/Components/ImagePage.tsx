@@ -183,27 +183,38 @@ export function ImagePage() {
         })
     }
 
-    const [imgMaxWidth, setImgMaxWidth] = useState<string>()
-    const [imgMaxHeight, setImgMaxHeight] = useState<string>()
+    const [imgMaxWidth, setImgMaxWidth] = useState<string>('')
+    const [imgMaxHeight, setImgMaxHeight] = useState<string>('')
+
+    const [imgContainerMaxWidth, setImgContainerMaxWidth] =
+        useState<string>('auto')
+    const [imgContainerMaxHeight, setImgContainerMaxHeight] =
+        useState<string>('auto')
+
     useEffect(() => {
-        setImgMaxHeight(
-            orientation == 'portrait'
-                ? rotation % 2 == 0
-                    ? '95vh'
-                    : '95vw'
-                : rotation % 2 == 0
-                ? '95vh'
-                : '95vw'
-        )
-        setImgMaxWidth(
-            orientation == 'portrait'
-                ? rotation % 2 == 0
-                    ? '95vw'
-                    : '95vh'
-                : rotation % 2 == 0
-                ? '95vw'
-                : '95vh'
-        )
+        setImgMaxHeight(rotation % 2 == 0 ? '95vh' : '95vw')
+        setImgMaxWidth(rotation % 2 == 0 ? '95vw' : '95vh')
+
+        // setImgContainerMaxHeight(
+        //     orientation == 'portrait'
+        //         ? rotation % 2 == 0
+        //             ? imgMaxHeight // portrait snyr rett
+        //             : 'auto' // portrait a hlid
+        //         : rotation % 2 == 0 //orientation == 'landscape'
+        //         ? 'auto' // landscape snyr rett
+        //         : imgMaxHeight //landscape snyr a hlid
+        // )
+        // setImgContainerMaxHeight(imgMaxHeight)
+        // setImgContainerMaxWidth(imgMaxWidth)
+        // setImgContainerMaxWidth(
+        //     orientation == 'portrait'
+        //         ? rotation % 2 == 0
+        //             ? imgMaxHeight
+        //             : 'auto'
+        //         : rotation % 2 == 0
+        //         ? 'auto'
+        //         : imgMaxHeight
+        // )
     }, [orientation, rotation])
     // const ios = () => {
     //     if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
@@ -294,8 +305,14 @@ export function ImagePage() {
                                 margin: 'auto',
                                 // height: fullScreen ? imgMaxHeight : 'auto',
                                 // width: fullScreen ? imgMaxWidth : 'auto',
-                                height: imgMaxHeight,
-                                width: imgMaxWidth,
+                                // height: imgMaxHeight,
+                                // width: imgMaxWidth,
+                                height: 'auto',
+                                width: 'auto',
+                                // height: imgContainerMaxHeight,
+                                // width: imgContainerMaxWidth,
+                                // height: `calc(min(100%,${imgContainerMaxHeight}))`,
+                                // width: `calc(min(100%,${imgContainerMaxWidth}))`,
                                 maxHeight: imgMaxHeight,
                                 maxWidth: imgMaxWidth,
                                 // maxHeight:
