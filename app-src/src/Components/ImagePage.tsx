@@ -24,10 +24,10 @@ export function RotateButton({ setRotation }) {
                 setTimeout(() => setShouldReset(true), 3000)
                 if (shouldReset) {
                     setRotation((old) => (old == 0 ? 1 : 0))
-                    setShouldReset(false)
                 } else {
                     setRotation((old) => (old + 1) % 4)
                 }
+                setShouldReset(false)
             }}
             style={{
                 height: '50px',
