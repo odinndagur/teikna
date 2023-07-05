@@ -21,7 +21,7 @@ export function RotateButton({ setRotation }) {
         <button
             onClick={(ev) => {
                 ev.preventDefault()
-                setTimeout(() => setShouldReset(true), 3000)
+                setTimeout(() => setShouldReset(true), 9000)
                 if (shouldReset) {
                     setRotation((old) => (old == 0 ? 1 : 0))
                 } else {
@@ -486,17 +486,26 @@ export function ImagePage() {
                     padding: '1rem',
                     position: 'absolute',
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(50px, 1fr))',
-                    gridTemplateRows: '1fr',
+                    gridTemplateColumns:
+                        rotation % 2 == 0
+                            ? 'repeat(auto-fill, minmax(50px, 1fr))'
+                            : '1fr',
+                    gridTemplateRows:
+                        rotation % 2 != 0
+                            ? 'repeat(auto-fill, minmax(50px, 1fr))'
+                            : '1fr',
+                    // gridTemplateRows: '1fr',
                     // justifyContent: 'center',
                     gap: '1rem',
                     // width: '80%',
-                    maxWidth: rotation % 2 == 0 ? '100%' : undefined,
-                    maxHeight: rotation % 2 != 0 ? '100%' : undefined,
+                    width: rotation % 2 == 0 ? '100%' : undefined,
+                    height: rotation % 2 != 0 ? '100%' : undefined,
                     // maxHeight: '50px',
                     // height: '100%',
                     boxSizing: 'border-box',
-                    bottom: '2rem',
+                    // backgroundColor: 'red',
+                    bottom: rotation % 2 == 0 ? '1rem' : undefined,
+
                     visibility: showControls ? 'visible' : 'hidden',
                     // rotate: `${rotation * 90}deg`,
                 }}
@@ -505,7 +514,7 @@ export function ImagePage() {
                     onClick={() => exitViewer()}
                     style={{
                         height: '50px',
-                        flexShrink: 1,
+                        // flexShrink: 1,
                         zIndex: 5,
                     }}
                     className="material-icons"

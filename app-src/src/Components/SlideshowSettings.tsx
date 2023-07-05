@@ -23,6 +23,12 @@ export function SlideshowSettings() {
             </button>
 
             <dialog
+                onKeyDown={(ev) => {
+                    if (ev.code == 'Escape') {
+                        console.log('escape a modal')
+                        ev.stopPropagation()
+                    }
+                }}
                 style={{
                     border: 0,
                     backdropFilter: 'blur(10px)',
@@ -41,6 +47,40 @@ export function SlideshowSettings() {
                     }
                 }}
             >
+                <form
+                    style={{
+                        display: 'flex',
+                        gap: '1rem',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        // alignContent: 'center',
+                        // justifyItems: 'center',
+                    }}
+                    onSubmit={(ev) => {
+                        ev.preventDefault()
+                        const val = ev.target.secondsInput.value
+                        const [minutes, seconds] = val.split(':')
+                        setTotalSeconds(60 * Number(minutes) + Number(seconds))
+                        const dialog = document.getElementById(
+                            modalId
+                        ) as HTMLDialogElement
+                        dialog.close()
+                    }}
+                >
+                    <label htmlFor="">
+                        Time per image
+                        <input
+                            style={{ margin: '1rem' }}
+                            type="time"
+                            id="secondsInput"
+                            defaultValue="00:30"
+                        />
+                    </label>
+                    <button type="submit">
+                        <span className="material-icons">check</span>
+                    </button>
+                </form>
+
                 <form
                     style={{
                         display: 'flex',
