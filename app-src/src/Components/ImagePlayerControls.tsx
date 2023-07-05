@@ -8,12 +8,14 @@ export function ImagePlayerControls({
     seconds,
     rotation,
     setTimeLeft,
+    setShowImageTimer,
 }: {
     nextImage: any
     prevImage: any
     seconds?: number
     rotation?: number
     setTimeLeft: any
+    setShowImageTimer: any
 }) {
     const [totalSeconds, setTotalSeconds] = useLocalStorage(
         'seconds-per-image',
@@ -25,19 +27,17 @@ export function ImagePlayerControls({
         setIsPlaying((old) => !old)
         setSecondsLeft(totalSeconds ?? seconds)
     }
+
     useEffect(() => {
         // setTotalSeconds(15)
         if (isPlaying) {
             if (secondsLeft <= 0) {
                 setSecondsLeft(totalSeconds ?? seconds)
-                setTimeLeft(totalSeconds ?? seconds)
                 nextImage()
             }
             const timer =
                 secondsLeft > 0 &&
                 setInterval(() => {
-                    setTimeLeft((old) => old - 1)
-
                     setSecondsLeft((old) => old - 1)
                 }, 1000)
             return () => clearInterval(timer)
@@ -52,6 +52,12 @@ export function ImagePlayerControls({
             '0'
         )}`
     }, [secondsLeft])
+    useEffect(() => {
+        setShowImageTimer(isPlaying)
+    }, [isPlaying])
+    useEffect(() => {
+        setTimeLeft(formattedTimeLeft)
+    }, [formattedTimeLeft])
     return (
         <>
             <SlideshowSettings />

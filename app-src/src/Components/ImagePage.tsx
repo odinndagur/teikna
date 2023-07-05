@@ -43,7 +43,7 @@ export function RotateButton({ setRotation }) {
 export function ImagePage() {
     const [img, setImg] = useState('')
     const [showImageTimer, setShowImageTimer] = useState(true)
-    const [timeLeft, setTimeLeft] = useState(0)
+    const [timeLeft, setTimeLeft] = useState('')
     // const {
     //     data: { currentImage },
     // } = useMatch()
@@ -596,6 +596,7 @@ export function ImagePage() {
                 <ImagePlayerControls
                     // seconds={60}
                     // key={images[idx]}
+                    setShowImageTimer={setShowImageTimer}
                     setTimeLeft={setTimeLeft}
                     nextImage={nextImage}
                     prevImage={prevImage}
