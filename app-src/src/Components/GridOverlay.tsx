@@ -1,6 +1,13 @@
-export function GridOverlay({ showGrid }: { showGrid?: boolean }) {
+export function GridOverlay({
+    showGrid,
+    key,
+}: {
+    showGrid?: boolean
+    key: any
+}) {
     return (
         <div
+            key={key}
             style={{
                 pointerEvents: 'none',
                 boxSizing: 'border-box',

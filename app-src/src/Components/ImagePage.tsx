@@ -209,17 +209,21 @@ export function ImagePage() {
         //     orientation == 'portrait'
         //         ? rotation % 2 == 0
         //             ? imgMaxHeight // portrait snyr rett
-        //             : 'auto' // portrait a hlid
+        //             : imgMaxWidth // portrait a hlid
         //         : rotation % 2 == 0 //orientation == 'landscape'
         //         ? 'auto' // landscape snyr rett
         //         : imgMaxHeight //landscape snyr a hlid
         // )
-        // setImgContainerMaxHeight(imgMaxHeight)
-        // setImgContainerMaxWidth(imgMaxWidth)
+        setImgContainerMaxHeight(
+            orientation == 'portrait' ? imgMaxHeight : 'auto'
+        )
+        setImgContainerMaxWidth(
+            orientation == 'landscape' ? imgMaxWidth : 'auto'
+        )
         // setImgContainerMaxWidth(
         //     orientation == 'portrait'
         //         ? rotation % 2 == 0
-        //             ? imgMaxHeight
+        //             ? 'auto'
         //             : 'auto'
         //         : rotation % 2 == 0
         //         ? 'auto'
@@ -317,10 +321,10 @@ export function ImagePage() {
                             // width: fullScreen ? imgMaxWidth : 'auto',
                             // height: imgMaxHeight,
                             // width: imgMaxWidth,
-                            height: 'auto',
-                            width: 'auto',
-                            // height: imgContainerMaxHeight,
-                            // width: imgContainerMaxWidth,
+                            // height: 'auto',
+                            // width: 'auto',
+                            height: imgContainerMaxHeight,
+                            width: imgContainerMaxWidth,
                             // height: `calc(min(100%,${imgContainerMaxHeight}))`,
                             // width: `calc(min(100%,${imgContainerMaxWidth}))`,
                             maxHeight: imgMaxHeight,
