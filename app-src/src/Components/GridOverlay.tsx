@@ -1,17 +1,17 @@
 export function GridOverlay({
     showGrid,
-    key,
+    innerKey,
     height,
     width,
 }: {
     showGrid?: boolean
-    key?: any
+    innerKey?: any
     height?: any
     width?: any
 }) {
     return (
         <div
-            key={key}
+            key={innerKey}
             style={{
                 pointerEvents: 'none',
                 boxSizing: 'border-box',

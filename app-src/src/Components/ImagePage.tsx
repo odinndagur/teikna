@@ -358,6 +358,7 @@ export function ImagePage() {
                         height={imgContainerMaxHeight}
                         width={imgContainerMaxWidth}
                         key={img}
+                        innerKey={img}
                         showGrid={showGrid}
                     />
                     <div

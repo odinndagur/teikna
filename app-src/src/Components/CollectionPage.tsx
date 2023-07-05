@@ -1,4 +1,4 @@
-import { useMatch } from '@tanstack/react-location'
+import { Link, useMatch } from '@tanstack/react-location'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { useLocalStorage } from 'usehooks-ts'
@@ -116,12 +116,24 @@ export function CollectionPage() {
                     justifyContent: 'space-between',
                 }}
             >
-                <h2>
-                    {
-                        userCollections?.find((c: any) => c.id == collectionId)
-                            ?.name
-                    }
-                </h2>
+                <Link
+                    to={'/imageViewer'}
+                    search={(old) => ({
+                        ...old,
+                        idx: 0,
+                        subredditImages: userCollections?.find(
+                            (c) => c.id == collectionId
+                        )?.images,
+                    })}
+                >
+                    <h2>
+                        {
+                            userCollections?.find(
+                                (c: any) => c.id == collectionId
+                            )?.name
+                        }
+                    </h2>
+                </Link>
                 <button
                     style={{ height: '2rem' }}
                     onClick={() => {
