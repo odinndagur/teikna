@@ -9,66 +9,41 @@ import { Footer } from './Footer'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import { useUserCollection } from './useUserCollection'
-function spliceNoMutate(myArray: any[], indexToRemove: number) {
-    return myArray
-        .slice(0, indexToRemove)
-        .concat(myArray.slice(indexToRemove + 1))
-}
-export function ImagePlayerControls({
-    nextImage,
-    prevImage,
-    seconds,
-}: {
-    nextImage: any
-    prevImage: any
-    seconds?: number
-}) {
-    const [isPlaying, setIsPlaying] = useState(false)
-    const [secondsLeft, setSecondsLeft] = useState(seconds ?? 4)
-    useEffect(() => {
-        if (isPlaying) {
-            if (secondsLeft <= 0) {
-                setSecondsLeft(seconds ?? 4)
-                nextImage()
-            }
-            const timer =
-                secondsLeft > 0 &&
-                setInterval(() => setSecondsLeft((old) => old - 1), 1000)
-            return () => clearInterval(timer)
-        }
-    }, [secondsLeft, isPlaying])
+import { ImagePlayerControls } from './ImagePlayerControls'
+import { spliceNoMutate } from './spliceNoMutate'
+import { SlideshowSettings } from './SlideshowSettings'
+import { GridOverlay } from './GridOverlay'
 
-    const formattedTimeLeft = useMemo(() => {
-        const minutes = Math.floor(secondsLeft / 60)
-        const seconds = secondsLeft - minutes * 60
-        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(
-            2,
-            '0'
-        )}`
-    }, [secondsLeft])
+export function RotateButton({ setRotation }) {
+    const [shouldReset, setShouldReset] = useState(false)
+
     return (
         <button
+            onClick={(ev) => {
+                ev.preventDefault()
+                setTimeout(() => setShouldReset(true), 3000)
+                if (shouldReset) {
+                    setRotation((old) => (old == 0 ? 1 : 0))
+                    setShouldReset(false)
+                } else {
+                    setRotation((old) => (old + 1) % 4)
+                }
+            }}
             style={{
+                height: '50px',
                 zIndex: 5,
-                minWidth: isPlaying ? '8rem' : undefined,
-                display: 'flex',
-                justifyContent: 'space-between',
             }}
-            onClick={() => {
-                setIsPlaying((old) => !old)
-            }}
+            className="material-icons"
         >
-            {' '}
-            <span className="material-icons">
-                {!isPlaying ? 'play_arrow' : 'pause'}
-            </span>
-            {isPlaying && <span>{formattedTimeLeft}</span>}
+            rotate_right
         </button>
     )
 }
 
 export function ImagePage() {
     const [img, setImg] = useState('')
+    const [showImageTimer, setShowImageTimer] = useState(true)
+    const [timeLeft, setTimeLeft] = useState(0)
     // const {
     //     data: { currentImage },
     // } = useMatch()
@@ -168,6 +143,11 @@ export function ImagePage() {
             to: collectionId
                 ? `/collections/${collectionId}`
                 : `/movies/${movie?.id}`,
+            search: (old) => ({
+                ...old,
+                movieId: undefined,
+                collectionId: undefined,
+            }),
         })
     }
     // const ios = () => {
@@ -218,7 +198,10 @@ export function ImagePage() {
                 onClick={(ev) => {
                     const target = ev.target as HTMLElement
 
-                    if (target.tagName.toLocaleLowerCase() != 'button') {
+                    if (
+                        target.tagName.toLocaleLowerCase() != 'button' &&
+                        target.tagName.toLocaleLowerCase() != 'a'
+                    ) {
                         console.log(target.tagName)
                         setShowControls((old) => !old)
                     }
@@ -292,7 +275,110 @@ export function ImagePage() {
                             }}
                             // ref={currentImageRef}
                         />
+                        <GridOverlay showGrid={showGrid} />
                         <div
+                            style={{
+                                visibility: showImageTimer
+                                    ? 'visible'
+                                    : 'hidden',
+                                inset: 0,
+                                position: 'absolute',
+                                textAlign: 'center',
+                            }}
+                        >
+                            {timeLeft}
+                        </div>
+                        <div
+                            style={{
+                                pointerEvents: 'none',
+                                position: 'absolute',
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'center',
+                                // height: '100%',
+                                inset: 0,
+                                // rotate: `${rotation * 90}deg`,
+                                // left: 0,
+                                // backgroundColor: 'red',
+                                // maxWidth:
+                                //     rotation % 2 == 0 ? '100%' : undefined,
+                                // maxHeight:
+                                //     rotation % 2 != 0 ? '100%' : undefined,
+                                // width: rotation % 2 == 0 ? '100%' : undefined,
+                                // height: rotation % 2 != 0 ? '100%' : undefined,
+                                // top: '50%',
+                                // top: 0,
+                                // height: '100%',
+                                padding: '2rem',
+                                boxSizing: 'border-box',
+                                // transform: 'translate(0,-50%)',
+                                zIndex: 4,
+                                visibility: showControls ? 'visible' : 'hidden',
+                            }}
+                        >
+                            <Link
+                                style={{
+                                    pointerEvents: 'auto',
+                                    zIndex: 5,
+                                    textDecoration: 'none',
+                                    color:
+                                        images && idx <= 0 ? 'gray' : undefined,
+                                    width: '2rem',
+                                    padding: '5rem 1rem',
+                                    textAlign: 'center',
+                                    // backgroundColor: 'red',
+                                }}
+                                search={(old) => ({
+                                    ...old,
+                                    idx: Math.max(idx - 1, 0),
+                                })}
+                                replace
+                                className="material-icons"
+                                disabled={idx >= (images && images.length)}
+                                // onClick={(ev) => {
+                                //     ev.preventDefault()
+                                //     // prevImage()
+
+                                //     // selectImage(Math.max(idx - 1, 0))
+                                // }}
+                            >
+                                arrow_back_ios
+                            </Link>
+
+                            <Link
+                                style={{
+                                    zIndex: 5,
+                                    pointerEvents: 'auto',
+
+                                    textDecoration: 'none',
+                                    color:
+                                        images && idx >= images.length - 1
+                                            ? 'gray'
+                                            : undefined,
+                                    width: '2rem',
+                                    padding: '5rem 1rem',
+                                    textAlign: 'center',
+                                    // backgroundColor: 'red',
+                                    // backgroundColor: 'red',
+                                }}
+                                className="material-icons"
+                                search={(old) => ({
+                                    ...old,
+                                    idx: Math.min(idx + 1, images.length - 1),
+                                })}
+
+                                // onClick={(ev) => {
+                                //     ev.preventDefault()
+                                //     // nextImage()
+
+                                //     // selectImage(Math.min(idx + 1, images.length))
+                                // }}
+                            >
+                                arrow_forward_ios
+                            </Link>
+                        </div>
+
+                        {/* <div
                             style={{
                                 pointerEvents: 'none',
                                 boxSizing: 'border-box',
@@ -390,7 +476,7 @@ export function ImagePage() {
                                     boxSizing: 'border-box',
                                 }}
                             ></div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 {/* </div> */}
@@ -402,15 +488,17 @@ export function ImagePage() {
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fill, minmax(50px, 1fr))',
                     gridTemplateRows: '1fr',
-                    justifyContent: 'center',
+                    // justifyContent: 'center',
                     gap: '1rem',
-                    width: '80%',
-                    maxWidth: '100%',
+                    // width: '80%',
+                    maxWidth: rotation % 2 == 0 ? '100%' : undefined,
+                    maxHeight: rotation % 2 != 0 ? '100%' : undefined,
                     // maxHeight: '50px',
                     // height: '100%',
                     boxSizing: 'border-box',
                     bottom: '2rem',
                     visibility: showControls ? 'visible' : 'hidden',
+                    // rotate: `${rotation * 90}deg`,
                 }}
             >
                 <button
@@ -426,20 +514,10 @@ export function ImagePage() {
                     clear
                 </button>
 
-                <button
-                    onClick={(ev) => {
-                        ev.preventDefault()
-                        setRotation((old) => (old + 1) % 4)
-                    }}
-                    style={{
-                        zIndex: 5,
-                    }}
-                    className="material-icons"
-                >
-                    rotate_right
-                </button>
+                <RotateButton setRotation={setRotation} />
                 <button
                     style={{
+                        height: '50px',
                         zIndex: 5,
                         transform: mirrored ? 'scaleX(-1)' : undefined,
                     }}
@@ -453,6 +531,7 @@ export function ImagePage() {
                 </button>
                 <button
                     style={{
+                        height: '50px',
                         zIndex: 5,
                         color: showGrid ? 'var(--main-text-color)' : 'gray',
                     }}
@@ -479,6 +558,7 @@ export function ImagePage() {
                 </button> */}
                 <button
                     style={{
+                        height: '50px',
                         zIndex: 5,
                         transform: mirrored ? 'scaleX(-1)' : undefined,
                     }}
@@ -509,135 +589,17 @@ export function ImagePage() {
                             ])
                         }
                     }}
-                    //     onClick={(ev) => {
-                    //         ev.preventDefault()
-                    //         if (currentCollection?.images.includes(img)) {
-                    //             setUserCollections((old: any) => {
-                    //                 const currentCollection = old.find(
-                    //                     (c: any) => c.id == 1
-                    //                 )
-                    //                 return [
-                    //                     ...old.filter((c: any) => c.id != 1),
-                    //                     {
-                    //                         ...currentCollection,
-                    //                         images: currentCollection.images
-                    //                         ),
-                    //                     },
-                    //                 ]
-                    //             })
-                    //         }
-                    //         else {
-                    //             setUserCollections((old: any) => {
-                    //                 const currentCollection = old.find(
-                    //                     (c: any) => c.id == 1
-                    //                 )
-                    //                 return [
-                    //                     ...old.filter((c: any) => c.id != 1),
-                    //                     {
-                    //                         ...currentCollection,
-                    //                         images: [
-                    //                             ...currentCollection.images,
-                    //                             img,
-                    //                         ],
-                    //                     },
-                    //                 ]
-                    //             })
-                    //         }
-                    //     }
-                    // }
                 >
                     {currentCollection?.images.includes(img) ? 'delete' : 'add'}
                     {/* add */}
                 </button>
                 <ImagePlayerControls
-                    seconds={60}
+                    // seconds={60}
                     // key={images[idx]}
+                    setTimeLeft={setTimeLeft}
                     nextImage={nextImage}
                     prevImage={prevImage}
                 />
-            </div>
-
-            <div
-                style={{
-                    pointerEvents: 'none',
-                    position: 'absolute',
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    // rotate: `${rotation * 90}deg`,
-                    width: '100%',
-                    left: 0,
-                    // backgroundColor: 'red',
-                    maxWidth: '100%',
-                    top: '50%',
-                    // top: 0,
-                    // height: '100%',
-                    padding: '1rem',
-                    boxSizing: 'border-box',
-                    transform: 'translate(0,-50%)',
-                    zIndex: 4,
-                    visibility: showControls ? 'visible' : 'hidden',
-                }}
-            >
-                <Link
-                    style={{
-                        pointerEvents: 'auto',
-                        zIndex: 5,
-                        textDecoration: 'none',
-                        color: images && idx <= 0 ? 'gray' : undefined,
-                        width: '2rem',
-                        padding: '5rem 1rem',
-                        textAlign: 'center',
-                        // backgroundColor: 'red',
-                    }}
-                    search={(old) => ({
-                        ...old,
-                        idx: Math.max(idx - 1, 0),
-                    })}
-                    replace
-                    className="material-icons"
-                    disabled={idx >= (images && images.length)}
-                    // onClick={(ev) => {
-                    //     ev.preventDefault()
-                    //     // prevImage()
-
-                    //     // selectImage(Math.max(idx - 1, 0))
-                    // }}
-                >
-                    arrow_back_ios
-                </Link>
-
-                <Link
-                    style={{
-                        zIndex: 5,
-                        pointerEvents: 'auto',
-
-                        textDecoration: 'none',
-                        color:
-                            images && idx >= images.length - 1
-                                ? 'gray'
-                                : undefined,
-                        width: '2rem',
-                        padding: '5rem 1rem',
-                        textAlign: 'center',
-                        // backgroundColor: 'red',
-                        // backgroundColor: 'red',
-                    }}
-                    className="material-icons"
-                    search={(old) => ({
-                        ...old,
-                        idx: Math.min(idx + 1, images.length - 1),
-                    })}
-
-                    // onClick={(ev) => {
-                    //     ev.preventDefault()
-                    //     // nextImage()
-
-                    //     // selectImage(Math.min(idx + 1, images.length))
-                    // }}
-                >
-                    arrow_forward_ios
-                </Link>
             </div>
         </>
     )
