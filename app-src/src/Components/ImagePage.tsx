@@ -205,30 +205,30 @@ export function ImagePage() {
         setImgMaxHeight(rotation % 2 == 0 ? '95vh' : '95vw')
         setImgMaxWidth(rotation % 2 == 0 ? '95vw' : '95vh')
 
-        // setImgContainerMaxHeight(
-        //     orientation == 'portrait'
-        //         ? rotation % 2 == 0
-        //             ? imgMaxHeight // portrait snyr rett
-        //             : imgMaxWidth // portrait a hlid
-        //         : rotation % 2 == 0 //orientation == 'landscape'
-        //         ? 'auto' // landscape snyr rett
-        //         : imgMaxHeight //landscape snyr a hlid
-        // )
         setImgContainerMaxHeight(
-            orientation == 'portrait' ? imgMaxHeight : 'auto'
+            orientation == 'portrait'
+                ? rotation % 2 == 0
+                    ? imgMaxHeight // portrait snyr rett
+                    : imgMaxWidth // portrait a hlid
+                : rotation % 2 == 0 //orientation == 'landscape'
+                ? 'auto' // landscape snyr rett
+                : imgMaxHeight //landscape snyr a hlid
         )
-        setImgContainerMaxWidth(
-            orientation == 'landscape' ? imgMaxWidth : 'auto'
-        )
-        // setImgContainerMaxWidth(
-        //     orientation == 'portrait'
-        //         ? rotation % 2 == 0
-        //             ? 'auto'
-        //             : 'auto'
-        //         : rotation % 2 == 0
-        //         ? 'auto'
-        //         : imgMaxHeight
+        // setImgContainerMaxHeight(
+        //     orientation == 'portrait' ? imgMaxHeight : 'auto'
         // )
+        // setImgContainerMaxWidth(
+        //     orientation == 'landscape' ? imgMaxWidth : 'auto'
+        // )
+        setImgContainerMaxWidth(
+            orientation == 'portrait'
+                ? rotation % 2 == 0
+                    ? 'auto'
+                    : 'auto'
+                : rotation % 2 == 0
+                ? 'auto'
+                : imgMaxHeight
+        )
     }, [orientation, rotation])
     // const ios = () => {
     //     if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
