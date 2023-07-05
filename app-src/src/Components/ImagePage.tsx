@@ -129,6 +129,16 @@ export function ImagePage() {
                 //     setSelectedIndex((old) => Math.min(images.length, old + 1))
                 // }
             }
+
+            if (e.key == 'R') {
+                setRotation((old) => (old - 1) % 4)
+            }
+            if (e.key == 'r') {
+                setRotation((old) => (old + 1) % 4)
+            }
+            if (e.key.toLocaleLowerCase() == 'g') {
+                setShowGrid((old) => !old)
+            }
             if (e.code == 'Escape') {
                 exitViewer()
             }
@@ -306,7 +316,7 @@ export function ImagePage() {
                                     .join(' ')}
                                 `,
                                 // padding: '0 0 0 10px',
-                                outline: '1px solid white',
+                                // outline: '1px solid white',
                                 // width: '100%',
                                 // rotate: `-${rotation * 90}deg`,
                                 // maxHeight: '100%',
