@@ -50,7 +50,13 @@ export function ImageElement({
             {/* <button> */}
             <Link
                 to={`/imageViewer`}
-                search={{ collectionId, movieId, images, idx }}
+                search={{
+                    collectionId,
+                    movieId,
+                    // images,
+                    idx,
+                    subredditImages: images ?? undefined,
+                }}
             >
                 <img
                     className="button"

@@ -54,7 +54,7 @@ export function ImagePage() {
     // const {
     //     data: { currentImage },
     // } = useMatch()
-    const { collectionId, idx } = useSearch()
+    const { collectionId, idx, subredditImages } = useSearch()
     const {
         data: { movie },
     } = useMatch()
@@ -74,7 +74,19 @@ export function ImagePage() {
     const currentCollection = collectionId
         ? userCollections.find((c) => c.id == collectionId)
         : userCollections.find((c) => c.id == 1)
-    const images = collectionId ? currentCollection?.images : movie?.images ?? 1
+    const [images, setImages] = useState<string[]>([])
+    useEffect(() => {
+        // const images = collectionId ? currentCollection?.images : movie?.images ?? 1
+        if (collectionId) {
+            setImages(currentCollection?.images)
+        }
+        if (movie) {
+            setImages(movie?.images)
+        }
+        if (subredditImages) {
+            setImages(subredditImages)
+        }
+    })
     const [rotation, setRotation] = useState(0)
     const [orientation, setOrientation] = useState<'portrait' | 'landscape'>(
         'portrait'
@@ -93,7 +105,7 @@ export function ImagePage() {
                 console.log({ imgTest })
             }
         }, 50)
-    }, [idx])
+    }, [idx, images])
 
     const onKeyDown = useCallback(
         (e: KeyboardEvent) => {
