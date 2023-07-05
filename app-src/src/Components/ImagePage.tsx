@@ -139,6 +139,19 @@ export function ImagePage() {
             if (e.key.toLocaleLowerCase() == 'g') {
                 setShowGrid((old) => !old)
             }
+            if (e.key.toLocaleLowerCase() == 'c') {
+                setShowControls((old) => !old)
+            }
+            if (e.key == '?') {
+                alert(`
+                r til að snúa mynd réttsælis
+                shift-r til að snúa mynd rangsælis
+                c sýnir 'controls'
+                g sýnir 'grid'
+                escape fer til baka í myndasafn
+                örvar skipta á milli mynda
+                `)
+            }
             if (e.code == 'Escape') {
                 exitViewer()
             }
@@ -202,8 +215,8 @@ export function ImagePage() {
         useState<string>('auto')
 
     useEffect(() => {
-        setImgMaxHeight(rotation % 2 == 0 ? '95vh' : '95vw')
-        setImgMaxWidth(rotation % 2 == 0 ? '95vw' : '95vh')
+        setImgMaxHeight(rotation % 2 == 0 ? '100vh' : '100vw')
+        setImgMaxWidth(rotation % 2 == 0 ? '100vw' : '100vh')
 
         setImgContainerMaxHeight(
             orientation == 'portrait'
@@ -212,7 +225,7 @@ export function ImagePage() {
                     : imgMaxWidth // portrait a hlid
                 : rotation % 2 == 0 //orientation == 'landscape'
                 ? 'auto' // landscape snyr rett
-                : imgMaxHeight //landscape snyr a hlid
+                : 'auto' //landscape snyr a hlid
         )
         // setImgContainerMaxHeight(
         //     orientation == 'portrait' ? imgMaxHeight : 'auto'
@@ -227,7 +240,7 @@ export function ImagePage() {
                     : 'auto'
                 : rotation % 2 == 0
                 ? 'auto'
-                : imgMaxHeight
+                : '100vh'
         )
     }, [orientation, rotation])
     // const ios = () => {
@@ -260,19 +273,32 @@ export function ImagePage() {
                 style={{
                     // maxWidth: '100vw',
                     // maxHeight: '100vh',
-                    width: '100%',
-                    height: '100%',
+                    width: '100vw',
+                    height: '100vh',
+                    maxHeight: imgMaxHeight,
+                    maxWidth: imgMaxWidth,
                     boxSizing: 'border-box',
-                    overflow: 'hidden',
+                    // overflow: 'hidden',
                     inset: 0,
-                    margin: 0,
+                    margin: 'auto',
                     position: 'absolute',
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    padding:
-                        'env(safe-area-border-top),env(safe-area-border-right),env(safe-area-border-bottom),env(safe-area-border-left)',
+                    padding: `${[0, 3, 2, 1]
+                        .map((val) => {
+                            return rotation === val
+                                ? // ? '10rem'
+                                  'env(safe-area-inset-top)'
+                                : '0px'
+                        })
+                        .join(' ')}
+                        `,
+
+                    // padding:
+                    //     'env(safe-area-border-top),env(safe-area-border-right),env(safe-area-border-bottom),env(safe-area-border-left)',
                     rotate: `${rotation * 90}deg`,
+                    // backgroundColor: 'red',
                 }}
                 onClick={(ev) => {
                     const target = ev.target as HTMLElement
@@ -297,18 +323,19 @@ export function ImagePage() {
                         style={{
                             // placeSelf: 'center',
                             objectFit: 'contain',
+                            padding: 0,
                             // width: '100%',
                             // height: '100%',
                             // border: '5px solid green',
-                            padding: `${[0, 3, 2, 1]
-                                .map((val) => {
-                                    return rotation === val
-                                        ? // ? '10rem'
-                                          'env(safe-area-inset-top)'
-                                        : '0px'
-                                })
-                                .join(' ')}
-                                `,
+                            // padding: `${[0, 3, 2, 1]
+                            //     .map((val) => {
+                            //         return rotation === val
+                            //             ? // ? '10rem'
+                            //               '10rem' //  'env(safe-area-inset-top)'
+                            //             : '0px'
+                            //     })
+                            //     .join(' ')}
+                            //     `,
                             // padding: '0 0 0 10px',
                             // outline: '1px solid white',
                             // width: '100%',
@@ -323,6 +350,8 @@ export function ImagePage() {
                             // width: imgMaxWidth,
                             // height: 'auto',
                             // width: 'auto',
+                            // height: imgContainerMaxHeight,
+                            // width: imgContainerMaxWidth,
                             height: imgContainerMaxHeight,
                             width: imgContainerMaxWidth,
                             // height: `calc(min(100%,${imgContainerMaxHeight}))`,
@@ -332,19 +361,19 @@ export function ImagePage() {
                             // maxHeight:
                             //     orientation == 'portrait'
                             //         ? rotation % 2 == 0
-                            //             ? '95vh'
-                            //             : '95vw'
+                            //             ? '100vh'
+                            //             : '100vw'
                             //         : rotation % 2 == 0
-                            //         ? '95vh'
-                            //         : '95vw',
+                            //         ? '100vh'
+                            //         : '100vw',
                             // maxWidth:
                             //     orientation == 'portrait'
                             //         ? rotation % 2 == 0
-                            //             ? '95vw'
-                            //             : '95vh'
+                            //             ? '100vw'
+                            //             : '100vh'
                             //         : rotation % 2 == 0
-                            //         ? '95vw'
-                            //         : '95vh',
+                            //         ? '100vw'
+                            //         : '100vh',
 
                             // maxHeight: 'min(100vh,100%)',
                             // maxWidth: 'min(100vw,100%)',
@@ -355,8 +384,8 @@ export function ImagePage() {
                         // ref={currentImageRef}
                     />
                     <GridOverlay
-                        height={imgContainerMaxHeight}
-                        width={imgContainerMaxWidth}
+                        // height={imgContainerMaxHeight}
+                        // width={imgContainerMaxWidth}
                         key={img}
                         innerKey={img}
                         showGrid={showGrid}
@@ -480,25 +509,31 @@ export function ImagePage() {
                     padding: '1rem',
                     position: 'absolute',
                     display: 'grid',
-                    gridTemplateColumns:
-                        rotation % 2 == 0
-                            ? 'repeat(auto-fill, minmax(50px, 1fr))'
-                            : '1fr',
-                    gridTemplateRows:
-                        rotation % 2 != 0
-                            ? 'repeat(auto-fill, minmax(50px, 1fr))'
-                            : '1fr',
+                    justifyContent: 'center',
+                    // gridTemplateColumns:
+                    //     rotation % 2 == 0
+                    //         ? 'repeat(auto-fill, minmax(50px, 1fr))'
+                    //         : '1fr',
+                    // gridTemplateRows:
+                    //     rotation % 2 != 0
+                    //         ? 'repeat(auto-fill, minmax(50px, 1fr))'
+                    //         : '1fr',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(50px, 1fr))',
+                    gridTemplateRows: '1fr',
+
                     // gridTemplateRows: '1fr',
                     // justifyContent: 'center',
                     gap: '1rem',
-                    // width: '80%',
-                    width: rotation % 2 == 0 ? '100%' : undefined,
-                    height: rotation % 2 != 0 ? '100%' : undefined,
+                    width: '80%',
+                    translate: '10% 0',
+                    // maxWidth: rotation % 2 == 0 ? '100%' : undefined,
+                    // maxHeight: rotation % 2 != 0 ? '100%' : undefined,
                     // maxHeight: '50px',
                     // height: '100%',
+                    bottom: 0,
                     boxSizing: 'border-box',
                     // backgroundColor: 'red',
-                    bottom: rotation % 2 == 0 ? '1rem' : undefined,
+                    // bottom: rotation % 2 == 0 ? '1rem' : undefined,
 
                     visibility: showControls ? 'visible' : 'hidden',
                     // rotate: `${rotation * 90}deg`,

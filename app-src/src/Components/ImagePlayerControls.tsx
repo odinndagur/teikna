@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useLocalStorage } from 'usehooks-ts'
 import { SlideshowSettings } from './SlideshowSettings'
 
@@ -48,6 +48,20 @@ export function ImagePlayerControls({
             return () => clearInterval(timer)
         }
     }, [secondsLeft, isPlaying, totalSeconds])
+
+    const onKeyDown = useCallback((e: KeyboardEvent) => {
+        if (e.code == 'Space') {
+            togglePlayer()
+        }
+    }, [])
+    useEffect(() => {
+        document.addEventListener('keyup', onKeyDown)
+        // document.addEventListener('keydown', onKeyDown)
+        return () => {
+            // document.removeEventListener('keydown', onKeyDown)
+            document.removeEventListener('keyup', onKeyDown)
+        }
+    }, [onKeyDown])
 
     const formattedTimeLeft = useMemo(() => {
         const minutes = Math.floor(secondsLeft / 60)
