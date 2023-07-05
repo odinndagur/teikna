@@ -108,10 +108,25 @@ export default defineConfig({
             },
             workbox: {
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,jpg,jpeg}'],
+
                 // globPatterns: ['**/*.{js,html,ico,png,svg,jpg,jpeg}'],
                 navigateFallback: '/index.html',
                 maximumFileSizeToCacheInBytes: 70000000,
                 runtimeCaching: [
+                    {
+                        urlPattern: /^https:\/\/teikna\.odinndagur\.com\/.*/i,
+                        handler: 'NetworkFirst',
+                        options: {
+                            cacheName: 'odinndagur-teikna-cache',
+                            expiration: {
+                                maxEntries: 60,
+                                maxAgeSeconds: 60 * 60 * 24 * 7, // <== 365 days
+                            },
+                            cacheableResponse: {
+                                statuses: [0, 200],
+                            },
+                        },
+                    },
                     {
                         urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
                         handler: 'CacheFirst',
