@@ -296,7 +296,17 @@ export function ImagePage() {
                                 // width: '100%',
                                 // height: '100%',
                                 // border: '5px solid green',
-                                padding: 0,
+                                padding: `${[0, 3, 2, 1]
+                                    .map((val) => {
+                                        return rotation === val
+                                            ? // ? '10rem'
+                                              'env(safe-area-inset-top)'
+                                            : '0px'
+                                    })
+                                    .join(' ')}
+                                `,
+                                // padding: '0 0 0 10px',
+                                outline: '1px solid white',
                                 // width: '100%',
                                 // rotate: `-${rotation * 90}deg`,
                                 // maxHeight: '100%',
