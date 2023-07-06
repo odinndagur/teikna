@@ -50,6 +50,34 @@ export function RotateButton({ setRotation }) {
 }
 
 export function ImagePage() {
+    const [touchPosition, setTouchPosition] = useState(null)
+
+    const handleTouchStart = (e) => {
+        const touchDown = e.touches[0].clientX
+        setTouchPosition(touchDown)
+    }
+
+    const handleTouchMove = (e) => {
+        const touchDown = touchPosition
+
+        if (touchDown === null) {
+            return
+        }
+
+        const currentTouch = e.touches[0].clientX
+        const diff = touchDown - currentTouch
+
+        if (diff > 5) {
+            nextImage()
+        }
+
+        if (diff < -5) {
+            prevImage()
+        }
+
+        setTouchPosition(null)
+    }
+
     const [img, setImg] = useState('')
     const [showImageTimer, setShowImageTimer] = useState(true)
     const [timeLeft, setTimeLeft] = useState('')
@@ -271,6 +299,8 @@ export function ImagePage() {
 
     return (
         <div
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
             style={{
                 maxWidth: '100vw',
                 maxHeight: '100vh',
