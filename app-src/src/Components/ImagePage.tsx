@@ -332,9 +332,18 @@ export function ImagePage() {
                         // onClick={() => setShowControls((old) => !old)}
                         alt=""
                         style={{
+                            padding: `${[0, 3, 2, 1]
+                                .map((val) => {
+                                    return rotation === val
+                                        ? // ? '10rem'
+                                          'env(safe-area-inset-top)'
+                                        : '0px'
+                                })
+                                .join(' ')}
+                                `,
                             // placeSelf: 'center',
                             objectFit: 'contain',
-                            padding: 0,
+                            // padding: 0,
                             // width: '100%',
                             // height: '100%',
                             // border: '5px solid green',
@@ -395,6 +404,7 @@ export function ImagePage() {
                         // ref={currentImageRef}
                     />
                     <GridOverlay
+                        rotation={rotation}
                         // height={imgContainerMaxHeight}
                         // width={imgContainerMaxWidth}
                         key={img}
@@ -565,7 +575,7 @@ export function ImagePage() {
                 </button>
 
                 <RotateButton setRotation={setRotation} />
-                <button
+                {/* <button
                     style={{
                         height: '50px',
                         width: '50px',
@@ -580,7 +590,7 @@ export function ImagePage() {
                     }}
                 >
                     <span className="material-icons">fullscreen</span>
-                </button>
+                </button> */}
                 <button
                     style={{
                         height: '50px',
@@ -599,6 +609,7 @@ export function ImagePage() {
                 </button>
                 <button
                     style={{
+                        rotate: `${rotation * 90}deg`,
                         height: '50px',
                         width: '50px',
                         zIndex: 5,
@@ -621,11 +632,12 @@ export function ImagePage() {
                         ev.preventDefault()
                         setShowControls((old) => !old)
                     }}
-                >
+                    >
                     menu
                 </button> */}
                 <button
                     style={{
+                        rotate: `${rotation * 90}deg`,
                         height: '50px',
                         width: '50px',
                         zIndex: 5,
@@ -668,6 +680,7 @@ export function ImagePage() {
                 <ImagePlayerControls
                     // seconds={60}
                     // key={images[idx]}
+                    rotation={rotation}
                     currentImage={images[idx]}
                     setShowImageTimer={setShowImageTimer}
                     setTimeLeft={setTimeLeft}

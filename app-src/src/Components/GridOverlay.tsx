@@ -3,11 +3,13 @@ export function GridOverlay({
     innerKey,
     height,
     width,
+    rotation,
 }: {
     showGrid?: boolean
     innerKey?: any
     height?: any
     width?: any
+    rotation: number
 }) {
     return (
         <div
@@ -26,6 +28,15 @@ export function GridOverlay({
                 // width: '95%',
                 // maxHeight: '95%',
                 // width: '95%',
+                padding: `${[0, 3, 2, 1]
+                    .map((val) => {
+                        return rotation === val
+                            ? // ? '10rem'
+                              'env(safe-area-inset-top)'
+                            : '0px'
+                    })
+                    .join(' ')}
+                    `,
                 height: height ?? 'auto',
                 width: width ?? 'auto',
                 margin: 'auto',

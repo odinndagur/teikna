@@ -14,7 +14,7 @@ export function ImagePlayerControls({
     nextImage: any
     prevImage: any
     seconds?: number
-    rotation?: number
+    rotation: number
     setTimeLeft: any
     setShowImageTimer: any
     currentImage: string
@@ -87,6 +87,8 @@ export function ImagePlayerControls({
                     minWidth: isPlaying ? '8rem' : undefined,
                     display: 'flex',
                     justifyContent: 'space-between',
+                    // rotate: `${rotation * 90}deg`,
+                    // transformOrigin: rotation % 2 != 0 ? 'top' : undefined,
                 }}
                 onClick={() => {
                     togglePlayer()
@@ -96,7 +98,11 @@ export function ImagePlayerControls({
                 <span className="material-icons">
                     {!isPlaying ? 'play_arrow' : 'pause'}
                 </span>
-                {isPlaying && <span>{formattedTimeLeft}</span>}
+                {isPlaying && (
+                    <span style={{ rotate: `${rotation * 90}deg` }}>
+                        {formattedTimeLeft}
+                    </span>
+                )}
             </button>
         </>
     )
