@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Grid } from './Grid'
 import './MoviePage.css'
 import { ImageElement } from './ImageElement'
+import { useSearch } from '@tanstack/react-location'
 
 export function ImageViewerSubreddit({
     images,
@@ -12,6 +13,15 @@ export function ImageViewerSubreddit({
     movieId?: number | string
     collectionId?: number | string
 }) {
+    const { idx: currentImageIdx } = useSearch()
+    useEffect(() => {
+        setTimeout(() => {
+            if (currentImageIdx) {
+                const gridEl = document.getElementById('subreddit-grid')
+                gridEl?.children[Number(currentImageIdx)]?.scrollIntoView()
+            }
+        }, 200)
+    }, [currentImageIdx, images])
     const [selectedIndex, setSelectedIndex] = useState<number>(0)
     const prevImage = () => {
         if (images && selectedIndex > 0) {
@@ -49,7 +59,7 @@ export function ImageViewerSubreddit({
     }, [])
 
     return (
-        <Grid>
+        <Grid id={'subreddit-grid'}>
             {images?.map((img, idx) => {
                 return (
                     <ImageElement

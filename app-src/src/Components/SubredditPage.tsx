@@ -154,7 +154,14 @@ export function SubredditPage() {
                 // key={currentSubreddit}
                 images={data?.images}
             />
-            <Link search={(old) => ({ ...old, after: data?.after })} replace>
+            <Link
+                search={(old) => ({
+                    ...old,
+                    after: data?.after,
+                    idx: undefined,
+                })}
+                replace
+            >
                 Next page
             </Link>
             {/* <button
