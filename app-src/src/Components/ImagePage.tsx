@@ -50,29 +50,74 @@ export function RotateButton({ setRotation }) {
 }
 
 export function ImagePage() {
-    const [touchPosition, setTouchPosition] = useState(null)
+    const [touchPosition, setTouchPosition] = useState<{
+        touchDownX: number
+        touchDownY: number
+    }>(null)
 
-    const handleTouchStart = (e) => {
-        const touchDown = e.touches[0].clientX
-        setTouchPosition(touchDown)
+    const handleTouchStart = (e: TouchEvent) => {
+        const touchDownX = e.touches[0].clientX
+        const touchDownY = e.touches[0].clientY
+        setTouchPosition({ touchDownX, touchDownY })
     }
 
     const handleTouchMove = (e) => {
         const touchDown = touchPosition
-
         if (touchDown === null) {
             return
         }
 
-        const currentTouch = e.touches[0].clientX
-        const diff = touchDown - currentTouch
+        const currentTouch = e.touches[0]
+        const diffX = touchDown.touchDownX - currentTouch.clientX
+        const diffY = touchDown.touchDownY - currentTouch.clientY
 
-        if (diff > 5) {
-            nextImage()
+        // alert(JSON.stringify({ rotation, diffX, diffY }))
+        switch (rotation) {
+            case 0:
+                if (diffX > 5) {
+                    nextImage()
+                }
+
+                if (diffX < -5) {
+                    prevImage()
+                }
+                break
+            case 1:
+                if (diffY > 5) {
+                    nextImage()
+                }
+
+                if (diffY < -5) {
+                    prevImage()
+                }
+                break
+            case 2:
+                if (diffX > 5) {
+                    prevImage()
+                }
+
+                if (diffX < -5) {
+                    nextImage()
+                }
+                break
+            case 3:
+                if (diffY > 5) {
+                    prevImage()
+                }
+
+                if (diffY < -5) {
+                    nextImage()
+                }
+                break
         }
+        if (rotation == 0) {
+            if (diffX > 5) {
+                nextImage()
+            }
 
-        if (diff < -5) {
-            prevImage()
+            if (diffX < -5) {
+                prevImage()
+            }
         }
 
         setTouchPosition(null)
@@ -306,6 +351,8 @@ export function ImagePage() {
                 maxHeight: '100vh',
                 boxSizing: 'border-box',
                 overflow: 'hidden',
+                position: 'fixed',
+                inset: 0,
             }}
         >
             <div
@@ -314,6 +361,7 @@ export function ImagePage() {
                 style={{
                     // maxWidth: '100vw',
                     // maxHeight: '100vh',
+
                     width: '100vw',
                     height: '100vh',
                     maxHeight: imgMaxHeight,

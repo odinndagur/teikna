@@ -67,7 +67,7 @@ if (!self.define) {
     });
   };
 }
-define(['./workbox-865c825e'], (function (workbox) { 'use strict';
+define(['./workbox-64ec4c3a'], (function (workbox) { 'use strict';
 
   self.skipWaiting();
   workbox.clientsClaim();
@@ -88,6 +88,15 @@ define(['./workbox-865c825e'], (function (workbox) { 'use strict';
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("/index.html"), {
     allowlist: [/^\/$/]
   }));
+  workbox.registerRoute(/^https:\/\/teikna\.odinndagur\.com\/.*/i, new workbox.NetworkFirst({
+    "cacheName": "odinndagur-teikna-cache",
+    plugins: [new workbox.ExpirationPlugin({
+      maxEntries: 60,
+      maxAgeSeconds: 604800
+    }), new workbox.CacheableResponsePlugin({
+      statuses: [0, 200]
+    })]
+  }), 'GET');
   workbox.registerRoute(/^https:\/\/fonts\.googleapis\.com\/.*/i, new workbox.CacheFirst({
     "cacheName": "google-fonts-cache",
     plugins: [new workbox.ExpirationPlugin({
