@@ -22,9 +22,10 @@ import { ImageViewerSubreddit } from './ImageViewerSubreddit'
 
 export function SubredditPage() {
     const queryClient = useQueryClient()
-    const {
-        data: { subreddit, images, after },
-    } = useMatch()
+    // const {
+    //     data: { subreddit, images, after },
+    // } = useMatch()
+    const { subreddit, after } = useSearch()
     // const [after, setAfter] = useState(undefined)
     const [myStorage, setMyStorage] = useLocalStorage('subreddits', [])
     // const [currentSubreddit, setCurrentSubreddit] = useLocalStorage(
@@ -81,7 +82,10 @@ export function SubredditPage() {
 
     const { data } = useQuery({
         queryFn: () =>
-            fetchImagesFromSub({ sub: subreddit, after: after ?? '' }),
+            fetchImagesFromSub({
+                sub: subreddit ?? 'cute',
+                after: after ?? '',
+            }),
         queryKey: [subreddit, after],
         staleTime: 0,
     })
@@ -150,7 +154,7 @@ export function SubredditPage() {
                 // key={currentSubreddit}
                 images={data?.images}
             />
-            <Link search={(old) => ({ ...old, after })} replace>
+            <Link search={(old) => ({ ...old, after: data?.after })} replace>
                 Next page
             </Link>
             {/* <button
