@@ -247,7 +247,7 @@ export const fetchImagesFromSub = async ({
         console.log('EXPRESS')
         const res = await fetchImagesFromSubExpress(sub, after ?? '')
 
-        return { images: res.images ?? [], after: res.after }
+        return { images: res.images ?? [], after: res.after, subreddit: sub }
     }
     DB_CONSOLE_LOGS && console.log({ fullUrl })
     return await fetch(fullUrl)
@@ -255,7 +255,7 @@ export const fetchImagesFromSub = async ({
         .then((d) => {
             console.log({ d })
             if (!d.data) {
-                return { after: '', images: [] }
+                return { after: '', images: [], subreddit: sub }
             }
             console.log({ 'd.data': d.data })
             const after = d.data.after
@@ -268,7 +268,7 @@ export const fetchImagesFromSub = async ({
                     }
                 })
                 .filter(Boolean)
-            return { images, after }
+            return { images, after, subreddit: sub }
         })
 }
 

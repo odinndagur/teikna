@@ -1,4 +1,5 @@
 import {
+    Link,
     MakeGenerics,
     useLocation,
     useMatch,
@@ -22,46 +23,46 @@ import { ImageViewerSubreddit } from './ImageViewerSubreddit'
 export function SubredditPage() {
     const queryClient = useQueryClient()
     const {
-        data: { subreddit },
+        data: { subreddit, images, after },
     } = useMatch()
-    const [after, setAfter] = useState(undefined)
+    // const [after, setAfter] = useState(undefined)
     const [myStorage, setMyStorage] = useLocalStorage('subreddits', [])
     // const [currentSubreddit, setCurrentSubreddit] = useLocalStorage(
     //     'current-subreddit',
     //     'cute'
     // )
     const [shouldGetMoreImages, setShouldGetMoreImages] = useState(0)
-    const { data, refetch } = useQuery({
-        queryFn: () =>
-            fetchImagesFromSub({
-                sub: subreddit ?? 'cute',
-                after: after,
-            }),
-        // {
-        //     const data = await fetchImagesFromSub({
-        //         sub: currentSubreddit ?? 'cute',
-        //         after: after,
-        //     })
+    // const { data, refetch } = useQuery({
+    //     queryFn: () =>
+    //         fetchImagesFromSub({
+    //             sub: subreddit ?? 'cute',
+    //             after: after,
+    //         }),
+    //     // {
+    //     //     const data = await fetchImagesFromSub({
+    //     //         sub: currentSubreddit ?? 'cute',
+    //     //         after: after,
+    //     //     })
 
-        //     console.log({ data }, 'DATA INNI I USE QUERY')
-        //     setAfter(data.after)
-        //     if (!data) {
-        //         return { images: [], after: '' }
-        //     }
-        //     return data
-        // },
-        keepPreviousData: true,
-        refetchOnMount: false,
-        enabled: true,
-        queryKey: [subreddit],
-        // staleTime: Infinity,
-        refetchOnWindowFocus: false,
-        refetchOnReconnect: false,
-    })
+    //     //     console.log({ data }, 'DATA INNI I USE QUERY')
+    //     //     setAfter(data.after)
+    //     //     if (!data) {
+    //     //         return { images: [], after: '' }
+    //     //     }
+    //     //     return data
+    //     // },
+    //     keepPreviousData: true,
+    //     refetchOnMount: false,
+    //     enabled: true,
+    //     queryKey: [subreddit],
+    //     // staleTime: Infinity,
+    //     refetchOnWindowFocus: false,
+    //     refetchOnReconnect: false,
+    // })
 
-    useEffect(() => {
-        setAfter(data?.after ?? '')
-    }, [data?.images])
+    // useEffect(() => {
+    //     setAfter(data?.after ?? '')
+    // }, [data?.images])
 
     const navigate = useNavigate()
 
@@ -78,10 +79,12 @@ export function SubredditPage() {
     //     setAfter(original_after)
     // }, [])
 
-    // const { data } = useQuery({
-    //     queryFn: () => fetchImagesFromSub(subreddit ?? 'cute', after),
-    //     queryKey: [subreddit, after],
-    // })
+    const { data } = useQuery({
+        queryFn: () =>
+            fetchImagesFromSub({ sub: subreddit, after: after ?? '' }),
+        queryKey: [subreddit, after],
+        staleTime: 0,
+    })
 
     return (
         <div>
@@ -99,12 +102,16 @@ export function SubredditPage() {
                     onSubmit={(ev) => {
                         ev.preventDefault()
                         // setCurrentSubreddit(inputState)
-                        queryClient.invalidateQueries({
-                            queryKey: [subreddit, shouldGetMoreImages],
-                        })
-                        setAfter('')
+                        // queryClient.invalidateQueries({
+                        //     queryKey: [subreddit, shouldGetMoreImages],
+                        // })
+                        // setAfter('')
                         navigate({
-                            to: `/subreddit/${inputState}`,
+                            to: `/subreddit`,
+                            search: (old) => ({
+                                ...old,
+                                subreddit: inputState,
+                            }),
                         })
                     }}
                 >
@@ -143,7 +150,10 @@ export function SubredditPage() {
                 // key={currentSubreddit}
                 images={data?.images}
             />
-            <button
+            <Link search={(old) => ({ ...old, after })} replace>
+                Next page
+            </Link>
+            {/* <button
                 style={{ maxWidth: '8rem', margin: 'auto' }}
                 onClick={(ev) => {
                     console.log(ev)
@@ -151,11 +161,11 @@ export function SubredditPage() {
                     ev.stopPropagation()
                     refetch()
                     // setShouldGetMoreImages((old) => old + 1)
-                    // refetch()
+                    // refetch()s
                 }}
             >
                 Load more
-            </button>
+            </button> */}
             <Footer></Footer>
         </div>
     )

@@ -157,6 +157,42 @@ function App() {
                                     {
                                         path: '/',
                                         element: <SubredditPage />,
+                                        // loader: async ({ search }) => {
+                                        //     const { images, after } =
+                                        //         await fetchImagesFromSub({
+                                        //             sub:
+                                        //                 search.subreddit ??
+                                        //                 'cute',
+                                        //             after: search.after ?? '',
+                                        //         })
+                                        //     return {
+                                        //         images,
+                                        //         after,
+                                        //         subreddit:
+                                        //             search.subreddit ?? 'cute',
+                                        //     }
+                                        // },
+                                        loader: async ({ search }) => {
+                                            const { images, subreddit, after } =
+                                                await queryClient.fetchQuery({
+                                                    queryFn: () =>
+                                                        fetchImagesFromSub({
+                                                            sub:
+                                                                search.subreddit ??
+                                                                'cute',
+                                                            after:
+                                                                search.after ??
+                                                                '',
+                                                        }),
+                                                    queryKey: [
+                                                        search.subreddit ??
+                                                            'cute',
+                                                        search.after ?? '',
+                                                    ],
+                                                })
+                                            return { images, subreddit, after }
+                                        },
+
                                         // loader: async () => {
                                         //     const { images, after } =
                                         //         await fetchImagesFromSub('cute')

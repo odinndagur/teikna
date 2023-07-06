@@ -130,11 +130,20 @@ export function ImagePage() {
                 // }
             }
 
-            if (e.key == 'R') {
-                setRotation((old) => (old - 1) % 4)
-            }
-            if (e.key == 'r') {
-                setRotation((old) => (old + 1) % 4)
+            // if (e.key == 'R') {
+            //     setRotation((old) => (old - 1) % 4)
+            // }
+            // if (e.key == 'r') {
+            //     setRotation((old) => (old + 1) % 4)
+            // }
+            if (e.code == 'KeyR') {
+                if (e.altKey) {
+                    setRotation(0)
+                } else if (e.shiftKey) {
+                    setRotation((old) => (old - 1) % 4)
+                } else {
+                    setRotation((old) => (old + 1) % 4)
+                }
             }
             if (e.key.toLocaleLowerCase() == 'g') {
                 setShowGrid((old) => !old)
@@ -146,6 +155,7 @@ export function ImagePage() {
                 alert(`
                 r til að snúa mynd réttsælis
                 shift-r til að snúa mynd rangsælis
+                alt-r til að resetta snúning
                 c sýnir 'controls'
                 g sýnir 'grid'
                 escape fer til baka í myndasafn
