@@ -51,7 +51,7 @@ export function MoviesListByYear() {
 
     const movieListRef = useRef(null)
     const rowVirtualizer = useVirtualizer({
-        count: Number(movies ? movies[0].total_count : 1),
+        count: Number(movies.length ? movies[0].total_count : 1),
         getScrollElement: () => movieListRef.current,
         estimateSize: () => 100,
         overscan: 150,
@@ -71,7 +71,25 @@ export function MoviesListByYear() {
                     onChange={(ev) => handleInput(ev.target.value)}
                 ></input>
             </Header>
-            <h2>{year}</h2>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '1rem',
+                }}
+            >
+                <h2>
+                    <Link to={`/year/${Number(year) - 1}`}>
+                        {Number(year) - 1}
+                    </Link>
+                </h2>
+                <h2>{year}</h2>
+                <h2>
+                    <Link to={`/year/${Number(year) + 1}`}>
+                        {Number(year) + 1}
+                    </Link>
+                </h2>
+            </div>
             <div
                 className="movie-list"
                 ref={movieListRef}

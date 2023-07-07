@@ -50,6 +50,7 @@ export function RotateButton({ setRotation }) {
 }
 
 export function ImagePage() {
+    // const [imgContainerScale, setImgContainerScale] = useState(1.7)
     const [touchPosition, setTouchPosition] = useState<{
         touchDownX: number
         touchDownY: number
@@ -168,6 +169,7 @@ export function ImagePage() {
         'portrait'
     )
     const imgTest = new Image()
+    const [imgSize, setImgSize] = useState<{ w: number; h: number }>(null)
 
     useEffect(() => {
         setImg(images[idx])
@@ -179,10 +181,11 @@ export function ImagePage() {
                 setOrientation(
                     imgTest.width > imgTest.height ? 'landscape' : 'portrait'
                 )
+                setImgSize({ w: imgTest.width, h: imgTest.height })
                 console.log({ imgTest })
             }
         }, 50)
-    }, [idx, images])
+    }, [idx, images, img])
 
     const onKeyDown = useCallback(
         (e: KeyboardEvent) => {
@@ -235,6 +238,9 @@ export function ImagePage() {
                 space byrjar slideshow
                 örvar skipta á milli mynda
                 `)
+            }
+            if (e.key.toLocaleLowerCase() == 'f') {
+                setFullScreen((old) => !old)
             }
             if (e.code == 'Escape') {
                 exitViewer()
@@ -327,6 +333,95 @@ export function ImagePage() {
                 : '100vh'
         )
     }, [orientation, rotation])
+    const imgContainerScale = useMemo(() => {
+        if (imgSize) {
+            const { w, h } = imgSize
+            // const smallerSide =
+            //     orientation == 'portrait'
+            //         ? rotation % 2 == 0
+            //             ? 'h' // portrait snyr rett
+            //             : 'w' // portrait a hlid
+            //         : rotation % 2 == 0 //orientation == 'landscape'
+            //         ? 'h' // landscape snyr rett
+            //         : 'h' //landscape snyr a hlid
+            const smallerSide = orientation == 'portrait' ? 'w' : 'h'
+            if (fullScreen) {
+                if (
+                    w > window.innerWidth ||
+                    h > window.innerHeight ||
+                    (rotation % 2 != 0 &&
+                        (w > window.innerHeight || h > window.innerWidth))
+                ) {
+                    // alert('what')
+                    return 1
+                }
+
+                // alert(
+                //     JSON.stringify({
+                //         smallerSide,
+                //         windowWidth: window.innerWidth,
+                //         windowHeight: window.innerHeight,
+                //         w,
+                //         h,
+                //     })
+                // )
+                // alert(smallerSide)
+                return smallerSide == 'w'
+                    ? rotation % 2 == 0
+                        ? window.innerHeight / h
+                        : window.innerHeight / w
+                    : rotation % 2 == 0
+                    ? window.innerHeight / h
+                    : window.innerHeight / w
+            } else {
+                // alert('what')
+                return 1
+            }
+            console.log({
+                imgContainerScale,
+                windowWidth: window.innerWidth,
+                w,
+                h,
+            })
+        }
+        return 1
+    }, [
+        imgSize?.w,
+        imgSize?.h,
+        imgSize,
+        rotation,
+        orientation,
+        String(fullScreen),
+        img,
+    ])
+    // useEffect(() => {
+    //     if (imgSize) {
+    //         const { w, h } = imgSize
+    //         const smallerSide =
+    //             orientation == 'portrait'
+    //                 ? rotation % 2 == 0
+    //                     ? 'w' // portrait snyr rett
+    //                     : 'h' // portrait a hlid
+    //                 : rotation % 2 == 0 //orientation == 'landscape'
+    //                 ? 'h' // landscape snyr rett
+    //                 : 'w' //landscape snyr a hlid
+    //         if (fullScreen) {
+    //             setImgContainerScale(
+    //                 smallerSide == 'w'
+    //                     ? window.innerWidth / w
+    //                     : window.innerHeight / h
+    //             )
+    //         } else {
+    //             setImgContainerScale(1)
+    //         }
+    //         console.log({
+    //             imgContainerScale,
+    //             windowWidth: window.innerWidth,
+    //             w,
+    //             h,
+    //         })
+    //     }
+    // }, [imgSize?.w, imgSize?.h, rotation, fullScreen])
     // const ios = () => {
     //     if (typeof window === `undefined` || typeof navigator === `undefined`) return false;
 
@@ -355,6 +450,28 @@ export function ImagePage() {
                 inset: 0,
             }}
         >
+            <div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    fontSize: '3rem',
+                    zIndex: 999999,
+                    pointerEvents: 'none',
+                    display: 'none',
+                }}
+            >
+                <div>imgcontainerscale: {imgContainerScale}</div>
+
+                <div>orientation: {orientation}</div>
+                <div>smallerside: {orientation == 'portrait' ? 'w' : 'h'}</div>
+
+                <div>rotation: {rotation}</div>
+
+                <div>fullscreen: {JSON.stringify(fullScreen)}</div>
+                <div>window.innerHeight {window.innerHeight}</div>
+                <div>window.innerWidth {window.innerWidth}</div>
+                <div>imgSize {JSON.stringify(imgSize)}</div>
+            </div>
             <div
                 className="no-scrollbar"
                 id={img}
@@ -402,7 +519,13 @@ export function ImagePage() {
                 }}
                 key={String(mirrored)}
             >
-                <div style={{ position: 'absolute' }}>
+                <div
+                    key={img}
+                    style={{
+                        position: 'absolute',
+                        scale: String(imgContainerScale),
+                    }}
+                >
                     <img
                         className="no-scrollbar"
                         src={img}
@@ -410,6 +533,7 @@ export function ImagePage() {
                         // onClick={() => setShowControls((old) => !old)}
                         alt=""
                         style={{
+                            display: 'block',
                             padding: `${[0, 3, 2, 1]
                                 .map((val) => {
                                     return rotation === val
@@ -653,7 +777,7 @@ export function ImagePage() {
                 </button>
 
                 <RotateButton setRotation={setRotation} />
-                {/* <button
+                <button
                     style={{
                         height: '50px',
                         width: '50px',
@@ -668,7 +792,7 @@ export function ImagePage() {
                     }}
                 >
                     <span className="material-icons">fullscreen</span>
-                </button> */}
+                </button>
                 <button
                     style={{
                         height: '50px',

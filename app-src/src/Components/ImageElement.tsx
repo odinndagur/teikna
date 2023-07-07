@@ -64,10 +64,10 @@ export function ImageElement({
                     src={img}
                     key={img}
                     style={{
-                        display:
+                        visibility:
                             imageVisible || img.includes('gif')
                                 ? undefined
-                                : 'none',
+                                : 'hidden',
                         cursor: 'pointer',
                         maxWidth:
                             orientation == 'landscape'
