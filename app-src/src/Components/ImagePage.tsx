@@ -735,6 +735,9 @@ export function ImagePage() {
                                     ),
                                 },
                             ])
+                            if (collectionId) {
+                                prevImage()
+                            }
                         } else {
                             setUserCollections((old: any) => [
                                 ...old.filter(
