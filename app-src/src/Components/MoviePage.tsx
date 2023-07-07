@@ -29,21 +29,28 @@ export type movieGenerics = MakeGenerics<{
     LoaderData: {
         movie?: movie
         movies?: movie[]
+        heading?: string
     }
 }>
 export function MoviePage() {
     const {
-        data: { movie },
+        data: { movie, heading },
     } = useMatch<movieGenerics>()
 
     return (
         <>
-            <Header></Header>
+            <Header>
+                <h2>{heading}</h2>
+            </Header>
             {/* {JSON.stringify(movie)} */}
             <div key={movie?.id}>
                 <h1>{movie?.title}</h1>
                 {/* <h2>{movie?.dop}</h2> */}
                 <ul>
+                    <li>
+                        <b>Year</b>
+                        <Link to={`/year/${movie?.year}`}>{movie?.year}</Link>
+                    </li>
                     <li>
                         <b>Director</b>
                         <Link to={`/director/${movie?.director_id}`}>

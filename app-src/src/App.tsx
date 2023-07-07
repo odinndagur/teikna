@@ -12,6 +12,7 @@ import {
     getCollectionById,
     getCollections,
     getMoviesByRole,
+    getMoviesByYear,
 } from './db'
 import {
     ReactLocation,
@@ -43,6 +44,7 @@ import { CollectionsPage } from './Components/CollectionsPage'
 import { CollectionPage } from './Components/CollectionPage'
 import { ImagePage } from './Components/ImagePage'
 import { MoviesListByRole } from './Components/MoviesListByRole'
+import { MoviesListByYear } from './Components/MoviesListByYear'
 
 const reactLocation = new ReactLocation()
 
@@ -277,6 +279,16 @@ function App() {
                                             production_designer: params.id,
                                         })
                                     return { movies, role }
+                                },
+                            },
+                            {
+                                path: 'year/:year',
+                                element: <MoviesListByYear />,
+                                loader: async ({ params }) => {
+                                    const { movies } = await getMoviesByYear({
+                                        year: params.year,
+                                    })
+                                    return { movies, year: params.year }
                                 },
                             },
                             {

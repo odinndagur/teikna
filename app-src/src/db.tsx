@@ -138,6 +138,38 @@ export const getMoviesByRole = async ({
     return { movies: res, role }
 }
 
+export const getMoviesByYear = async ({ year }: { year: string | number }) => {
+    let res: {
+        total_count: number
+        id: string | number
+        title: string
+        year: number
+        director: string
+        dop: string
+        production_designer: string
+        costume_designer: string
+    }[] = await query(`
+    select count(*) over() as total_count, movie.id, movie.title, movie.year,
+    director.name as director,
+    dop.name as dop,
+    production_designer.name as production_designer,
+    costume_designer.name as costume_designer
+    --json_group_array(movie_image.image_url) as images
+    from movie 
+    --join movie_image on movie.id = movie_image.movie_id
+    join director on movie.director_id = director.id
+    join director_of_photography as dop on dop.id = movie.dop_id
+    join production_designer on production_designer.id = movie.production_designer_id
+    join costume_designer on costume_designer.id = movie.costume_designer_id
+    join movie_fts on movie_fts.id = movie.id
+    ${`where movie.year = ${year}`}
+    group by movie.id
+    order by levenshtein(movie.title,"")`)
+    console.log({ res, fn: 'moviebyyear' })
+
+    return { movies: res }
+}
+
 export const getSomeMovies = async () => {
     const res = await query(`
         select movie.*,
