@@ -102,6 +102,7 @@ export const getMoviesByRole = async ({
     --json_group_array(movie_image.image_url) as images
     from movie 
     --join movie_image on movie.id = movie_image.movie_id
+    join director on movie.director_id = director.id
     join director_of_photography as dop on dop.id = movie.dop_id
     join production_designer on production_designer.id = movie.production_designer_id
     join costume_designer on costume_designer.id = movie.costume_designer_id
