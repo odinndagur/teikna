@@ -1,4 +1,4 @@
-import { MakeGenerics, useMatch } from '@tanstack/react-location'
+import { Link, MakeGenerics, useMatch } from '@tanstack/react-location'
 import { Header } from './Header'
 import { Footer } from './Footer'
 import { useQuery } from '@tanstack/react-query'
@@ -9,30 +9,26 @@ import './MoviePage.css'
 import { Carousel } from './Carousel'
 import { ImageViewer } from './ImageViewer'
 
+interface movie {
+    id: string | number
+    title: string
+    director: string
+    dop: string
+    production_designer: string
+    costume_designer: string
+    year: number
+    images: string[]
+    filmgrab_url: string
+    director_id: string | number
+    dop_id: string | number
+    production_designer_id: string | number
+    costume_designer_id: string | number
+}
+
 export type movieGenerics = MakeGenerics<{
     LoaderData: {
-        movie?: {
-            id: string | number
-            title: string
-            director: string
-            director_of_photography: string
-            production_designer: string
-            costume_designer: string
-            year: number
-            images: string[]
-            filmgrab_url: string
-        }
-        movies?: {
-            id: string | number
-            title: string
-            director: string
-            director_of_photography: string
-            production_designer: string
-            costume_designer: string
-            year: number
-            images: string[]
-            filmgrab_url: string
-        }[]
+        movie?: movie
+        movies?: movie[]
     }
 }>
 export function MoviePage() {
@@ -46,6 +42,35 @@ export function MoviePage() {
             {/* {JSON.stringify(movie)} */}
             <div key={movie?.id}>
                 <h1>{movie?.title}</h1>
+                {/* <h2>{movie?.dop}</h2> */}
+                <ul>
+                    <li>
+                        <b>Director</b>
+                        <Link to={`/director/${movie?.director_id}`}>
+                            {movie?.director}
+                        </Link>
+                    </li>
+                    <li>
+                        <b>Director of Photography</b>
+                        <Link to={`/dop/${movie?.dop_id}`}>{movie?.dop}</Link>
+                    </li>
+                    <li>
+                        <b>Costume Designer</b>
+                        <Link
+                            to={`/costume_designer/${movie?.costume_designer_id}`}
+                        >
+                            {movie?.costume_designer}
+                        </Link>
+                    </li>
+                    <li>
+                        <b>Production Designer</b>
+                        <Link
+                            to={`/production_designer/${movie?.production_designer_id}`}
+                        >
+                            {movie?.production_designer}
+                        </Link>
+                    </li>
+                </ul>
                 <i>
                     All images from{' '}
                     <a href={movie?.filmgrab_url}>filmgrab.com</a>

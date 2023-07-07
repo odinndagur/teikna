@@ -11,6 +11,7 @@ import {
     getRandomMovie,
     getCollectionById,
     getCollections,
+    getMoviesByRole,
 } from './db'
 import {
     ReactLocation,
@@ -41,6 +42,7 @@ import { RandomMovie } from './Components/RandomMovie'
 import { CollectionsPage } from './Components/CollectionsPage'
 import { CollectionPage } from './Components/CollectionPage'
 import { ImagePage } from './Components/ImagePage'
+import { MoviesListByRole } from './Components/MoviesListByRole'
 
 const reactLocation = new ReactLocation()
 
@@ -232,6 +234,42 @@ function App() {
                                         }),
                                     },
                                 ],
+                            },
+                            {
+                                path: 'director/:id',
+                                element: <MoviesListByRole />,
+                                loader: async ({ params }) => ({
+                                    movies: await getMoviesByRole({
+                                        director: params.id,
+                                    }),
+                                }),
+                            },
+                            {
+                                path: 'dop/:id',
+                                element: <MoviesListByRole />,
+                                loader: async ({ params }) => ({
+                                    movies: await getMoviesByRole({
+                                        dop: params.id,
+                                    }),
+                                }),
+                            },
+                            {
+                                path: 'costume_designer/:id',
+                                element: <MoviesListByRole />,
+                                loader: async ({ params }) => ({
+                                    movies: await getMoviesByRole({
+                                        costume_designer: params.id,
+                                    }),
+                                }),
+                            },
+                            {
+                                path: 'production_designer/:id',
+                                element: <MoviesListByRole />,
+                                loader: async ({ params }) => ({
+                                    movies: await getMoviesByRole({
+                                        production_designer: params.id,
+                                    }),
+                                }),
                             },
                             {
                                 path: 'random',

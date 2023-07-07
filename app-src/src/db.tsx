@@ -55,12 +55,14 @@ export const getAllMovies = async () => {
 export const getMovieById = async (id: string | number) => {
     const res = await query(`
     select movie.*,
+    director.name as director,
     dop.name as dop,
     production_designer.name as production_designer,
     costume_designer.name as costume_designer,
     json_group_array(movie_image.image_url) as images
     from movie 
 join movie_image on movie.id = movie_image.movie_id
+join director on director.id = movie.director_id
 join director_of_photography as dop on dop.id = movie.dop_id
 join production_designer on production_designer.id = movie.production_designer_id
 join costume_designer on costume_designer.id = movie.costume_designer_id
@@ -73,6 +75,49 @@ group by movie.id
     }))
     DB_CONSOLE_LOGS && console.log(currentMovie)
     return currentMovie[0]
+}
+
+export const getMoviesByRole = async ({
+    director,
+    dop,
+    costume_designer,
+    production_designer,
+}: {
+    director?: string
+    dop?: string
+    costume_designer?: string
+    production_designer?: string
+}) => {
+    let res: {
+        total_count: number
+        id: string | number
+        title: string
+        year: number
+    }[] = await query(`
+    select count(*) over() as total_count, movie.id, movie.title, movie.year,
+    director,
+    director_of_photography,
+    production_designer,
+    costume_designer
+    --json_group_array(movie_image.image_url) as images
+    from movie 
+    --join movie_image on movie.id = movie_image.movie_id
+    join director_of_photography as dop on dop.id = movie.dop_id
+    join production_designer on production_designer.id = movie.production_designer_id
+    join costume_designer on costume_designer.id = movie.costume_designer_id
+    join movie_fts on movie_fts.id = movie.id
+    ${director ? 'where director.id = ' + director : ''}
+    ${dop ? 'where dop.id = ' + dop : ''}
+    ${costume_designer ? 'where costume_designer.id = ' + costume_designer : ''}
+    ${
+        production_designer
+            ? 'where production_designer.id = ' + production_designer
+            : ''
+    }
+    group by movie.id
+    order by levenshtein(movie.title,"")`)
+    console.log(res)
+    return res
 }
 
 export const getSomeMovies = async () => {
