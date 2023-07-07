@@ -238,38 +238,46 @@ function App() {
                             {
                                 path: 'director/:id',
                                 element: <MoviesListByRole />,
-                                loader: async ({ params }) => ({
-                                    movies: await getMoviesByRole({
-                                        director: params.id,
-                                    }),
-                                }),
+                                loader: async ({ params }) => {
+                                    const { movies, role } =
+                                        await getMoviesByRole({
+                                            director: params.id,
+                                        })
+                                    return { movies, role }
+                                },
                             },
                             {
                                 path: 'dop/:id',
                                 element: <MoviesListByRole />,
-                                loader: async ({ params }) => ({
-                                    movies: await getMoviesByRole({
-                                        dop: params.id,
-                                    }),
-                                }),
+                                loader: async ({ params }) => {
+                                    const { movies, role } =
+                                        await getMoviesByRole({
+                                            dop: params.id,
+                                        })
+                                    return { movies, role }
+                                },
                             },
                             {
                                 path: 'costume_designer/:id',
                                 element: <MoviesListByRole />,
-                                loader: async ({ params }) => ({
-                                    movies: await getMoviesByRole({
-                                        costume_designer: params.id,
-                                    }),
-                                }),
+                                loader: async ({ params }) => {
+                                    const { movies, role } =
+                                        await getMoviesByRole({
+                                            costume_designer: params.id,
+                                        })
+                                    return { movies, role }
+                                },
                             },
                             {
                                 path: 'production_designer/:id',
                                 element: <MoviesListByRole />,
-                                loader: async ({ params }) => ({
-                                    movies: await getMoviesByRole({
-                                        production_designer: params.id,
-                                    }),
-                                }),
+                                loader: async ({ params }) => {
+                                    const { movies, role } =
+                                        await getMoviesByRole({
+                                            production_designer: params.id,
+                                        })
+                                    return { movies, role }
+                                },
                             },
                             {
                                 path: 'random',

@@ -27,9 +27,10 @@ export function MoviesListByRole() {
     const queryClient = useQueryClient()
 
     const {
-        data: { movies },
-    } = useMatch<movieGenerics>()
-    console.log(movies)
+        data: { movies, role },
+    } = useMatch()
+
+    // console.log(data)
     const handleInput = (val: string) => {
         console.log(val)
         setSearchValue(val)
@@ -70,6 +71,7 @@ export function MoviesListByRole() {
                     onChange={(ev) => handleInput(ev.target.value)}
                 ></input>
             </Header>
+            <h2>{role}</h2>
             <div
                 className="movie-list"
                 ref={movieListRef}
