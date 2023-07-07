@@ -385,11 +385,11 @@ export function ImagePage() {
                 } else {
                     return smallerSide == 'w'
                         ? rotation % 2 == 0
-                            ? window.innerHeight / h
-                            : window.innerHeight / h
+                            ? window.innerWidth / w
+                            : window.innerWidth / h
                         : rotation % 2 == 0
                         ? window.innerWidth / w
-                        : window.innerHeight / w
+                        : window.innerWidth / h
                 }
             } else {
                 // alert('what')
@@ -473,8 +473,10 @@ export function ImagePage() {
             <div
                 style={{
                     position: 'absolute',
-                    inset: 0,
-                    fontSize: '3rem',
+                    inset: '1rem',
+                    fontSize: '1.5rem',
+                    margin: '1rem',
+                    boxSizing: 'border-box',
                     zIndex: 999999,
                     pointerEvents: 'none',
                     display: 'none',
