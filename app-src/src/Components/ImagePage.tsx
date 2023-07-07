@@ -347,10 +347,18 @@ export function ImagePage() {
             const smallerSide = orientation == 'portrait' ? 'w' : 'h'
             if (fullScreen) {
                 if (
-                    w > window.innerWidth ||
-                    h > window.innerHeight ||
-                    (rotation % 2 != 0 &&
-                        (w > window.innerHeight || h > window.innerWidth))
+                    (window.innerWidth < window.innerHeight &&
+                        (w > window.innerWidth ||
+                            h > window.innerHeight ||
+                            (rotation % 2 != 0 &&
+                                (w > window.innerHeight ||
+                                    h > window.innerWidth)))) ||
+                    (window.innerWidth > window.innerHeight &&
+                        (w > window.innerHeight ||
+                            h > window.innerWidth ||
+                            (rotation % 2 != 0 &&
+                                (h > window.innerHeight ||
+                                    w > window.innerWidth))))
                 ) {
                     // alert('what')
                     return 1
@@ -366,13 +374,23 @@ export function ImagePage() {
                 //     })
                 // )
                 // alert(smallerSide)
-                return smallerSide == 'w'
-                    ? rotation % 2 == 0
+                if (window.innerWidth > window.innerHeight) {
+                    return smallerSide == 'w'
+                        ? rotation % 2 == 0
+                            ? window.innerHeight / h
+                            : window.innerHeight / w
+                        : rotation % 2 == 0
                         ? window.innerHeight / h
                         : window.innerHeight / w
-                    : rotation % 2 == 0
-                    ? window.innerHeight / h
-                    : window.innerHeight / w
+                } else {
+                    return smallerSide == 'w'
+                        ? rotation % 2 == 0
+                            ? window.innerHeight / h
+                            : window.innerHeight / h
+                        : rotation % 2 == 0
+                        ? window.innerWidth / w
+                        : window.innerHeight / w
+                }
             } else {
                 // alert('what')
                 return 1
@@ -393,6 +411,8 @@ export function ImagePage() {
         orientation,
         String(fullScreen),
         img,
+        window.innerWidth,
+        window.innerHeight,
     ])
     // useEffect(() => {
     //     if (imgSize) {
@@ -623,106 +643,6 @@ export function ImagePage() {
                     >
                         {timeLeft}
                     </div>
-                    <div
-                        style={{
-                            pointerEvents: 'none',
-                            position: 'absolute',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            // height: '100%',
-                            inset: 0,
-                            // rotate: `${rotation * 90}deg`,
-                            // left: 0,
-                            // backgroundColor: 'red',
-                            // maxWidth:
-                            //     rotation % 2 == 0 ? '100%' : undefined,
-                            // maxHeight:
-                            //     rotation % 2 != 0 ? '100%' : undefined,
-                            // width: rotation % 2 == 0 ? '100%' : undefined,
-                            // height: rotation % 2 != 0 ? '100%' : undefined,
-                            // top: '50%',
-                            // top: 0,
-                            // height: '100%',
-                            padding: '2rem',
-                            boxSizing: 'border-box',
-                            // transform: 'translate(0,-50%)',
-                            zIndex: 4,
-                            visibility: showControls ? 'visible' : 'hidden',
-                        }}
-                    >
-                        <Link
-                            style={{
-                                pointerEvents: 'auto',
-                                zIndex: 5,
-                                textDecoration: 'none',
-                                // color:
-                                //     images && idx <= 0 ? 'gray' : undefined,
-                                color:
-                                    images && idx <= 0
-                                        ? 'gray'
-                                        : 'rgba(127,127,127,1)',
-                                visibility:
-                                    images && idx <= 0 ? 'hidden' : 'visible',
-
-                                width: '2rem',
-                                padding: '5rem 1rem',
-                                textAlign: 'center',
-                                // backgroundColor: 'red',
-                            }}
-                            search={(old) => ({
-                                ...old,
-                                idx: Math.max(idx - 1, 0),
-                            })}
-                            replace
-                            className="material-icons"
-                            disabled={idx >= (images && images.length)}
-                            // onClick={(ev) => {
-                            //     ev.preventDefault()
-                            //     // prevImage()
-
-                            //     // selectImage(Math.max(idx - 1, 0))
-                            // }}
-                        >
-                            arrow_back_ios
-                        </Link>
-
-                        <Link
-                            style={{
-                                zIndex: 5,
-                                pointerEvents: 'auto',
-
-                                textDecoration: 'none',
-                                color:
-                                    images && idx >= images.length - 1
-                                        ? 'gray'
-                                        : 'rgba(127,127,127,1)',
-                                visibility:
-                                    images && idx >= images.length - 1
-                                        ? 'hidden'
-                                        : 'visible',
-                                width: '2rem',
-                                padding: '5rem 1rem',
-                                textAlign: 'center',
-                                // backgroundColor: 'red',
-                                // backgroundColor: 'red',
-                            }}
-                            className="material-icons"
-                            search={(old) => ({
-                                ...old,
-                                idx: Math.min(idx + 1, images.length - 1),
-                            })}
-
-                            // onClick={(ev) => {
-                            //     ev.preventDefault()
-                            //     // nextImage()
-
-                            //     // selectImage(Math.min(idx + 1, images.length))
-                            // }}
-                        >
-                            arrow_forward_ios
-                        </Link>
-                    </div>
                 </div>
             </div>
             {/* </div> */}
@@ -784,6 +704,7 @@ export function ImagePage() {
                         rotate: `${rotation * 90}deg`,
                         zIndex: 5,
                         transform: mirrored ? 'scaleX(-1)' : undefined,
+                        color: fullScreen ? 'var(--main-text-color)' : 'gray',
                     }}
                     // className="material-icons"
                     onClick={(ev) => {
@@ -791,7 +712,16 @@ export function ImagePage() {
                         setFullScreen((old) => !old)
                     }}
                 >
-                    <span className="material-icons">fullscreen</span>
+                    <span
+                        style={{
+                            color: fullScreen
+                                ? 'var(--main-text-color)'
+                                : 'gray',
+                        }}
+                        className="material-icons"
+                    >
+                        fullscreen
+                    </span>
                 </button>
                 <button
                     style={{
@@ -822,7 +752,14 @@ export function ImagePage() {
                         setShowGrid((old) => !old)
                     }}
                 >
-                    <span className="material-icons">grid_3x3</span>
+                    <span
+                        style={{
+                            color: showGrid ? 'var(--main-text-color)' : 'gray',
+                        }}
+                        className="material-icons"
+                    >
+                        grid_3x3
+                    </span>
                 </button>
                 {/* <button
                     style={{
@@ -892,6 +829,103 @@ export function ImagePage() {
                     nextImage={nextImage}
                     prevImage={prevImage}
                 />
+            </div>
+            <div
+                style={{
+                    pointerEvents: 'none',
+                    position: 'absolute',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'center',
+                    // height: '100%',
+                    inset: 0,
+                    // rotate: `${rotation * 90}deg`,
+                    // left: 0,
+                    // backgroundColor: 'red',
+                    // maxWidth:
+                    //     rotation % 2 == 0 ? '100%' : undefined,
+                    // maxHeight:
+                    //     rotation % 2 != 0 ? '100%' : undefined,
+                    // width: rotation % 2 == 0 ? '100%' : undefined,
+                    // height: rotation % 2 != 0 ? '100%' : undefined,
+                    // top: '50%',
+                    // top: 0,
+                    // height: '100%',
+                    padding: '2rem',
+                    boxSizing: 'border-box',
+                    // transform: 'translate(0,-50%)',
+                    zIndex: 4,
+                    visibility: showControls ? 'visible' : 'hidden',
+                }}
+            >
+                <Link
+                    style={{
+                        pointerEvents: 'auto',
+                        zIndex: 5,
+                        textDecoration: 'none',
+                        // color:
+                        //     images && idx <= 0 ? 'gray' : undefined,
+                        color:
+                            images && idx <= 0 ? 'gray' : 'rgba(127,127,127,1)',
+                        visibility: images && idx <= 0 ? 'hidden' : 'visible',
+
+                        width: '2rem',
+                        padding: '5rem 1rem',
+                        textAlign: 'center',
+                        // backgroundColor: 'red',
+                    }}
+                    search={(old) => ({
+                        ...old,
+                        idx: Math.max(idx - 1, 0),
+                    })}
+                    replace
+                    className="material-icons"
+                    disabled={idx >= (images && images.length)}
+                    // onClick={(ev) => {
+                    //     ev.preventDefault()
+                    //     // prevImage()
+
+                    //     // selectImage(Math.max(idx - 1, 0))
+                    // }}
+                >
+                    arrow_back_ios
+                </Link>
+
+                <Link
+                    style={{
+                        zIndex: 5,
+                        pointerEvents: 'auto',
+
+                        textDecoration: 'none',
+                        color:
+                            images && idx >= images.length - 1
+                                ? 'gray'
+                                : 'rgba(127,127,127,1)',
+                        visibility:
+                            images && idx >= images.length - 1
+                                ? 'hidden'
+                                : 'visible',
+                        width: '2rem',
+                        padding: '5rem 1rem',
+                        textAlign: 'center',
+                        // backgroundColor: 'red',
+                        // backgroundColor: 'red',
+                    }}
+                    className="material-icons"
+                    search={(old) => ({
+                        ...old,
+                        idx: Math.min(idx + 1, images.length - 1),
+                    })}
+
+                    // onClick={(ev) => {
+                    //     ev.preventDefault()
+                    //     // nextImage()
+
+                    //     // selectImage(Math.min(idx + 1, images.length))
+                    // }}
+                >
+                    arrow_forward_ios
+                </Link>
             </div>
         </div>
     )
