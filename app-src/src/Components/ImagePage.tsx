@@ -838,10 +838,13 @@ export function ImagePage() {
                     position: 'absolute',
                     display: 'flex',
                     justifyContent: 'space-between',
+                    flexDirection: rotation % 2 == 0 ? 'row' : 'column',
+                    transformOrigin: 'center',
                     alignItems: 'center',
                     // height: '100%',
                     inset: 0,
                     // rotate: `${rotation * 90}deg`,
+                    scale: `${['1 1', '1 1', '-1 1', '1 -1'][rotation]}`, //'-1 1',
                     // left: 0,
                     // backgroundColor: 'red',
                     // maxWidth:
@@ -862,6 +865,7 @@ export function ImagePage() {
             >
                 <Link
                     style={{
+                        rotate: `${(rotation % 2) * 90}deg`,
                         pointerEvents: 'auto',
                         zIndex: 5,
                         textDecoration: 'none',
@@ -872,7 +876,7 @@ export function ImagePage() {
                         visibility: images && idx <= 0 ? 'hidden' : 'visible',
 
                         width: '2rem',
-                        padding: '5rem 1rem',
+                        // padding: '5rem 1rem',
                         textAlign: 'center',
                         // backgroundColor: 'red',
                     }}
@@ -895,6 +899,7 @@ export function ImagePage() {
 
                 <Link
                     style={{
+                        rotate: `${(rotation % 2) * 90}deg`,
                         zIndex: 5,
                         pointerEvents: 'auto',
 
@@ -908,7 +913,7 @@ export function ImagePage() {
                                 ? 'hidden'
                                 : 'visible',
                         width: '2rem',
-                        padding: '5rem 1rem',
+                        // padding: '5rem 1rem',
                         textAlign: 'center',
                         // backgroundColor: 'red',
                         // backgroundColor: 'red',
