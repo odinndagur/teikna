@@ -201,7 +201,28 @@ export const getSomeMovies = async () => {
     return movies
 }
 
-export const searchMovies = async (searchValue?: string) => {
+export const searchMovies = async ({
+    searchValue,
+    sort,
+    desc,
+}: {
+    searchValue?: string
+    sort?: string
+    desc?: boolean
+}) => {
+    const order = desc ? 'desc' : 'asc'
+    let sortBy
+    if (sort == 'year') {
+        sortBy = 'movie.year'
+    }
+    if (sort == 'title') {
+        sortBy = 'movie.title'
+    }
+    const sortString = `${
+        sort
+            ? sortBy + ' ' + order
+            : 'levenshtein(movie.title,"' + searchValue + '")'
+    }`
     const res = await query(`
         select count(*) over() as total_count, movie.id, movie.title, movie.year,
         director,
@@ -217,7 +238,9 @@ export const searchMovies = async (searchValue?: string) => {
         join movie_fts on movie_fts.id = movie.id
         ${searchValue ? 'where movie_fts match "' + searchValue + '*"' : ''}
         group by movie.id
-        order by levenshtein(movie.title,"${searchValue}")
+        order by 
+        ${sortString}
+       
     `)
     const movies: movie[] = res.map((movie: movieJson) => ({
         ...movie,

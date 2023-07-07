@@ -39,7 +39,12 @@ export function MoviesList() {
     const search = useSearch()
 
     const { data } = useQuery({
-        queryFn: () => searchMovies(String(search.query ?? '')),
+        queryFn: () =>
+            searchMovies({
+                searchValue: String(search.query ?? ''),
+                sort: search.sort ?? undefined,
+                desc: Boolean(search.desc),
+            }),
         queryKey: ['search', search],
         staleTime: 0,
         cacheTime: 0,
@@ -69,6 +74,60 @@ export function MoviesList() {
                     onChange={(ev) => handleInput(ev.target.value)}
                 ></input>
             </Header>
+            <div
+                style={{
+                    display: 'flex',
+                    gap: '1rem',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                }}
+            >
+                <div>Sort by</div>
+                <button
+                    onClick={() =>
+                        navigate({
+                            search: (old) => ({
+                                ...old,
+                                sort: 'year',
+                                desc: !old.desc ?? false,
+                            }),
+                        })
+                    }
+                >
+                    <span>Year</span>
+                    <span
+                        style={{
+                            padding: '0 0.5rem',
+                            transform: search.desc ? 'scaleY(-1)' : '',
+                        }}
+                        className="material-icons"
+                    >
+                        sort
+                    </span>
+                </button>
+                <button
+                    onClick={() =>
+                        navigate({
+                            search: (old) => ({
+                                ...old,
+                                sort: 'title',
+                                desc: !old.desc ?? false,
+                            }),
+                        })
+                    }
+                >
+                    <span>Title</span>
+                    <span
+                        style={{
+                            padding: '0 0.5rem',
+                            transform: search.desc ? 'scaleY(-1)' : '',
+                        }}
+                        className="material-icons"
+                    >
+                        sort
+                    </span>
+                </button>
+            </div>
             <div
                 className="movie-list"
                 ref={movieListRef}

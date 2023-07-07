@@ -127,12 +127,12 @@ function App() {
                                             movies: await queryClient.fetchQuery(
                                                 {
                                                     queryFn: () =>
-                                                        searchMovies(
-                                                            String(
+                                                        searchMovies({
+                                                            searchValue: String(
                                                                 search.query ??
                                                                     ''
-                                                            )
-                                                        ),
+                                                            ),
+                                                        }),
                                                     queryKey: [
                                                         'search',
                                                         search,
