@@ -93,6 +93,10 @@ export const getMoviesByRole = async ({
         id: string | number
         title: string
         year: number
+        director: string
+        dop: string
+        production_designer: string
+        costume_designer: string
     }[] = await query(`
     select count(*) over() as total_count, movie.id, movie.title, movie.year,
     director.name as director,
@@ -120,16 +124,16 @@ export const getMoviesByRole = async ({
     console.log(res)
     let role
     if (director) {
-        role = res[0].director
+        role = { role: 'Director', name: res[0].director }
     }
     if (dop) {
-        role = res[0].dop
+        role = { role: 'Director of Photography', name: res[0].dop }
     }
     if (production_designer) {
-        role = res[0].production_designer
+        role = { role: 'Production Designer', name: res[0].production_designer }
     }
     if (costume_designer) {
-        role = res[0].costume_designer
+        role = { role: 'Costume Designer', name: res[0].costume_designer }
     }
     return { movies: res, role }
 }

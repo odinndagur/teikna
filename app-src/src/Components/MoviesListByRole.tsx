@@ -71,7 +71,9 @@ export function MoviesListByRole() {
                     onChange={(ev) => handleInput(ev.target.value)}
                 ></input>
             </Header>
-            <h2>{role}</h2>
+            <h2>
+                {role.name} - <i>{role.role}</i>
+            </h2>
             <div
                 className="movie-list"
                 ref={movieListRef}
