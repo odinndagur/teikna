@@ -15,6 +15,7 @@ import { ImagePlayerControls } from './ImagePlayerControls'
 import { spliceNoMutate } from './spliceNoMutate'
 import { SlideshowSettings } from './SlideshowSettings'
 import { GridOverlay } from './GridOverlay'
+import { CenterLineOverlay } from './CenterLineOverlay'
 
 export function RotateButton({ setRotation }) {
     const [shouldReset, setShouldReset] = useState(false)
@@ -142,9 +143,11 @@ export function ImagePage() {
     // const img = images && images[idx]
     // const img = imageUrl
     const modalId = 'image-viewer-modal'
-    const [mirrored, setMirrored] = useState(false)
+    const [mirroredHorizontal, setMirroredHorizontal] = useState(false)
+    const [mirroredVertical, setMirroredVertical] = useState(false)
     const [fullScreen, setFullScreen] = useState(false)
     const [showGrid, setShowGrid] = useState(false)
+    const [showCenterLine, setShowCenterLine] = useState(false)
     const [showControls, setShowControls] = useState(true)
     const [currentImageSize, setCurrentImageSize] = useState()
     const [userCollections, setUserCollections] = useUserCollection()
@@ -539,7 +542,7 @@ export function ImagePage() {
                         setShowControls((old) => !old)
                     }
                 }}
-                key={String(mirrored)}
+                key={String(mirroredHorizontal)}
             >
                 <div
                     key={img}
@@ -622,7 +625,13 @@ export function ImagePage() {
                             // maxHeight: 'min(100vh,100%)',
                             // maxWidth: 'min(100vw,100%)',
                             zIndex: 5,
-                            transform: mirrored ? 'scaleX(-1)' : undefined,
+                            // transform: mirroredHorizontal ? 'scaleX(-1)' : undefined,
+                            transform:
+                                mirroredHorizontal || mirroredVertical
+                                    ? `${
+                                          mirroredHorizontal ? 'scaleX(-1)' : ''
+                                      } ${mirroredVertical ? 'scaleY(-1)' : ''}`
+                                    : undefined,
                             // backgroundColor: 'red',
                         }}
                         // ref={currentImageRef}
@@ -634,6 +643,14 @@ export function ImagePage() {
                         key={img}
                         innerKey={img}
                         showGrid={showGrid}
+                    />
+                    <CenterLineOverlay
+                        rotation={rotation}
+                        key={img}
+                        innerKey={img}
+                        showCenterLine={showCenterLine}
+                        horizontal
+                        vertical
                     />
                     <div
                         style={{
@@ -705,7 +722,9 @@ export function ImagePage() {
                         width: '50px',
                         rotate: `${rotation * 90}deg`,
                         zIndex: 5,
-                        transform: mirrored ? 'scaleX(-1)' : undefined,
+                        transform: mirroredHorizontal
+                            ? 'scaleX(-1)'
+                            : undefined,
                         color: fullScreen ? 'var(--main-text-color)' : 'gray',
                     }}
                     // className="material-icons"
@@ -731,15 +750,42 @@ export function ImagePage() {
                         width: '50px',
                         rotate: `${rotation * 90}deg`,
                         zIndex: 5,
-                        transform: mirrored ? 'scaleX(-1)' : undefined,
+                        transform: mirroredHorizontal
+                            ? 'scaleX(-1)'
+                            : undefined,
                     }}
                     // className="material-icons"
                     onClick={(ev) => {
                         ev.preventDefault()
-                        setMirrored((old) => !old)
+                        setMirroredHorizontal((old) => !old)
                     }}
                 >
                     <span className="material-icons">flip</span>
+                </button>
+                <button
+                    style={{
+                        height: '50px',
+                        width: '50px',
+                        rotate: `${(rotation + 1) * 90}deg`,
+                        zIndex: 5,
+                        // backgroundColor: mirroredVertical ? 'red' : 'green',
+                    }}
+                    // className="material-icons"
+                    onClick={(ev) => {
+                        ev.preventDefault()
+                        setMirroredVertical((old) => !old)
+                    }}
+                >
+                    <span
+                        style={{
+                            transform: mirroredVertical
+                                ? 'scaleX(-1)' //meikar engan sens því er að rotatea um 90 gráður svo x er y
+                                : undefined,
+                        }}
+                        className="material-icons"
+                    >
+                        flip
+                    </span>
                 </button>
                 <button
                     style={{
@@ -763,6 +809,33 @@ export function ImagePage() {
                         grid_3x3
                     </span>
                 </button>
+
+                <button
+                    style={{
+                        rotate: `${rotation * 90}deg`,
+                        height: '50px',
+                        width: '50px',
+                        zIndex: 5,
+                        color: showCenterLine
+                            ? 'var(--main-text-color)'
+                            : 'gray',
+                    }}
+                    onClick={(ev) => {
+                        ev.preventDefault()
+                        setShowCenterLine((old) => !old)
+                    }}
+                >
+                    <span
+                        style={{
+                            color: showCenterLine
+                                ? 'var(--main-text-color)'
+                                : 'gray',
+                        }}
+                        className="material-icons"
+                    >
+                        align_horizontal_center
+                    </span>
+                </button>
                 {/* <button
                     style={{
                         zIndex: 5,
@@ -782,7 +855,9 @@ export function ImagePage() {
                         height: '50px',
                         width: '50px',
                         zIndex: 5,
-                        transform: mirrored ? 'scaleX(-1)' : undefined,
+                        transform: mirroredHorizontal
+                            ? 'scaleX(-1)'
+                            : undefined,
                     }}
                     onClick={(ev) => {
                         if (currentCollection?.images.includes(img)) {
