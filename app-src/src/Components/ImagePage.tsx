@@ -354,11 +354,12 @@ export function ImagePage() {
                                 (w > window.innerHeight ||
                                     h > window.innerWidth)))) ||
                     (window.innerWidth > window.innerHeight &&
-                        (w > window.innerHeight ||
-                            h > window.innerWidth ||
-                            (rotation % 2 != 0 &&
-                                (h > window.innerHeight ||
-                                    w > window.innerWidth))))
+                        h > window.innerWidth) ||
+                    // w > window.innerHeight ||
+                    (rotation % 2 != 0 &&
+                        (h > window.innerWidth || w > window.innerHeight)) ||
+                    (rotation % 2 == 0 &&
+                        (h > window.innerHeight || w > window.innerWidth))
                 ) {
                     // alert('what')
                     return 1
@@ -373,12 +374,11 @@ export function ImagePage() {
                 //         h,
                 //     })
                 // )
-                // alert(smallerSide)
                 if (window.innerWidth > window.innerHeight) {
                     return smallerSide == 'w'
                         ? rotation % 2 == 0
                             ? window.innerHeight / h
-                            : window.innerWidth / h
+                            : window.innerHeight / w
                         : rotation % 2 == 0
                         ? window.innerWidth / w
                         : window.innerHeight / w
@@ -479,7 +479,7 @@ export function ImagePage() {
                     boxSizing: 'border-box',
                     zIndex: 999999,
                     pointerEvents: 'none',
-                    display: 'none',
+                    // display: 'none',
                 }}
             >
                 <div>imgcontainerscale: {imgContainerScale}</div>
