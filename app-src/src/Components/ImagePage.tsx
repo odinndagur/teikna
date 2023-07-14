@@ -378,18 +378,18 @@ export function ImagePage() {
                     return smallerSide == 'w'
                         ? rotation % 2 == 0
                             ? window.innerHeight / h
-                            : window.innerHeight / w
+                            : window.innerWidth / h
                         : rotation % 2 == 0
-                        ? window.innerHeight / h
+                        ? window.innerWidth / w
                         : window.innerHeight / w
                 } else {
                     return smallerSide == 'w'
                         ? rotation % 2 == 0
-                            ? window.innerWidth / w
+                            ? window.innerHeight / h
                             : window.innerWidth / h
                         : rotation % 2 == 0
                         ? window.innerWidth / w
-                        : window.innerWidth / h
+                        : window.innerHeight / w
                 }
             } else {
                 // alert('what')
