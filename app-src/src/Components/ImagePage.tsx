@@ -348,8 +348,8 @@ export function ImagePage() {
             if (fullScreen) {
                 if (
                     (window.innerWidth < window.innerHeight &&
-                        (w > window.innerWidth ||
-                            h > window.innerHeight ||
+                        // w > window.innerWidth ||
+                        (h > window.innerHeight ||
                             (rotation % 2 != 0 &&
                                 (w > window.innerHeight ||
                                     h > window.innerWidth)))) ||
@@ -385,7 +385,7 @@ export function ImagePage() {
                 } else {
                     return smallerSide == 'w'
                         ? rotation % 2 == 0
-                            ? window.innerHeight / h
+                            ? window.innerWidth / w
                             : window.innerWidth / h
                         : rotation % 2 == 0
                         ? window.innerWidth / w
@@ -479,7 +479,7 @@ export function ImagePage() {
                     boxSizing: 'border-box',
                     zIndex: 999999,
                     pointerEvents: 'none',
-                    // display: 'none',
+                    display: 'none',
                 }}
             >
                 <div>imgcontainerscale: {imgContainerScale}</div>
