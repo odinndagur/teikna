@@ -93,7 +93,7 @@ function App() {
     }, [])
 
     if (!promiseWorkerLoaded) {
-        return
+        // return
         return <PlaceholderScreen />
     }
     return (

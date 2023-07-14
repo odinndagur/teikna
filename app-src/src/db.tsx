@@ -247,7 +247,8 @@ export const searchMovies = async ({
         year: Number(movie.year),
         //images: JSON.parse(movie.images),
     }))
-    const total_count = Number(movies[0].total_count)
+    console.log({ movies })
+    const total_count = Number(movies[0]?.total_count ?? 0)
     DB_CONSOLE_LOGS && console.log(movies)
     return { movies, total_count: total_count ?? 0 }
 }
