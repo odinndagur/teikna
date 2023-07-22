@@ -406,7 +406,8 @@ async function run() {
             // `${filepathPrefix}assets/filmgrab-sqlite.txt`,
             // `${filepathPrefix}film-grab-db0.sqlite3.txt`,
             // `${filepathPrefix}filmgrab-fts.txt`,
-            `${filepathPrefix}filmgrab-tables-ready.txt`,
+            // `${filepathPrefix}filmgrab-tables-ready.txt`,
+            `${filepathPrefix}filmgrab_animationscreencaps_combined.sqlite3.txt`,
         ]
         for (let filepath of filepaths) {
             // if (filepath.includes('db_data')) {

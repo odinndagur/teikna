@@ -62,9 +62,9 @@ export function MoviesList() {
         // scrollToFn
     })
 
-    useEffect(() => {
-        rowVirtualizer.scrollToOffset(10000)
-    }, [])
+    // useEffect(() => {
+    //     rowVirtualizer.scrollToOffset(10000)
+    // }, [])
 
     return (
         <>

@@ -9,6 +9,7 @@ export function ImageElement({
     collectionId,
     movieId,
     images,
+    style,
 }: {
     img: string
     selectImage: any
@@ -16,6 +17,7 @@ export function ImageElement({
     collectionId?: number
     movieId?: string | number
     images?: string[]
+    style?: any
 }) {
     const modalId = 'image-viewer-modal'
 
@@ -40,13 +42,13 @@ export function ImageElement({
                     imgTest.width > imgTest.height ? 'landscape' : 'portrait'
                 )
                 setImageVisible(true)
-                console.log({ imgTest })
+                // console.log({ imgTest })
             }
         }, 50)
     }, [])
 
     return (
-        <div key={img} style={{ scrollSnapType: 'y mandatory' }}>
+        <div key={img} style={{ ...style, scrollSnapType: 'y mandatory' }}>
             {/* <button> */}
             <Link
                 to={`/imageViewer`}
@@ -61,7 +63,7 @@ export function ImageElement({
             >
                 <img
                     className="button"
-                    src={img}
+                    src={`${img}?w=400`}
                     key={img}
                     style={{
                         visibility:

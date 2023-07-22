@@ -51,7 +51,7 @@ export function MoviePage() {
                         <b>Year</b>
                         <Link to={`/year/${movie?.year}`}>{movie?.year}</Link>
                     </li>
-                    <li>
+                    {/* <li>
                         <b>Director</b>
                         <Link to={`/director/${movie?.director_id}`}>
                             {movie?.director}
@@ -76,11 +76,13 @@ export function MoviePage() {
                         >
                             {movie?.production_designer}
                         </Link>
-                    </li>
+                    </li> */}
                 </ul>
                 <i>
                     All images from{' '}
-                    <a href={movie?.filmgrab_url}>filmgrab.com</a>
+                    <a href={`https://www.${movie?.images_source}.com`}>
+                        {movie?.images_source}
+                    </a>
                 </i>
                 <ImageViewer images={movie?.images!} movieId={movie?.id} />
             </div>

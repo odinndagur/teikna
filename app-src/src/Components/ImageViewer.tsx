@@ -3,6 +3,7 @@ import { Grid } from './Grid'
 import './MoviePage.css'
 import { ImageElement } from './ImageElement'
 import { useSearch } from '@tanstack/react-location'
+import { useVirtualizer } from '@tanstack/react-virtual'
 
 export function ImageViewer({
     images,
@@ -58,9 +59,76 @@ export function ImageViewer({
         }
     }, [])
 
+    const [lanes, setLanes] = useState<number>()
+    useEffect(() => {
+        setLanes(Math.floor((window.innerWidth - 200) / 300))
+    }, [window.innerWidth])
+
+    const imageListRef = useRef(null)
+    const rowVirtualizer = useVirtualizer({
+        count: Number(images.length),
+        getScrollElement: () => imageListRef.current,
+        estimateSize: () => 50,
+        overscan: 60,
+        debug: import.meta.env.MODE == 'development',
+        lanes: lanes,
+
+        // scrollToFn
+    })
+
     return (
-        <Grid id={'images-grid'}>
-            {images?.map((img, idx) => {
+        <Grid id={'images-grid'} divRef={imageListRef}>
+            {/* <div
+                style={{
+                    position: 'absolute',
+                    inset: 0,
+                    zIndex: 10000,
+                    fontSize: '20rem',
+                }}
+            >
+                {Math.floor((window.innerWidth - 200) / 300)}
+            </div> */}
+            {rowVirtualizer.getVirtualItems().map((virtualItem) => {
+                const idx = virtualItem.index
+                const img = images[idx]
+                return (
+                    // <div
+                    //     style={{
+                    //         // position: 'absolute',
+                    //         // top: 0,
+                    //         // left: 0,
+                    //         // width: '100%',
+                    //         // height: `${virtualItem.size}px`,
+                    //         transform: `translateY(${Math.floor(
+                    //             virtualItem.index / lanes
+                    //         )}px)`,
+                    //         // boxShadow: 'var(--card-box-shadow)',
+                    //         // borderBottom:
+                    //         //     '1px solid var(--main-text-color)',
+                    //         // padding: '1rem',
+                    //         // boxSizing: 'border-box',
+                    //     }}
+                    // >
+                    //     <p>{virtualItem.lane}</p>
+
+                    <ImageElement
+                        // key={img + idx}
+                        key={virtualItem.key}
+                        img={img}
+                        selectImage={() => setSelectedIndex(idx)}
+                        idx={idx}
+                        movieId={movieId}
+                        collectionId={collectionId}
+                        style={{
+                            transform: `translateY(${Math.floor(
+                                virtualItem.index / lanes
+                            )}px)`,
+                        }}
+                    />
+                    // </div>
+                )
+            })}
+            {/* {images?.map((img, idx) => {
                 return (
                     <ImageElement
                         key={img + idx}
@@ -71,7 +139,7 @@ export function ImageViewer({
                         collectionId={collectionId}
                     />
                 )
-            })}
+            })} */}
             {/* <ImageModal
                 images={images}
                 idx={selectedIndex}

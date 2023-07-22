@@ -3,16 +3,18 @@ import { Ref } from 'react'
 export function Grid({
     children,
     id,
-    ref,
+    // ref,
+    divRef,
 }: {
     children: any
     id?: any
-    ref?: Ref<HTMLDivElement>
+    // ref?: Ref<HTMLDivElement>
+    divRef?: Ref<HTMLDivElement>
 }) {
     return (
         <div
             id={id}
-            ref={ref}
+            ref={divRef}
             className="grid"
             style={{ scrollSnapType: 'y mandatory' }}
         >

@@ -54,25 +54,40 @@ export const getAllMovies = async () => {
 
 export const getMovieById = async (id: string | number) => {
     const res = await query(`
-    select movie.*,
-    director.name as director,
-    dop.name as dop,
-    production_designer.name as production_designer,
-    costume_designer.name as costume_designer,
+    select movie.*, 
+    images_source.name AS images_source,
+    --director.name AS director,
+    --dop.name AS dop,
+    --production_designer.name as production_designer,
+    --costume_designer.name as costume_designer,
     json_group_array(movie_image.image_url) as images
-    from movie 
-join movie_image on movie.id = movie_image.movie_id
-join director on director.id = movie.director_id
-join director_of_photography as dop on dop.id = movie.dop_id
-join production_designer on production_designer.id = movie.production_designer_id
-join costume_designer on costume_designer.id = movie.costume_designer_id
-where movie.id = ${id}
-group by movie.id
+    FROM movie 
+    LEFT JOIN movie_image ON movie.id = movie_image.movie_id
+    JOIN images_source ON images_source.id = movie.source_id
+    --join director on director.id = movie.director_id
+    --join director_of_photography as dop on dop.id = movie.dop_id
+    --join production_designer on production_designer.id = movie.production_designer_id
+    --join costume_designer on costume_designer.id = movie.costume_designer_id
+    where movie.id = ${id}
+    group by movie.id
 `)
-    const currentMovie: movie[] = res.map((movie: movieJson) => ({
-        ...movie,
-        images: JSON.parse(movie.images),
-    }))
+    DB_CONSOLE_LOGS && console.log(res)
+    const currentMovie: movie[] = res.map((movie: movieJson) => {
+        console.log(movie)
+        return {
+            ...movie,
+            images:
+                movie.images_source == 'filmgrab'
+                    ? JSON.parse(movie.images)
+                    : Array.from(
+                          { length: Number(movie.image_count) },
+                          (_, idx) =>
+                              `${movie.image_prefix}${idx + 1}${
+                                  movie.image_suffix
+                              }`
+                      ),
+        }
+    })
     DB_CONSOLE_LOGS && console.log(currentMovie)
     return currentMovie[0]
 }
@@ -224,11 +239,11 @@ export const searchMovies = async ({
             : 'levenshtein(movie.title,"' + searchValue + '")'
     }`
     const res = await query(`
-        select count(*) over() as total_count, movie.id, movie.title, movie.year,
-        director,
-        director_of_photography,
-        production_designer,
-        costume_designer
+        select count(*) over() as total_count, movie.id, movie.title, movie.year
+        --director,
+        --director_of_photography,
+        --production_designer,
+        --costume_designer
         --json_group_array(movie_image.image_url) as images
         from movie 
         --join movie_image on movie.id = movie_image.movie_id

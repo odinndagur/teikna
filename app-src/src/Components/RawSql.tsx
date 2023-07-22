@@ -14,7 +14,7 @@ export function RawSql() {
         })
     }
     return (
-        <div>
+        <div style={{ overflow: 'auto' }}>
             <Header>
                 <form onSubmit={(ev) => submitSql(ev)}>
                     <textarea
@@ -44,7 +44,7 @@ export function RawSql() {
                     })}
                 </table>
             )}
-            <Footer/>
+            <Footer />
         </div>
     )
 }
