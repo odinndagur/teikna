@@ -174,8 +174,21 @@ export function ImagePage() {
     const imgTest = new Image()
     const [imgSize, setImgSize] = useState<{ w: number; h: number }>(null)
 
+    const [imgCount, setImgCount] = useState()
     useEffect(() => {
-        setImg(images[idx])
+        if (movie.images_source == 'animationscreencaps') {
+            setImgCount(movie.images.image_count)
+        } else {
+            setImgCount(images.length)
+        }
+    }, [])
+
+    useEffect(() => {
+        if (movie.images_source == 'animationscreencaps') {
+            setImg(`${movie.image_prefix}${idx}${movie.image_suffix}`)
+        } else {
+            setImg(images[idx])
+        }
         console.log({ idx })
         console.log(img)
         setTimeout(() => {
@@ -204,8 +217,8 @@ export function ImagePage() {
                 e.preventDefault()
                 nextImage()
                 // console.log('front arrow', selectedIndex)
-                // if (images && selectedIndex < images.length - 1) {
-                //     setSelectedIndex((old) => Math.min(images.length, old + 1))
+                // if (images && selectedIndex < imgCount - 1) {
+                //     setSelectedIndex((old) => Math.min(imgCount, old + 1))
                 // }
             }
 
@@ -262,7 +275,7 @@ export function ImagePage() {
         navigate({
             search: (old) => ({
                 ...old,
-                idx: Math.min(idx + 1, images.length - 1),
+                idx: Math.min(idx + 1, imgCount - 1),
             }),
             replace: true,
         })
@@ -961,7 +974,7 @@ export function ImagePage() {
                     })}
                     replace
                     className="material-icons"
-                    disabled={idx >= (images && images.length)}
+                    disabled={idx >= (images && imgCount)}
                     // onClick={(ev) => {
                     //     ev.preventDefault()
                     //     // prevImage()
@@ -980,11 +993,11 @@ export function ImagePage() {
 
                         textDecoration: 'none',
                         color:
-                            images && idx >= images.length - 1
+                            images && idx >= imgCount - 1
                                 ? 'gray'
                                 : 'rgba(127,127,127,1)',
                         visibility:
-                            images && idx >= images.length - 1
+                            images && idx >= imgCount - 1
                                 ? 'hidden'
                                 : 'visible',
                         width: '2rem',
@@ -996,14 +1009,14 @@ export function ImagePage() {
                     className="material-icons"
                     search={(old) => ({
                         ...old,
-                        idx: Math.min(idx + 1, images.length - 1),
+                        idx: Math.min(idx + 1, imgCount - 1),
                     })}
 
                     // onClick={(ev) => {
                     //     ev.preventDefault()
                     //     // nextImage()
 
-                    //     // selectImage(Math.min(idx + 1, images.length))
+                    //     // selectImage(Math.min(idx + 1, imgCount))
                     // }}
                 >
                     arrow_forward_ios

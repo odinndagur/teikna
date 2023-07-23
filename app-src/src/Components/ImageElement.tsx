@@ -45,10 +45,17 @@ export function ImageElement({
                 // console.log({ imgTest })
             }
         }, 50)
-    }, [])
+    }, [img])
 
     return (
-        <div key={img} style={{ ...style, scrollSnapType: 'y mandatory' }}>
+        <div
+            key={img}
+            style={{
+                ...style,
+                scrollSnapType: 'y mandatory',
+                minHeight: '200px',
+            }}
+        >
             {/* <button> */}
             <Link
                 to={`/imageViewer`}

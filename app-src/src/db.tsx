@@ -79,13 +79,19 @@ export const getMovieById = async (id: string | number) => {
             images:
                 movie.images_source == 'filmgrab'
                     ? JSON.parse(movie.images)
-                    : Array.from(
-                          { length: Number(movie.image_count) },
-                          (_, idx) =>
-                              `${movie.image_prefix}${idx + 1}${
-                                  movie.image_suffix
-                              }`
-                      ),
+                    : {
+                          source: movie.images_source,
+                          image_prefix: movie.image_prefix,
+                          image_count: Number(movie.image_count),
+                          image_suffix: movie.image_suffix,
+                      },
+            // : Array.from(
+            //       { length: Number(movie.image_count) },
+            //       (_, idx) =>
+            //           `${movie.image_prefix}${idx + 1}${
+            //               movie.image_suffix
+            //           }`
+            //   ),
         }
     })
     DB_CONSOLE_LOGS && console.log(currentMovie)

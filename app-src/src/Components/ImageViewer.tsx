@@ -64,9 +64,28 @@ export function ImageViewer({
         setLanes(Math.floor((window.innerWidth - 200) / 300))
     }, [window.innerWidth])
 
+    function isObject(objValue: any) {
+        return (
+            objValue &&
+            typeof objValue === 'object' &&
+            objValue.constructor === Object
+        )
+    }
+
+    const [imgSource, setImgSource] = useState('')
+
+    useEffect(() => {
+        if (isObject(images)) {
+            setImgSource(images.source)
+        } else {
+            setImgSource('filmgrab')
+        }
+        console.log(`${images.image_prefix}${1}${images.image_suffix}`)
+    }, [images])
+
     const imageListRef = useRef(null)
     const rowVirtualizer = useVirtualizer({
-        count: Number(images.length),
+        count: imgSource == 'filmgrab' ? images.length : images.image_count,
         getScrollElement: () => imageListRef.current,
         estimateSize: () => 50,
         overscan: 60,
@@ -77,7 +96,7 @@ export function ImageViewer({
     })
 
     return (
-        <Grid id={'images-grid'} divRef={imageListRef}>
+        <Grid id={'images-grid'} divRef={imageListRef} key={imgSource}>
             {/* <div
                 style={{
                     position: 'absolute',
@@ -90,7 +109,12 @@ export function ImageViewer({
             </div> */}
             {rowVirtualizer.getVirtualItems().map((virtualItem) => {
                 const idx = virtualItem.index
-                const img = images[idx]
+                const img =
+                    imgSource == 'filmgrab'
+                        ? images[idx]
+                        : `${images.image_prefix}${idx + 1}${
+                              images.image_suffix
+                          }`
                 return (
                     // <div
                     //     style={{
@@ -110,7 +134,6 @@ export function ImageViewer({
                     //     }}
                     // >
                     //     <p>{virtualItem.lane}</p>
-
                     <ImageElement
                         // key={img + idx}
                         key={virtualItem.key}
