@@ -275,7 +275,7 @@ export function ImagePage() {
         navigate({
             search: (old) => ({
                 ...old,
-                idx: Math.min(idx + 1, imgCount - 1),
+                idx: imgCount > 0 ? Math.min(idx + 1, imgCount - 1) : idx + 1,
             }),
             replace: true,
         })

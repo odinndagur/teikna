@@ -30,6 +30,7 @@ export function ImageViewer({
         }
     }
     const nextImage = () => {
+        console.log('nextimage')
         if (images && selectedIndex < images.length - 1) {
             setSelectedIndex((old) => Math.min(images.length - 1, old + 1))
         }
