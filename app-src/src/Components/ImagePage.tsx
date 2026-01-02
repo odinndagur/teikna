@@ -666,6 +666,7 @@ export function ImagePage() {
                         }}
                         // ref={currentImageRef}
                     />
+
                     <GridOverlay
                         rotation={rotation}
                         // height={imgContainerMaxHeight}
@@ -964,7 +965,7 @@ export function ImagePage() {
                     padding: '2rem',
                     boxSizing: 'border-box',
                     // transform: 'translate(0,-50%)',
-                    zIndex: 4,
+                    zIndex: 5,
                     visibility: showControls ? 'visible' : 'hidden',
                 }}
             >
