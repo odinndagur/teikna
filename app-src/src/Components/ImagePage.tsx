@@ -83,6 +83,11 @@ export function ImagePage() {
                 if (diffX < -5) {
                     prevImage()
                 }
+
+                if (diffY < -5) {
+                    exitViewer()
+                }
+
                 break
             case 1:
                 if (diffY > 5) {
@@ -91,6 +96,10 @@ export function ImagePage() {
 
                 if (diffY < -5) {
                     prevImage()
+                }
+
+                if (diffX > 5) {
+                    exitViewer()
                 }
                 break
             case 2:
@@ -101,6 +110,10 @@ export function ImagePage() {
                 if (diffX < -5) {
                     nextImage()
                 }
+
+                if (diffY > 5) {
+                    exitViewer()
+                }
                 break
             case 3:
                 if (diffY > 5) {
@@ -110,17 +123,21 @@ export function ImagePage() {
                 if (diffY < -5) {
                     nextImage()
                 }
+
+                if (diffX < 5) {
+                    exitViewer()
+                }
                 break
         }
-        if (rotation == 0) {
-            if (diffX > 5) {
-                nextImage()
-            }
+        // if (rotation == 0) {
+        //     if (diffX > 5) {
+        //         nextImage()
+        //     }
 
-            if (diffX < -5) {
-                prevImage()
-            }
-        }
+        //     if (diffX < -5) {
+        //         prevImage()
+        //     }
+        // }
 
         setTouchPosition(null)
     }
